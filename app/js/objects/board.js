@@ -58,11 +58,11 @@
 				_tileArray[i].sprite.scale.y = _scale;
 				_outerBoard.addChild(_tileArray[i].sprite);
 
-				var spriteText = game.add.text(game.world.centerX - (_tileArray[i].sprite.width / 2), game.world.centerY - (_tileArray[i].sprite.height / 2), _tileArray[i].text, 
+				var mid = _tileArray[i].sprite.width * 1.5;
+				var spriteText = game.add.text( mid, mid, _tileArray[i].text, 
 				{
-					font: '70px Geo',
-					fill: '#000000',
-					align: 'center'
+					font: '150px Geo',
+					fill: '#000000'
 				}, text);
 
 				spriteText.anchor.setTo(0.5, 0.5);

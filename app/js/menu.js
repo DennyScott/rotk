@@ -1,17 +1,25 @@
 var menuState = {
 	create: function(){
+		this.createNameLabel();
+		this.createStartLabel();
+		this.clickUpToStart();
+	},
 
-		//Display the name of the game
-		var nameLabel = game.add.text(game.world.centerX, -50, 'ROTK', {
-			font: '70px Geo',
-			fill: '#ffffff'
-		});
-		nameLabel.anchor.setTo(0.5, 0.5);
+	start: function() {
+		//Start the actual game
+		game.state.start('play');
+	},
 
-		//Create a tween on teh label
-		game.add.tween(nameLabel).to({y: 80}, 1000).easing(Phaser.Easing.Bounce.Out)
-			.start();
+	clickUpToStart: function() {
+		//Create a new Phaser keyboard variable, the up arrow key
+		var upKey = game.input.keyboard.addKey(Phaser.Keyboard.UP);
 
+		//When the 'upKey' is pressed, it will call the 'start' function once
+		upKey.onDown.addOnce(this.start, this);
+		game.input.onDown.addOnce(this.start, this);
+	},
+
+	createStartLabel: function() {
 		//Store the relevant text based the device used
 		if(game.device.desktop){
 			text = 'press the up arrow key to start';
@@ -29,19 +37,18 @@ var menuState = {
 
 		game.add.tween(startLabel).to({angle: -2}, 500).to({angle:2}, 500).loop()
 			.start();
-
-		//Create a new Phaser keyboard variable, the up arrow key
-		var upKey = game.input.keyboard.addKey(Phaser.Keyboard.UP);
-
-		//When the 'upKey' is pressed, it will call the 'start' function once
-		upKey.onDown.addOnce(this.start, this);
-		game.input.onDown.addOnce(this.start, this);
-
-		
 	},
 
-	start: function() {
-		//Start the actual game
-		game.state.start('play');
-	},
+	createNameLabel: function() {
+		//Display the name of the game
+		var nameLabel = game.add.text(game.world.centerX, -50, 'ROTK', {
+			font: '70px Geo',
+			fill: '#ffffff'
+		});
+		nameLabel.anchor.setTo(0.5, 0.5);
+
+		//Create a tween on teh label
+		game.add.tween(nameLabel).to({y: 80}, 1000).easing(Phaser.Easing.Bounce.Out)
+			.start();
+	}
 }

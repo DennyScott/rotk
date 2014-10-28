@@ -8,37 +8,11 @@
 		var _board = this;
 		var _completeBoard = game.add.group(); //Entire Board Group
 		var _outerBoard; //OuterBoard, parent of child tiles
-		var _one = {
-				text: '1'
-			},
-			_two = {
-				text: '2'
-			},
-			_three = {
-				text: '3'
-			},
-			_four = {
-				text: '4'
-			},
-			_five = {
-				text: '5'
-			},
-			_six = {
-				text: '6'
-			},
-			_seven = {
-				text: '7'
-			},
-			_eight = {
-				text: '8'
-			},
-			_nine = {
-				text: '9'
-			};
-		var _scale = 0.333333; //Scale of the smaller tiles compared to the larger tiles.
 		var _positions; //Coordinates for each Tile
-		var _tileArray; //Array of all created Tile Objects
+		var _tileArray = []; //Array of all created Tile Objects
+		var _positionArray = [2, 9, 3, 8, 1, 7, 4, 6, 5];
 		var tiles = game.add.group(_completeBoard, 'tiles', true); //Group for all tiles
+		var _scale = 0.333333; //Scale of the smaller tiles compared to the larger tiles.
 
 		/**
 		 * Constructor
@@ -54,13 +28,18 @@
 			_rotateBoard(); //Rotate the board 45 degrees.
 		};
 
+
 		/**
 		 * Create the Tile Array. The positioning of each object in the array is to
 		 * replicate the positioning of each value, left to right, top to bottom.
 		 * @return {[type]} [description]
 		 */
 		var _createTileArray = function() {
-			_tileArray = [_two, _nine, _three, _eight, _one, _seven, _four, _six, _five];
+			for(var i = 0; i < _positionArray.length; i++){
+				var tile = new game.tile(i + 1 + '');
+				_tileArray.push(tile);
+			}
+			
 		};
 
 		/**
@@ -68,40 +47,17 @@
 		 */
 		var _createTilesOnBoard = function() {
 			for (var i = 0; i < _tileArray.length; i++) {
-				_tileArray[i].sprite = game.add.sprite(_positions[i].x, _positions[i].y, 'whiteTile', null, tiles); //Create Tile Sprite
-
-				//Scale the Tiles
-				_tileArray[i].sprite.scale.x = _scale;
-				_tileArray[i].sprite.scale.y = _scale;
+				var index = _positionArray[i] - 1; //Use the position array to organize. Since we start with 0, negate 1
+				
+				//Create Tile Sprite
+				var createdSprite = _tileArray[index].addSprite(_positions[i].x, 
+					_positions[i].y, _scale, tiles); 
 
 				//Add the sprite as a Child of the outerboard object
-				_outerBoard.addChild(_tileArray[i].sprite);
+				_outerBoard.addChild(createdSprite);
 
-				//Create the Text for the Tile
-				_createTextOnTile(_tileArray[i]);
-
-			};
+			}
 		};
-
-		/**
-		 * Create The Text on the Tile.
-		 * @param  {[Object]} _tile The Tile Object, containing the sprite and the text
-		 */
-		var _createTextOnTile = function(_tile) {
-			var mid = _tile.sprite.width * 1.5; //Find the Mid point for the Text
-
-			//Create the Text
-			var spriteText = game.add.text(mid, mid, _tile.text, {
-				font: mid / 1.5 + 'px Geo',
-				fill: '#000000'
-			});
-
-			spriteText.anchor.setTo(0.5, 0.5); //Set Anchor for Text
-			spriteText.angle = -45; //Rotate back 45 degrees, to make it straigtened.
-
-			//Add The text as a Child to the Sprite
-			_tile.sprite.addChild(spriteText);
-		}
 
 		/**
 		 * Rotate the angle of the Board by 45 degrees.

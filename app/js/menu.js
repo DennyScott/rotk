@@ -87,7 +87,7 @@ var menuState = {
 
 	createNameLabel: function() {
 		//Display the name of the game
-		var nameLabel = game.add.text(game.world.centerX, -50, 'ROTK', {
+		var nameLabel = game.add.text(game.world.centerX, -50, 'Debate!', {
 			font: '70px Geo',
 			fill: '#ffffff'
 		});

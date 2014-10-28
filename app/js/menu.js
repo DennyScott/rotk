@@ -11,8 +11,8 @@ var menuState = {
 		this.loadLocalStorage(); //Sets up local storage options, including loading previous high scores	
 		this.setHighScore(); //Sets up the high score to be saved to local storage if last game was higher
 		this.createBackgroundImage(); //Creates a background image for the menu
-				this.createNameLabel();
-		this.createStartLabel();
+		this.createNameLabel(); //Creates a Name Label for the Menu
+		this.createStartLabel(); //Create the start Label to tell the user to start the game
 		this.setUpInput(); //Sets up user input when the menu begins to start the game
 		this.setUpMute(); //Sets up the mute option in the top left of the screen
 	},

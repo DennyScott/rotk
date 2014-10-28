@@ -11,7 +11,7 @@ var loadState = {
 	},
 
 	create: function() {
-		game.state.start('menu');
+		this.loadNextState();
 	},
 
 	createLoadScreen: function() {
@@ -34,6 +34,10 @@ var loadState = {
 	loadImageAssets: function() {
 		//Load a new asset that we will use in the menu state
 		game.load.image('background', 'assets/background.png');
+	},
+
+	loadNextState: function() {
+		game.state.start('menu');
 	},
 
 	loadSpritesheetAssets: function() {

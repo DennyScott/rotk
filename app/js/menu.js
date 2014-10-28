@@ -22,7 +22,7 @@ var menuState = {
 	 */
 	start: function() {
 		//Start the actual game
-		game.state.start('play');
+		game.state.start('cardSelection');
 	},
 
 	/**

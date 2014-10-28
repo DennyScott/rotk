@@ -12,6 +12,7 @@ var cardSelectionState = {
 		this.createMoneyLabel();
 		this.createInstructionLabel();
 		this.createButton();
+		this.placeAbilitiesOnScreen();
 	},
 
 	update: function() {
@@ -19,7 +20,7 @@ var cardSelectionState = {
 	},
 
 	createAbilities: function() {
-		var abilities = [{
+		this.abilities = [{
 			type: 'Ability',
 			value: 'Awe',
 			cost: 10,
@@ -49,7 +50,7 @@ var cardSelectionState = {
 			value: 'Incite',
 			cost: 30,
 			description: 'An Attack command that will trump any regular command, as well as Fault and Argue, and cause a large amount of damage to your opponent, as well as make your opponent inactive for the following 2 turns'
-		}, {
+			}, {
 			type: 'attack',
 			value: 'Taunt',
 			cost: 45,
@@ -123,5 +124,33 @@ var cardSelectionState = {
 
 	loadState: function() {
 		game.state.start('play');
+	},
+
+	placeAbilitiesOnScreen: function() {
+		var currentPosition;
+		var spaceBetweenObject = 50;
+		var delayBetweenCards = 200; //In milliseconds
+
+		if (this.abilities.length % 2 === 0) {
+			currentPosition = game.world.centerX - spaceBetweenObject * this.abilities.length / 2 + (spaceBetweenObject * .5);
+		} else {
+			currentPosition = game.world.centerX - spaceBetweenObject * Math.floor(this.abilities.length / 2);
+		}
+
+		for (var i = 0; i < this.abilities.length; i++) {
+			var key = this.abilities[i].value
+			this[key] = game.add.sprite(currentPosition, game.world.centerY - 70, 'card');
+			this[key].alpha = 0;
+			this[key].anchor.setTo(0.5, 0.5);
+			this[key].card = this.abilities[i];
+			this[key].inputEnabled = true;
+			this[key].input.useHandCursor = true; //if you want a hand cursor
+			this[key].events.onInputOver.add(function() {
+				console.log(this[key].card.cost);
+			}, this);
+			currentPosition += spaceBetweenObject;
+			var timeDelay = this.labelEntranceMilliseconds * 1.2 + (i * delayBetweenCards);
+			var tween = game.add.tween(this[key]).to( { alpha: 1, y:game.world.centerY }, 1000, Phaser.Easing.Linear.None, true, timeDelay);
+		}
 	}
 }

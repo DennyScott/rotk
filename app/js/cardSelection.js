@@ -2,14 +2,16 @@ var cardSelectionState = {
 	preload: function() {
 		this.allNumbers = 27; //To get a 1 to 9 of each color (i.e Red, Blue, and Green)
 		this.amountOfColors = 3;
-		this.salary = 100;
+		this.budget = 100;
+		this.labelEntranceMilliseconds = 1000;
 	},
 
 	create: function() {
 		this.createAllCards();
 		this.createAbilities();
-		this.loadState();
-
+		this.createMoneyLabel();
+		this.createInstructionLabel();
+		this.createButton();
 	},
 
 	update: function() {
@@ -52,7 +54,7 @@ var cardSelectionState = {
 			value: 'Taunt',
 			cost: 45,
 			description: 'An Attack command that will trump any regular command, as well as Fault and Argue, and cause a massive amount of damage to your opponent, as well as make your opponent inactive for the following 2 turns'
-		}, ]
+		}];
 	},
 
 	createAllCards: function() {
@@ -80,6 +82,43 @@ var cardSelectionState = {
 			}
 		}
 		game.global.cards = this.cards;
+	},
+
+	createButton: function() {
+		this.nextButton = game.add.button(game.world.centerX, game.world.height - 40, 'mute', this.loadState, this);
+		this.nextButton.anchor.setTo(0.5, 0.5);
+	},
+
+	createInstructionLabel: function() {
+		//Explain how to pick the cards and start the game
+		var text = "Use you points to buy as many cards\nas you can to add to your Deck"
+		var startLabel = game.add.text(game.world.width * 2, 80,
+			text, {
+				font: '25px Arial',
+				fill: '#ffffff',
+				align: 'center'
+			});
+		startLabel.anchor.setTo(0.5, 0.5);
+
+		game.add.tween(startLabel).to({
+			x: game.world.centerX
+		}, this.labelEntranceMilliseconds).easing(Phaser.Easing.Bounce.Out).loop().start();
+	},
+
+	createMoneyLabel: function() {
+		//Explain how to pick the cards and start the game
+		var text = "Money Remaining: " + this.budget;
+		var startLabel = game.add.text(-100, 20,
+			text, {
+				font: '15px Arial',
+				fill: '#ffffff',
+				align: 'center'
+			});
+		startLabel.anchor.setTo(0.5, 0.5);
+
+		game.add.tween(startLabel).to({
+			x: 100
+		}, this.labelEntranceMilliseconds).easing(Phaser.Easing.Bounce.Out).loop().start();
 	},
 
 	loadState: function() {

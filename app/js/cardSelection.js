@@ -1,6 +1,7 @@
 var cardSelectionState = {
 	preload: function() {
 		this.allNumbers = 27; //To get a 1 to 9 of each color (i.e Red, Blue, and Green)
+		this.neededAmountOfCards = 30;
 		this.amountOfColors = 3;
 		this.budget = 100;
 		this.labelEntranceMilliseconds = 1000;
@@ -21,6 +22,9 @@ var cardSelectionState = {
 	},
 
 	addAbilityToDeck: function(item) {
+		if(game.global.cards.length >= this.neededAmountOfCards) {
+			this.destroyARandomNumberCard();
+		}
 		game.global.cards.push(item.card);
 	},
 
@@ -137,6 +141,11 @@ var cardSelectionState = {
 
 	deductFromBudget: function(item) {
 		this.budget -= item.card.cost;
+	},
+
+	destroyARandomNumberCard: function() {
+		//This line will erase a random card in the first 27 number cards only.
+		var destroyPosition = game.global.cards.splice(game.rnd.integerInRange(0, this.allNumbers - 1), 1);
 	},
 
 	loadState: function() {

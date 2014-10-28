@@ -4,6 +4,7 @@ var cardSelectionState = {
 		this.amountOfColors = 3;
 		this.budget = 100;
 		this.labelEntranceMilliseconds = 1000;
+		this.budgetLabelText = 'Budget Remaining: ';
 	},
 
 	create: function() {
@@ -16,7 +17,19 @@ var cardSelectionState = {
 	},
 
 	update: function() {
+		this.updateBudget();
+	},
 
+	addAbilityToDeck: function(item) {
+		game.global.cards.push(item.card);
+	},
+
+	canBuyCard: function(item) {
+		if(item.card.cost <= this.budget) {
+			return true
+		}
+
+		return false;
 	},
 
 	createAbilities: function() {
@@ -50,7 +63,7 @@ var cardSelectionState = {
 			value: 'Incite',
 			cost: 30,
 			description: 'An Attack command that will trump any regular command, as well as Fault and Argue, and cause a large amount of damage to your opponent, as well as make your opponent inactive for the following 2 turns'
-			}, {
+		}, {
 			type: 'attack',
 			value: 'Taunt',
 			cost: 45,
@@ -108,18 +121,22 @@ var cardSelectionState = {
 
 	createMoneyLabel: function() {
 		//Explain how to pick the cards and start the game
-		var text = "Money Remaining: " + this.budget;
-		var startLabel = game.add.text(-100, 20,
+		var text = this.budgetLabelText + this.budget;
+		this.budgetLabel = game.add.text(-100, 20,
 			text, {
 				font: '15px Arial',
 				fill: '#ffffff',
 				align: 'center'
 			});
-		startLabel.anchor.setTo(0.5, 0.5);
+		this.budgetLabel.anchor.setTo(0.5, 0.5);
 
-		game.add.tween(startLabel).to({
+		game.add.tween(this.budgetLabel).to({
 			x: 100
 		}, this.labelEntranceMilliseconds).easing(Phaser.Easing.Bounce.Out).loop().start();
+	},
+
+	deductFromBudget: function(item) {
+		this.budget -= item.card.cost;
 	},
 
 	loadState: function() {
@@ -145,12 +162,22 @@ var cardSelectionState = {
 			this[key].card = this.abilities[i];
 			this[key].inputEnabled = true;
 			this[key].input.useHandCursor = true; //if you want a hand cursor
-			this[key].events.onInputOver.add(function() {
-				console.log(this[key].card.cost);
+			this[key].events.onInputDown.add(function(item) {
+				if (this.canBuyCard(item)) {
+					this.deductFromBudget(item);
+					this.addAbilityToDeck(item);
+				}
 			}, this);
 			currentPosition += spaceBetweenObject;
 			var timeDelay = this.labelEntranceMilliseconds * 1.2 + (i * delayBetweenCards);
-			var tween = game.add.tween(this[key]).to( { alpha: 1, y:game.world.centerY }, 1000, Phaser.Easing.Linear.None, true, timeDelay);
+			var tween = game.add.tween(this[key]).to({
+				alpha: 1,
+				y: game.world.centerY
+			}, 1000, Phaser.Easing.Linear.None, true, timeDelay);
 		}
+	},
+
+	updateBudget: function() {
+		this.budgetLabel.text = this.budgetLabelText + this.budget;
 	}
 }

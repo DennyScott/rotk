@@ -1,0 +1,12 @@
+{
+  "name": "ROTK",
+  "description": "A simple puzzle game",
+  "version": "0.0.1",
+  "homepage": "https://github.com/DennyScott/rotk",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {},
+  "devDependencies": {
+    "phaser": "~2.1.3"
+  }
+}

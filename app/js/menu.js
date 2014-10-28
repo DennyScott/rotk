@@ -1,9 +1,11 @@
 var menuState = {
+
 	create: function() {
 		this.loadLocalStorage(); //Sets up local storage options, including loading previous high scores	
 		this.setHighScore(); //Sets up the high score to be saved to local storage if last game was higher
 		this.createBackgroundImage(); //Creates a background image for the menu
-		this.setUpMenuLabels(); //Sets up all the labels you see on the menu
+		this.createNameLabel(); //Creates a Name Label for the Menu
+		this.createStartLabel(); //Create the start Label to tell the user to start the game
 		this.setUpInput(); //Sets up user input when the menu begins to start the game
 		this.setUpMute(); //Sets up the mute option in the top left of the screen
 	},
@@ -63,44 +65,39 @@ var menuState = {
 		}
 	},
 
-	/**
-	 * Sets up the labels seen on the front of the menu, as well as their animations
-	 */
-	setUpMenuLabels: function() {
+	createStartLabel: function() {
+		//Store the relevant text based the device used
+		if (game.device.desktop) {
+			text = 'press the up arrow key to start';
+		} else {
+			text = 'touch the screen to start';
+		}
+
+			//Explain how to start the game
+		var startLabel = game.add.text(game.world.centerX, game.world.height-80,
+			text, {
+				font: '25px Arial',
+				fill: '#ffffff'
+			});
+		startLabel.anchor.setTo(0.5, 0.5);
+
+		game.add.tween(startLabel).to({angle: -2}, 500).to({angle:2}, 500).loop()
+			.start();
+	},
+
+	createNameLabel: function() {
 		//Display the name of the game
 		var nameLabel = game.add.text(game.world.centerX, -50, 'Debate!', {
-			font: '50px Geo',
+			font: '70px Geo',
 			fill: '#ffffff'
 		});
 		nameLabel.anchor.setTo(0.5, 0.5);
 
-		//Create a tween on the label
-		var tween = game.add.tween(nameLabel).to({
+		//Create a tween on teh label
+		game.add.tween(nameLabel).to({
 			y: 80
-		}, 1000).easing(Phaser.Easing.Bounce.Out).start();
-
-		var text = 'score: ' + game.global.score + '\nbest score: ' + localStorage.getItem('rotk.bestScore');
-		//Show the score at the center of the screen
-		var scoreLabel = game.add.text(game.world.centerX, game.world.centerY, text, {
-			font: '25px Geo',
-			fill: '#fffff'
-		})
-		scoreLabel.anchor.setTo(0.5, 0.5);
-		text = 'press the up arrow key to start';
-
-		//Explain how to start the game
-		var startLabel = game.add.text(game.world.centerX, game.world.height - 80, text, {
-			font: '25px Geo',
-			fill: '#ffffff'
-		});
-		startLabel.anchor.setTo(0.5, 0.5);
-
-		//Rotates the text left and right forever
-		game.add.tween(startLabel).to({
-			angle: -2
-		}, 500).to({
-			angle: 2
-		}, 500).loop().start();
+		}, 1000).easing(Phaser.Easing.Bounce.Out)
+			.start();
 	},
 
 	/**

@@ -21,7 +21,7 @@ var cardSelectionState = {
 	},
 
 	addAbilityToDeck: function(item) {
-		if(game.global.cards.length >= this.neededAmountOfCards) {
+		if (game.global.cards.length >= this.neededAmountOfCards) {
 			this.destroyARandomNumberCard();
 		}
 		game.global.cards.push(item.card);
@@ -30,13 +30,22 @@ var cardSelectionState = {
 	},
 
 	addButton: function() {
-		if(game.global.cards.length === this.neededAmountOfCards) {
+		if (game.global.cards.length === this.neededAmountOfCards) {
 			this.createButton();
 		}
 	},
 
+	addCard: function(item) {
+		if (!this.canBuyCard(item)) {
+			return;
+		}
+		this.deductFromBudget(item);
+		this.addAbilityToDeck(item);
+
+	},
+
 	canBuyCard: function(item) {
-		if(item.card.cost <= this.budget) {
+		if (item.card.cost <= this.budget) {
 			return true
 		}
 
@@ -110,7 +119,7 @@ var cardSelectionState = {
 	},
 
 	createButton: function() {
-		this.nextButton = game.add.button(game.world.centerX, game.world.height - 40, 'mute', this.loadState, this);
+		this.nextButton = game.add.button(game.world.centerX, game.world.height - 60, 'mute', this.loadState, this);
 		this.nextButton.anchor.setTo(0.5, 0.5);
 	},
 
@@ -178,12 +187,7 @@ var cardSelectionState = {
 			this[key].card = this.abilities[i];
 			this[key].inputEnabled = true;
 			this[key].input.useHandCursor = true; //if you want a hand cursor
-			this[key].events.onInputDown.add(function(item) {
-				if (this.canBuyCard(item)) {
-					this.deductFromBudget(item);
-					this.addAbilityToDeck(item);
-				}
-			}, this);
+			this[key].events.onInputDown.add(this.addCard, this);
 			currentPosition += spaceBetweenObject;
 			var timeDelay = this.labelEntranceMilliseconds * 1.2 + (i * delayBetweenCards);
 			var tween = game.add.tween(this[key]).to({

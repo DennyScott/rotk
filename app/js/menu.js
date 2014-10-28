@@ -72,6 +72,17 @@ var menuState = {
 		} else {
 			text = 'touch the screen to start';
 		}
+
+			//Explain how to start the game
+		var startLabel = game.add.text(game.world.centerX, game.world.height-80,
+			text, {
+				font: '25px Arial',
+				fill: '#ffffff'
+			});
+		startLabel.anchor.setTo(0.5, 0.5);
+
+		game.add.tween(startLabel).to({angle: -2}, 500).to({angle:2}, 500).loop()
+			.start();
 	},
 
 	createNameLabel: function() {
@@ -87,12 +98,6 @@ var menuState = {
 			y: 80
 		}, 1000).easing(Phaser.Easing.Bounce.Out)
 			.start();
-		//Rotates the text left and right forever
-		game.add.tween(startLabel).to({
-			angle: -2
-		}, 500).to({
-			angle: 2
-		}, 500).loop().start();
 	},
 
 	/**

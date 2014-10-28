@@ -13,7 +13,6 @@ var cardSelectionState = {
 		this.createAbilities();
 		this.createMoneyLabel();
 		this.createInstructionLabel();
-		this.createButton();
 		this.placeAbilitiesOnScreen();
 	},
 
@@ -26,6 +25,14 @@ var cardSelectionState = {
 			this.destroyARandomNumberCard();
 		}
 		game.global.cards.push(item.card);
+
+		this.addButton()
+	},
+
+	addButton: function() {
+		if(game.global.cards.length === this.neededAmountOfCards) {
+			this.createButton();
+		}
 	},
 
 	canBuyCard: function(item) {

@@ -1,12 +1,5 @@
 var menuState = {
 
-	createStartLabel: function() {
-		//Store the relevant text based the device used
-		if(game.device.desktop){
-			text = 'press the up arrow key to start';
-		}else{
-			text = 'touch the screen to start';
-		}
 	create: function() {
 		this.loadLocalStorage(); //Sets up local storage options, including loading previous high scores	
 		this.setHighScore(); //Sets up the high score to be saved to local storage if last game was higher
@@ -72,6 +65,15 @@ var menuState = {
 		}
 	},
 
+	createStartLabel: function() {
+		//Store the relevant text based the device used
+		if (game.device.desktop) {
+			text = 'press the up arrow key to start';
+		} else {
+			text = 'touch the screen to start';
+		}
+	},
+
 	createNameLabel: function() {
 		//Display the name of the game
 		var nameLabel = game.add.text(game.world.centerX, -50, 'ROTK', {
@@ -81,7 +83,9 @@ var menuState = {
 		nameLabel.anchor.setTo(0.5, 0.5);
 
 		//Create a tween on teh label
-		game.add.tween(nameLabel).to({y: 80}, 1000).easing(Phaser.Easing.Bounce.Out)
+		game.add.tween(nameLabel).to({
+			y: 80
+		}, 1000).easing(Phaser.Easing.Bounce.Out)
 			.start();
 		//Rotates the text left and right forever
 		game.add.tween(startLabel).to({

@@ -4,7 +4,7 @@ var playState = {
 	},
 
 	create: function() {
-		console.log('Started Game!');
+		var board = new game.board();	
 	},
 
 	update: function() {

@@ -15,7 +15,7 @@ var menuState = {
 	 */
 	createBackgroundImage: function() {
 		//Add a background image
-		game.add.image(0, 0, 'background');
+		// game.add.image(0, 0, 'background');
 	},
 
 	/**

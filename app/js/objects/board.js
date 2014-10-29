@@ -11,7 +11,7 @@
 		var _positions; //Coordinates for each Tile
 		var _tileArray = []; //Array of all created Tile Objects
 		var _positionArray = [2, 9, 3, 8, 1, 7, 4, 6, 5]; //Left to Right, top to Bottom positioning.
-		var _combinations = [];
+		var _combinations = []; //Possible Combinations in the game
 		var tiles = game.add.group(_completeBoard, 'tiles', true); //Group for all tiles
 		var _scale = 0.333333; //Scale of the smaller tiles compared to the larger tiles.
 
@@ -94,33 +94,38 @@
 		 * @param  {[string]} color  The color to make the card. Can be blue, red, green, black, and white
 		 */
 		this.playCard = function(number, color) {
-			_tileArray[number - 1].changeTileColor(color);
-			var winCounter = _checkWinner(number, color); //Check if the placed tile causes winners
-			var loseCounter = _checkLoser(number, color); //Check if the placed tile causes losers
-			var totalCounter = winCounter - loseCounter;
-			console.log(totalCounter);
+			_tileArray[number - 1].changeTileColor(color); //Change current Tile Color
+			var winCounter = _checkCombinations(number, color, _checkCombinationTileForSameColor); //Check if the placed tile causes winners
+			var loseCounter = _checkCombinations(number, color, _checkCombinationTileForOposingColors); //Check if the placed tile causes losers
+			var combos = {
+				win: winCounter,
+				lose: loseCounter
+			};
+			console.log(combos);
 		};
 
 		/**
-		 * Check if the number placed, in unision with the color, is the same color
+		 * Check if the number placed, in unision with the color, is the same or opposite color
 		 * as two other values paired in the combinations array. If any combination
-		 * has three colors that are the same, that is a winner. Each winner is counted, and
-		 * returned.
+		 * has three colors that are the same or different, that is a combo. 
+		 * The rules of the compare are defined by the comparingRules method passed into this
+		 * function.
 		 *
 		 * @param  {[int]} number Number that was placed by player
 		 * @param  {[string]} color  Color of the placed tile
-		 * @return {[int]}        Amount of winner counted
+		 * @param {function} comparingRules The function to compare the combination values with
+		 * @return {Array}        Array of winners counted
 		 */
-		var _checkWinner = function(number, color) {
-			var comboCounter = 0;
+		var _checkCombinations = function(number, color, comparingRules) {
+			var comboCounter = [];
 
 			//Iterate through each combination
 			for (var i = 0; i < _combinations.length; i++) {
 				//Check if the current played value is part of the combination, it must be
 				if (_combinations[i].indexOf(number) >= 0) {
 					//If all three colors are the same, add 1 value to the counter
-					if (_checkCombinationTileForColor(color, _combinations[i])) {
-						comboCounter++;
+					if (comparingRules(_combinations[i])) {
+						comboCounter.push(_combinations[i]); //Add Found combo to counter array
 					}
 				}
 			}
@@ -129,39 +134,13 @@
 		};
 
 		/**
-		 * Check if the numper placed, in opposition to each of the other colors in a
-		 * direction line or diagonally from the played line. If any combination has
-		 * has three opposite colors, that is a loser. Each loser is counted and returned.
-		 *
-		 * @param  {[int]} number Number that was placed by player
-		 * @param  {String} color  Color of the placed tile
-		 * @return {int}        Amount of the loser combos counted
-		 */
-		var _checkLoser = function(number, color) {
-			var comboCounter = 0;
-
-			//Iterate through each combination
-			for (var i = 0; i < _combinations.length; i++) {
-				//Check if the current played value is part of the combination, it must be
-				if (_combinations[i].indexOf(number) >= 0) {
-					//If all three tiles colors are different, add 1 to the counter
-					if (_checkCombinationTileForOpoosingColors(_combinations[i])) {
-						comboCounter++;
-					}
-				}
-			}
-
-			return comboCounter; //Return the total losers counted
-		}
-
-		/**
 		 * Check if the comination of three values are the opposite colors. If
 		 * they are the opposite colors, return true, if not, return false.
 		 *
 		 * @param  {Array} combination Combination of three values to check colors in.
 		 * @return {Boolean}             True if all three values are opposte, else false
 		 */
-		var _checkCombinationTileForOpoosingColors = function(combination) {
+		var _checkCombinationTileForOposingColors = function(combination) {
 			var seenColor = []; //Array to hold the color of each tile passed
 
 			//Iterate through all 3 values in the combination array
@@ -206,7 +185,8 @@
 		 * @param  {[array]} combination Combination of three values to check colors in.
 		 * @return {[boolean]}             True if all three colors are the same, else false
 		 */
-		var _checkCombinationTileForColor = function(color, combination) {
+		var _checkCombinationTileForSameColor = function(combination) {
+			var color = _tileArray[combination[0] - 1].color();
 			//Iterate through all 3 values in the combination array
 			for (var j = 0; j < combination.length; j++) {
 				//If the color is not the same as the passed string return false
@@ -225,6 +205,7 @@
 		 *
 		 */
 		var _getPositions = function() {
+			//The below 6 positions defined all 6 positons a value can take. (3x3 = 9)
 			var xLeft = 0 - (_outerBoard.width / 2);
 			var xCenter = xLeft + (_outerBoard.width * _scale);
 			var xRight = 0 + (_outerBoard.width / 2) - (_outerBoard.width * _scale);
@@ -233,31 +214,42 @@
 			var yCenter = yTop + (_outerBoard.height * _scale);
 			var yBottom = 0 + (_outerBoard.height / 2) - (_outerBoard.height * _scale);
 
+			//We then take these 6 positions, and place them in combinations together, to create
+			//all 9 posibilities.
 			_positions = [{
+				//Top Left
 				x: xLeft,
 				y: yTop
 			}, {
+				//Center Top
 				x: xCenter,
 				y: yTop
 			}, {
+				//Top right
 				x: xRight,
 				y: yTop
 			}, {
+				//Middle Left
 				x: xLeft,
 				y: yCenter
 			}, {
+				//Center Middle
 				x: xCenter,
 				y: yCenter
 			}, {
+				//Middle Right
 				x: xRight,
 				y: yCenter
 			}, {
+				//Bottom Left
 				x: xLeft,
 				y: yBottom
 			}, {
+				//Middle Bottom
 				x: xCenter,
 				y: yBottom
 			}, {
+				//Bottom Right
 				x: xRight,
 				y: yBottom
 			}];
@@ -265,8 +257,8 @@
 
 		_initalize(); //Start the Constructor
 
-		game.global = game.global || {};
-		game.global.currentBoard = _board;
+		game.global = game.global || {}; //Create the Global variable if it does not exist
+		game.global.currentBoard = _board; //Place the game board (this) in the currentBoard directory
 
 	}
 

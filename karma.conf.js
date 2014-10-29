@@ -5,8 +5,9 @@ module.exports = function(config){
 
     files : [
       'app/lib/phaser/build/phaser.js',
-      'app/js/**/!(game).js',
+      'app/js/states/**/*.js',
       'app/js/game.js',
+      'app/js/objects/**/*.js',
       'test/unit/**/*.js'
     ],
 

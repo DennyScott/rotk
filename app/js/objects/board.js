@@ -11,6 +11,7 @@
 		var _positions; //Coordinates for each Tile
 		var _tileArray = []; //Array of all created Tile Objects
 		var _positionArray = [2, 9, 3, 8, 1, 7, 4, 6, 5]; //Left to Right, top to Bottom positioning.
+		var _combinations = [];
 		var tiles = game.add.group(_completeBoard, 'tiles', true); //Group for all tiles
 		var _scale = 0.333333; //Scale of the smaller tiles compared to the larger tiles.
 
@@ -26,6 +27,7 @@
 			_createTileArray(); //Place the tiles in an array, following an order for gameplay
 			_createTilesOnBoard(); //Place the tiles in the positions found
 			_rotateBoard(); //Rotate the board 45 degrees.
+			_createCombinations();
 		};
 
 
@@ -68,6 +70,24 @@
 		};
 
 		/**
+		 * Create array combinations of each possible "combo combination" on the board. To be a 
+		 * combination, they must follow in line directly or diagonally.
+		 * 
+		 */
+		var _createCombinations = function() {
+			_combinations = [
+				[4,8,2],
+				[6,1,9],
+				[5,7,3],
+				[4,6,5],
+				[8,1,7],
+				[2,9,3],
+				[4,1,3],
+				[2,1,5]
+			]
+		}
+
+		/**
 		 * Play a Card, passing the number and the value. This will pass the responsibility
 		 * onto the tile object to update the color
 		 * @param  {[int]} number Number/position of the card
@@ -75,6 +95,51 @@
 		 */
 		this.playCard = function(number, color) {
 			_tileArray[number-1].changeTileColor(color);
+			var winCounter = _checkWinner(number, color); //Check if the placed tile causes winners
+			console.log(winCounter);
+		};
+
+		/**
+		 * Check if the number placed, in unision with the color, is the same color
+		 * as two other values paired in the combinations array. If any combination 
+		 * has three colors that are the samew, that is a winner. Each winner is counted, and
+		 * returned.
+		 * 
+		 * @param  {[int]} number Number that was placed by player
+		 * @param  {[string]} color  Color of the placed tile
+		 * @return {[int]}        Amount of winner counted
+		 */
+		var _checkWinner = function(number, color){
+			var comboCounter = 0;
+
+			for(var i = 0; i < _combinations.length; i++){
+				if(_combinations[i].indexOf(number) >= 0){
+					if(_checkCombinationTileForColor(color, _combinations[i])){
+						comboCounter++;
+					}	
+				}
+			}
+
+			return comboCounter;
+		};
+
+		/**
+		 * Check if the combination of three values are the same color. If
+		 * they are the same color, return true, if not, return false;
+		 * @param  {[string]} color     Color to check that each tile are
+		 * @param  {[array]} combination Combination of three values to check colors in.
+		 * @return {[boolean]}             True if all three colors are the same, else false
+		 */
+		var _checkCombinationTileForColor = function(color, combination){
+			//Iterate through all 3 values in the combination array
+			for(var j = 0; j < combination.length; j++){
+				//If the color is not the same as the passed string return false
+				if(_tileArray[combination[j] - 1].color() !== color){
+					return false;
+				}
+			}
+
+			return true; //All three values were the same color, return true
 		}
 
 		/**

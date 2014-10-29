@@ -217,6 +217,14 @@ var cardSelectionState = {
 
 			var label = game.add.sprite(currentPosition, endY + 80 + 20, 'priceLabel')
 			label.anchor.setTo(0.5, 0.5);
+			label.textArea= game.add.text(0, 0,
+				this[key].card.cost, {
+					font: '20px Arial',
+					fill: '#ffffff'
+				});
+			label.textArea.anchor.setTo(0.5, 0.3);
+			label.addChild(label.textArea);
+			console.log(label.textArea);
 
 			currentPosition += spaceBetweenObject;
 

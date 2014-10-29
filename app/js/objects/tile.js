@@ -53,6 +53,14 @@
 		};
 
 		/**
+		 * Get Color
+		 * @return {[string]} current color of the tile
+		 */
+		this.color = function(){
+			return _color;
+		}
+
+		/**
 		 * Reload the texture for the current tile. This will remove the old
 		 * image texture, and load the new texture in it's place.
 		 * @param  {[string]} color Color to make the current tile.
@@ -62,6 +70,7 @@
 				color = 'white'; //If no color is defined, make white
 			}
 			_sprite.loadTexture(color + 'Tile'); //Load Texture
+			_color = color;
 		};
 
 		/**

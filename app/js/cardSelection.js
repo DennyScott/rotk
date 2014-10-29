@@ -170,30 +170,61 @@ var cardSelectionState = {
 
 	placeAbilitiesOnScreen: function() {
 		var currentPosition;
-		var spaceBetweenObject = 50;
+		var spaceBetweenObject = 200;
 		var delayBetweenCards = 200; //In milliseconds
-
-		if (this.abilities.length % 2 === 0) {
-			currentPosition = game.world.centerX - spaceBetweenObject * this.abilities.length / 2 + (spaceBetweenObject * .5);
-		} else {
-			currentPosition = game.world.centerX - spaceBetweenObject * Math.floor(this.abilities.length / 2);
-		}
+		var startY = game.world.centerY - 220
+		var endY = game.world.centerY - 160
+		var verticalSpaceBetweenCards = 300;
 
 		for (var i = 0; i < this.abilities.length; i++) {
+			if (i % 4 === 0) {
+				var amountRemaining = this.abilities.length - i
+				if (amountRemaining > 4) {
+					currentPosition = game.world.centerX - spaceBetweenObject * 4 / 2 + (spaceBetweenObject * .5);
+				} else if (amountRemaining % 2 === 0) {
+					currentPosition = game.world.centerX - spaceBetweenObject * amountRemaining / 2 + (spaceBetweenObject * .5);
+				} else {
+					currentPosition = game.world.centerX - spaceBetweenObject * Math.floor(amountRemaining / 2);
+				}
+			}
 			var key = this.abilities[i].value
-			this[key] = game.add.sprite(currentPosition, game.world.centerY - 70, 'card');
+			this[key] = game.add.sprite(currentPosition, startY, 'abilityCommand');
 			this[key].alpha = 0;
 			this[key].anchor.setTo(0.5, 0.5);
 			this[key].card = this.abilities[i];
+			this[key].textArea = game.add.text(0, 0,
+				this[key].card.value, {
+					font: '25px Arial',
+					fill: '#ffffff'
+				});
+			this[key].textArea.anchor.setTo(0.5, 0.4);
+			this[key].textArea.alpha = 0;
+			this[key].addChild(this[key].textArea);
 			this[key].inputEnabled = true;
 			this[key].input.useHandCursor = true; //if you want a hand cursor
 			this[key].events.onInputDown.add(this.addCard, this);
-			currentPosition += spaceBetweenObject;
 			var timeDelay = this.labelEntranceMilliseconds * 1.2 + (i * delayBetweenCards);
 			var tween = game.add.tween(this[key]).to({
 				alpha: 1,
-				y: game.world.centerY
+				y: endY
 			}, 1000, Phaser.Easing.Linear.None, true, timeDelay);
+
+			game.add.tween(this[key].textArea).to({
+				alpha: 1
+			}, 1000, Phaser.Easing.Linear.None, true, timeDelay);
+
+
+
+			var label = game.add.sprite(currentPosition, endY + 80 + 20, 'priceLabel')
+			label.anchor.setTo(0.5, 0.5);
+
+			currentPosition += spaceBetweenObject;
+
+			if (i === 3) {
+				startY += verticalSpaceBetweenCards;
+				endY += verticalSpaceBetweenCards;
+			}
+
 		}
 	},
 

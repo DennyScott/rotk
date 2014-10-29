@@ -41,6 +41,7 @@ var cardSelectionState = {
 		}
 		this.deductFromBudget(item);
 		this.addAbilityToDeck(item);
+		this.updateSpriteCounter(item);
 
 	},
 
@@ -119,8 +120,17 @@ var cardSelectionState = {
 	},
 
 	createButton: function() {
-		this.nextButton = game.add.button(game.world.centerX, game.world.height - 60, 'mute', this.loadState, this);
-		this.nextButton.anchor.setTo(0.5, 0.5);
+		this.nextButton = game.add.button(game.world.centerX, game.world.height - 60, 'nextButton', this.loadState, this);
+		this.nextButton.anchor.setTo(0.5, 0.55);
+		var text = 'Begin';
+		this.nextButton.buttonText = game.add.text(0, 0,
+			text, {
+				font: '20px Arial',
+				fill: '#ffffff',
+				align: 'center'
+			});
+		this.nextButton.buttonText.anchor.setTo(0.5, 0.5);
+		this.nextButton.addChild(this.nextButton.buttonText);
 		this.nextButton.input.useHandCursor = true; //if you want a hand cursor
 	},
 
@@ -217,7 +227,7 @@ var cardSelectionState = {
 
 	placeCard: function(x, y, endY, ability, timeDelay) {
 		var key = ability.value
-		this[key] = game.add.sprite(x, y, 'abilityCommand');
+		this[key] = game.add.sprite(x, y, 'abilityWithQuantity');
 		this[key].alpha = 0;
 		this[key].anchor.setTo(0.5, 0.5);
 		this[key].card = ability;
@@ -230,6 +240,7 @@ var cardSelectionState = {
 		this[key].textArea.alpha = 0;
 		this[key].addChild(this[key].textArea);
 		this.setUpCardInputs(this[key]);
+		this.setUpSpriteCounter(this[key]);
 		this.setUpCardAnimation(this[key], endY, timeDelay);
 
 		this.placeCardLabel(x, endY, this[key].card);
@@ -265,7 +276,26 @@ var cardSelectionState = {
 		card.events.onInputDown.add(this.addCard, this);
 	},
 
+	setUpSpriteCounter: function(item) {
+		item.spriteCount = item.spriteCount || 0;
+		var text = '' + item.spriteCount;
+		item.textSpriteCount = game.add.text(-45, -47,
+			text, {
+				font: '20px Arial',
+				fill: '#000000'
+			});
+		item.textSpriteCount.anchor.setTo(0.5, 0.3);
+		item.addChild(item.textSpriteCount);
+
+	},
+
 	updateBudget: function() {
 		this.budgetLabel.text = this.budgetLabelText + this.budget;
+	},
+
+	updateSpriteCounter: function (item) {
+		item.spriteCount++;
+		item.textSpriteCount.text = item.spriteCount + '';
 	}
+
 }

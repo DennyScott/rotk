@@ -20,3 +20,7 @@ I won't really go into details of the abilities, but I will make a post of what 
 Other then that I have been refactoring a lot, trying to make the code more readable.  Remember anyone can check out this game at my github!  I had very little time today I could work on the project, I'm hoping to get more in the next couple days to really get going on this!  Other then that though, the plan tomorrow is to finish up the last of the assets needed for the Card Selection page, such as a next button, a quantity counter for the amount of a given card you chose, as well as perhaps help text of some sort.  
 
 I have been thinking more and more that I will need a tutorial of some sort, so we'll see what kind of time I have before weeks end.  I've only been able to work on this so far for a grand total of like 5 hours, so if I could get a good solid day of work on this coming up, that would be awesome!  Well check back for another blog post later!
+
+##October 29th, 2014
+-Added card counters to each ability in the buy screen
+-Updated the next button to continue to the game

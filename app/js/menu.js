@@ -65,24 +65,34 @@ var menuState = {
 		}
 	},
 
+	createButton: function() {
+		var startX = game.world.width + 180;
+		var endX = game.world.centerX;
+
+		this.nextButton = game.add.button(startX, game.world.height - 60, 'nextButton', this.start, this);
+		this.nextButton.anchor.setTo(0.5, 0.55);
+		var text = 'Start Game';
+		this.nextButton.buttonText = game.add.text(0, 0,
+			text, {
+				font: '20px Arial',
+				fill: '#ffffff',
+				align: 'center'
+			});
+		this.nextButton.buttonText.anchor.setTo(0.5, 0.5);
+		this.nextButton.addChild(this.nextButton.buttonText);
+
+
+		game.add.tween(this.nextButton).to({
+			x: endX
+		}, 1000, Phaser.Easing.Bounce.Out, true, 500);
+
+
+		this.nextButton.input.useHandCursor = true; //if you want a hand cursor
+	},
+
 	createStartLabel: function() {
 		//Store the relevant text based the device used
-		if (game.device.desktop) {
-			text = 'press the up arrow key to start';
-		} else {
-			text = 'touch the screen to start';
-		}
-
-			//Explain how to start the game
-		var startLabel = game.add.text(game.world.centerX, game.world.height-80,
-			text, {
-				font: '25px Arial',
-				fill: '#ffffff'
-			});
-		startLabel.anchor.setTo(0.5, 0.5);
-
-		game.add.tween(startLabel).to({angle: -2}, 500).to({angle:2}, 500).loop()
-			.start();
+		this.createButton();
 	},
 
 	createNameLabel: function() {

@@ -1,81 +1,88 @@
 (function() {
 
+	/**
+	 * Board Object. This will include each small tile, and the larger outer board. This will handle the creation of these
+	 * objects, and any events needed triggererd on these objects.
+	 */
 	var Board = function() {
 		var _board = this;
-		var _completeBoard = game.add.group();
-		var _outerBoard;
-		var _one = {
-				text: '1'
-			},
-			_two = {
-				text: '2'
-			},
-			_three = {
-				text: '3'
-			},
-			_four = {
-				text: '4'
-			},
-			_five = {
-				text: '5'
-			},
-			_six = {
-				text: '6'
-			},
-			_seven = {
-				text: '7'
-			},
-			_eight = {
-				text: '8'
-			},
-			_nine = {
-				text: '9'
-			};
-		var _scale = 0.333333;
-		var _positions;
-		var _tileArray;
-		var text = game.add.group(_completeBoard, 'text', true);
-		var tiles = game.add.group(_completeBoard, 'tiles', true);
+		var _completeBoard = game.add.group(); //Entire Board Group
+		var _outerBoard; //OuterBoard, parent of child tiles
+		var _positions; //Coordinates for each Tile
+		var _tileArray = []; //Array of all created Tile Objects
+		var _positionArray = [2, 9, 3, 8, 1, 7, 4, 6, 5]; //Left to Right, top to Bottom positioning.
+		var tiles = game.add.group(_completeBoard, 'tiles', true); //Group for all tiles
+		var _scale = 0.333333; //Scale of the smaller tiles compared to the larger tiles.
 
+		/**
+		 * Constructor
+		 */
 		var _initalize = function() {
+			//Create the Outer Board
 			_outerBoard = game.add.sprite(game.world.centerX, game.world.centerY, 'blackTile');
-			_outerBoard.anchor.setTo(0.5, 0.5);
+			_outerBoard.anchor.setTo(0.5, 0.5); //Anchor will be middle of object
 
-			_getPositions();
-			_createTileArray();
-			_createTilesOnBoard();
-			_rotateBoard();
+			_getPositions(); //Calculate all positions for tiles based on _outerBoard
+			_createTileArray(); //Place the tiles in an array, following an order for gameplay
+			_createTilesOnBoard(); //Place the tiles in the positions found
+			_rotateBoard(); //Rotate the board 45 degrees.
 		};
 
+
+		/**
+		 * Create the Tile Array. The positioning of each object in the array is to
+		 * replicate the positioning of each value, left to right, top to bottom.
+		 * @return {[type]} [description]
+		 */
 		var _createTileArray = function() {
-			_tileArray = [_two, _nine, _three, _eight, _one, _seven, _four, _six, _five];
+			for(var i = 0; i < _positionArray.length; i++){
+				var tile = new game.tile(i + 1 + '');
+				_tileArray.push(tile);
+			}
+			
 		};
 
+		/**
+		 * Create each tile object, setting the correct scale, white tile, positioons, and text.
+		 */
 		var _createTilesOnBoard = function() {
 			for (var i = 0; i < _tileArray.length; i++) {
-				_tileArray[i].sprite = game.add.sprite(_positions[i].x, _positions[i].y, 'whiteTile', null, tiles);
-				_tileArray[i].sprite.scale.x = _scale;
-				_tileArray[i].sprite.scale.y = _scale;
-				_outerBoard.addChild(_tileArray[i].sprite);
+				var index = _positionArray[i] - 1; //Use the position array to organize. Since we start with 0, negate 1
+				
+				//Create Tile Sprite
+				var createdSprite = _tileArray[index].addSprite(_positions[i].x, 
+					_positions[i].y, _scale, tiles); 
 
-				var mid = _tileArray[i].sprite.width * 1.5;
-				var spriteText = game.add.text( mid, mid, _tileArray[i].text, 
-				{
-					font: '150px Geo',
-					fill: '#000000'
-				}, text);
+				//Add the sprite as a Child of the outerboard object
+				_outerBoard.addChild(createdSprite);
 
-				spriteText.anchor.setTo(0.5, 0.5);
-				spriteText.angle = -45;
-
-				_tileArray[i].sprite.addChild(spriteText);
-			};
+			}
 		};
 
+		/**
+		 * Rotate the angle of the Board by 45 degrees.
+		 * @return {[type]} [description]
+		 */
 		var _rotateBoard = function() {
 			_outerBoard.angle += 45;
+		};
+
+		/**
+		 * Play a Card, passing the number and the value. This will pass the responsibility
+		 * onto the tile object to update the color
+		 * @param  {[int]} number Number/position of the card
+		 * @param  {[string]} color  The color to make the card. Can be blue, red, green, black, and white
+		 */
+		this.playCard = function(number, color) {
+			_tileArray[number-1].changeTileColor(color);
 		}
 
+		/**
+		 * Collect the positions from the outerboard size. This will first collect the X positions left
+		 * center and right, and the y positions top middle and bottom. We then put together an array with
+		 * those position to dictate all nine positions.
+		 * 
+		 */
 		var _getPositions = function() {
 			var xLeft = 0 - (_outerBoard.width / 2);
 			var xCenter = xLeft + (_outerBoard.width * _scale);
@@ -115,9 +122,12 @@
 			}];
 		};
 
-		_initalize();
+		_initalize(); //Start the Constructor
+
+		game.global = game.global || {};
+		game.global.currentBoard = _board;
 
 	}
 
-	game.board = Board;
+	game.board = Board; //Add the Board to the game object
 })();

@@ -10,7 +10,7 @@
 		var _outerBoard; //OuterBoard, parent of child tiles
 		var _positions; //Coordinates for each Tile
 		var _tileArray = []; //Array of all created Tile Objects
-		var _positionArray = [2, 9, 3, 8, 1, 7, 4, 6, 5];
+		var _positionArray = [2, 9, 3, 8, 1, 7, 4, 6, 5]; //Left to Right, top to Bottom positioning.
 		var tiles = game.add.group(_completeBoard, 'tiles', true); //Group for all tiles
 		var _scale = 0.333333; //Scale of the smaller tiles compared to the larger tiles.
 
@@ -68,6 +68,16 @@
 		};
 
 		/**
+		 * Play a Card, passing the number and the value. This will pass the responsibility
+		 * onto the tile object to update the color
+		 * @param  {[int]} number Number/position of the card
+		 * @param  {[string]} color  The color to make the card. Can be blue, red, green, black, and white
+		 */
+		this.playCard = function(number, color) {
+			_tileArray[number-1].changeTileColor(color);
+		}
+
+		/**
 		 * Collect the positions from the outerboard size. This will first collect the X positions left
 		 * center and right, and the y positions top middle and bottom. We then put together an array with
 		 * those position to dictate all nine positions.
@@ -113,6 +123,9 @@
 		};
 
 		_initalize(); //Start the Constructor
+
+		game.global = game.global || {};
+		game.global.currentBoard = _board;
 
 	}
 

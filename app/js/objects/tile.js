@@ -9,6 +9,7 @@
 		var _text;
 		var _sprite;
 		var _scale; //Scale of the smaller tiles compared to the larger tiles.
+		var _color;
 
 
 		/**
@@ -52,6 +53,18 @@
 		};
 
 		/**
+		 * Reload the texture for the current tile. This will remove the old
+		 * image texture, and load the new texture in it's place.
+		 * @param  {[string]} color Color to make the current tile.
+		 */
+		this.changeTileColor = function(color){
+			if(typeof color === 'undefined'){
+				color = 'white'; //If no color is defined, make white
+			}
+			_sprite.loadTexture(color + 'Tile'); //Load Texture
+		};
+
+		/**
 		 * Render the passed Text. This will create Game Text as a
 		 * child of the sprite object, and place the text in the
 		 * center of the sprite.
@@ -88,6 +101,8 @@
 			} else {
 				_sprite = game.add.sprite(x, y, 'whiteTile');
 			}
+
+			_color = 'white'; //Store the color for the tile
 
 			//Set the Scale of the Sprite
 			_sprite.scale.x = _scale;

@@ -34,6 +34,7 @@ var loadState = {
 	loadImageAssets: function() {
 		//Load a new asset that we will use in the menu state
 		game.load.image('background', 'assets/background.png');
+		game.load.image('card', 'assets/card.png');
 		game.load.image('blackTile', 'assets/BlackSquare.png');
 		game.load.image('whiteTile', 'assets/WhiteSquare.png');
 		game.load.image('redTile', 'assets/RedSquare.png');

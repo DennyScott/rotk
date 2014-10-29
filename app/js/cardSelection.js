@@ -121,6 +121,7 @@ var cardSelectionState = {
 	createButton: function() {
 		this.nextButton = game.add.button(game.world.centerX, game.world.height - 60, 'mute', this.loadState, this);
 		this.nextButton.anchor.setTo(0.5, 0.5);
+		this.nextButton.input.useHandCursor = true; //if you want a hand cursor
 	},
 
 	createInstructionLabel: function() {

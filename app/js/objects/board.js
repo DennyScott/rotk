@@ -96,13 +96,15 @@
 		this.playCard = function(number, color) {
 			_tileArray[number-1].changeTileColor(color);
 			var winCounter = _checkWinner(number, color); //Check if the placed tile causes winners
-			console.log(winCounter);
+			var loseCounter = _checkLoser(number, color); //Check if the placed tile causes losers
+			var totalCounter = winCounter - loseCounter;
+			console.log(totalCounter);
 		};
 
 		/**
 		 * Check if the number placed, in unision with the color, is the same color
 		 * as two other values paired in the combinations array. If any combination 
-		 * has three colors that are the samew, that is a winner. Each winner is counted, and
+		 * has three colors that are the same, that is a winner. Each winner is counted, and
 		 * returned.
 		 * 
 		 * @param  {[int]} number Number that was placed by player
@@ -112,20 +114,94 @@
 		var _checkWinner = function(number, color){
 			var comboCounter = 0;
 
+			//Iterate through each combination
 			for(var i = 0; i < _combinations.length; i++){
+				//Check if the current played value is part of the combination, it must be
 				if(_combinations[i].indexOf(number) >= 0){
+					//If all three colors are the same, add 1 value to the counter
 					if(_checkCombinationTileForColor(color, _combinations[i])){
 						comboCounter++;
 					}	
 				}
 			}
 
-			return comboCounter;
+			return comboCounter; //Return the totaled Counter
 		};
 
 		/**
+		 * Check if the numper placed, in opposition to each of the other colors in a 
+		 * direction line or diagonally from the played line. If any combination has
+		 * has three opposite colors, that is a loser. Each loser is counted and returned.
+		 * 
+		 * @param  {[int]} number Number that was placed by player
+		 * @param  {String} color  Color of the placed tile
+		 * @return {int}        Amount of the loser combos counted
+		 */
+		var _checkLoser = function(number, color){
+			var comboCounter = 0;
+
+			//Iterate through each combination
+			for(var i = 0; i < _combinations.length; i++){
+				//Check if the current played value is part of the combination, it must be
+				if(_combinations[i].indexOf(number) >= 0){
+					//If all three tiles colors are different, add 1 to the counter
+					if(_checkCombinationTileForOpoosingColors(_combinations[i])){
+						comboCounter++;
+					}
+				}
+			}
+
+			return comboCounter; //Return the total losers counted
+		}
+
+		/**
+		 * Check if the comination of three values are the opposite colors. If
+		 * they are the opposite colors, return true, if not, return false.
+		 * 
+		 * @param  {Array} combination Combination of three values to check colors in.
+		 * @return {Boolean}             True if all three values are opposte, else false
+		 */
+		var _checkCombinationTileForOpoosingColors = function(combination){
+			var seenColor = []; //Array to hold the color of each tile passed
+
+			//Iterate through all 3 values in the combination array
+			for(var i = 0; i < combination.length; i++){
+				//Get the current tiles color
+				var currentComboColor = _tileArray[combination[i] - 1].color();
+				
+				//Is the Color not seen before in the seenColor array, and not a default color (white, black)
+				if(seenColor.indexOf(currentComboColor) === -1 && !_defaultColors(currentComboColor)){
+					seenColor.push(currentComboColor); //Push that value in the seenArray
+				}else{
+					//If this value was already seen, return false
+					return false;
+				}
+			}
+
+			//All three colors were opposite, return true
+			return true;
+		};
+
+		/**
+		 * Check if the passed color is one of the default colors (white, black)
+		 * 
+		 * @param  {String} color Color to check
+		 * @return {Boolean}      Fal
+		 */
+		var _defaultColors = function(color){
+			//Is this one of the default colors?
+			if(color === 'white' || color === 'black'){
+				return true
+			}
+
+			//The color was not one of the default colors
+			return false;
+		}
+
+		/**
 		 * Check if the combination of three values are the same color. If
-		 * they are the same color, return true, if not, return false;
+		 * they are the same color, return true, if not, return false
+		 * 
 		 * @param  {[string]} color     Color to check that each tile are
 		 * @param  {[array]} combination Combination of three values to check colors in.
 		 * @return {[boolean]}             True if all three colors are the same, else false

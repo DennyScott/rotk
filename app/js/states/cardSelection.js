@@ -121,6 +121,7 @@ var cardSelectionState = {
 	createButton: function() {
 		this.nextButton = game.add.button(game.world.centerX, game.world.height - 60, 'mute', this.loadState, this);
 		this.nextButton.anchor.setTo(0.5, 0.5);
+		this.nextButton.input.useHandCursor = true; //if you want a hand cursor
 	},
 
 	createInstructionLabel: function() {
@@ -164,37 +165,104 @@ var cardSelectionState = {
 		var destroyPosition = game.global.cards.splice(game.rnd.integerInRange(0, this.allNumbers - 1), 1);
 	},
 
+	getLineStartPosition: function(i, spaceBetweenObject, currentPosition) {
+		if (i % 4 === 0) {
+			//If i is not divisable by 4, its not the start of a line, meaning currentPosition will simply be returned as is
+			var amountRemaining = this.abilities.length - i
+			if (amountRemaining > 4) {
+				//If its greater then 4, then we not on the last line yet of cards
+				currentPosition = game.world.centerX - spaceBetweenObject * 4 / 2 + (spaceBetweenObject * .5);
+			} else if (amountRemaining % 2 === 0) {
+				//If the cards remaining is less then 4, and is evenly divisible
+				currentPosition = game.world.centerX - spaceBetweenObject * amountRemaining / 2 + (spaceBetweenObject * .5);
+			} else {
+				//If the amount of cards left is less then 4, and not evenly divisible
+				currentPosition = game.world.centerX - spaceBetweenObject * Math.floor(amountRemaining / 2);
+			}
+		}
+
+		return currentPosition; //return the position of this item
+	},
+
 	loadState: function() {
 		game.state.start('play');
 	},
 
 	placeAbilitiesOnScreen: function() {
-		var currentPosition;
-		var spaceBetweenObject = 50;
+		var currentPosition; //The current position of cards
+		var spaceBetweenObject = 200; //The space between cards in the same row
 		var delayBetweenCards = 200; //In milliseconds
-
-		if (this.abilities.length % 2 === 0) {
-			currentPosition = game.world.centerX - spaceBetweenObject * this.abilities.length / 2 + (spaceBetweenObject * .5);
-		} else {
-			currentPosition = game.world.centerX - spaceBetweenObject * Math.floor(this.abilities.length / 2);
-		}
+		var startY = game.world.centerY - 220; //Where the animation starts for the cards
+		var endY = game.world.centerY - 160; //Where the animation ends for the cards
+		var verticalSpaceBetweenCards = 300; //The space between rows of cards
 
 		for (var i = 0; i < this.abilities.length; i++) {
-			var key = this.abilities[i].value
-			this[key] = game.add.sprite(currentPosition, game.world.centerY - 70, 'card');
-			this[key].alpha = 0;
-			this[key].anchor.setTo(0.5, 0.5);
-			this[key].card = this.abilities[i];
-			this[key].inputEnabled = true;
-			this[key].input.useHandCursor = true; //if you want a hand cursor
-			this[key].events.onInputDown.add(this.addCard, this);
-			currentPosition += spaceBetweenObject;
-			var timeDelay = this.labelEntranceMilliseconds * 1.2 + (i * delayBetweenCards);
-			var tween = game.add.tween(this[key]).to({
-				alpha: 1,
-				y: game.world.centerY
-			}, 1000, Phaser.Easing.Linear.None, true, timeDelay);
+
+			currentPosition = this.getLineStartPosition(i, spaceBetweenObject, currentPosition); //Gets the positon of this item, if its a new row
+
+			var timeDelay = this.labelEntranceMilliseconds * 1.2 + (i * delayBetweenCards); //Gets the delay time of the animation for this item
+
+			this.placeCard(currentPosition, startY, endY, this.abilities[i], timeDelay); //Places the card and label onto the screen
+
+			currentPosition += spaceBetweenObject; //Updates the currentPosition
+
+			if (i === 3) {
+				//Updates the screen to a new row
+				startY += verticalSpaceBetweenCards;
+				endY += verticalSpaceBetweenCards;
+			}
+
 		}
+	},
+
+	placeCard: function(x, y, endY, ability, timeDelay) {
+		var key = ability.value
+		this[key] = game.add.sprite(x, y, 'abilityCommand');
+		this[key].alpha = 0;
+		this[key].anchor.setTo(0.5, 0.5);
+		this[key].card = ability;
+		this[key].textArea = game.add.text(0, 0,
+			this[key].card.value, {
+				font: '25px Arial',
+				fill: '#ffffff'
+			});
+		this[key].textArea.anchor.setTo(0.5, 0.4);
+		this[key].textArea.alpha = 0;
+		this[key].addChild(this[key].textArea);
+		this.setUpCardInputs(this[key]);
+		this.setUpCardAnimation(this[key], endY, timeDelay);
+
+		this.placeCardLabel(x, endY, this[key].card);
+
+	},
+
+	placeCardLabel: function(x, y, card) {
+		var label = game.add.sprite(x, y + 80 + 20, 'priceLabel')
+		label.anchor.setTo(0.5, 0.5);
+		label.textArea = game.add.text(0, 0,
+			card.cost, {
+				font: '20px Arial',
+				fill: '#ffffff'
+			});
+		label.textArea.anchor.setTo(0.5, 0.3);
+		label.addChild(label.textArea);
+	},
+
+	setUpCardAnimation: function(card, endY, timeDelay) {
+		var tween = game.add.tween(card).to({
+			alpha: 1,
+			y: endY
+		}, 1000, Phaser.Easing.Linear.None, true, timeDelay);
+
+		game.add.tween(card.textArea).to({
+			alpha: 1
+		}, 1000, Phaser.Easing.Linear.None, true, timeDelay);
+	},
+
+	setUpCardInputs: function(card) {
+		card.inputEnabled = true;
+		card.input.useHandCursor = true; //if you want a hand cursor
+		card.events.onInputDown.add(this.addCard, this);
 	},
 
 	updateBudget: function() {

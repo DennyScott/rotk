@@ -49,7 +49,10 @@ var playState = {
 		card.visibleCard.addChild(card.visibleCard.innerText);
 		card.visibleCard.anchor.setTo(0.5, 0.5);
 
-
+		card.visibleCard.inputEnabled = true;
+		card.visibleCard.input.useHandCursor = true; //if you want a hand cursor
+		card.visibleCard.card = card; //This is to create a two way binding that both sides have reference to eachother
+		card.visibleCard.events.onInputDown.add(this.useCard, this);
 
 		//NEEDS TO BE AT END
 		card.visibleCard.scale.x = 0.5;
@@ -74,5 +77,13 @@ var playState = {
 		this.hand.push(game.global.cards[randNum]);
 
 		game.global.cards.splice(randNum, 1)
+	},
+
+	useCard: function (view) {
+		delete view.card.visibleCard; //Used to remove refrence to the view.  Will probably need to remove it from the actual view as well
+		console.log(view.card);
+		if(view.card.type === 'number'){
+			game.global.currentBoard.playCard(view.card.value, view.card.color);
+		}
 	}
 };

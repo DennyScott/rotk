@@ -6,6 +6,7 @@ var menuState = {
 		this.createBackgroundImage(); //Creates a background image for the menu
 		this.createNameLabel(); //Creates a Name Label for the Menu
 		this.createStartLabel(); //Create the start Label to tell the user to start the game
+		this.createBlinkingText(); //Creates the blinking objection and hold it in the title screen
 		this.setUpInput(); //Sets up user input when the menu begins to start the game
 		this.setUpMute(); //Sets up the mute option in the top left of the screen
 	},
@@ -16,6 +17,50 @@ var menuState = {
 	createBackgroundImage: function() {
 		//Add a background image
 		// game.add.image(0, 0, 'background');
+	},
+
+	createBlinkingText: function() {
+		var objection = game.add.text(0, 0,
+			'Objection!', {
+				font: '70px Arial',
+				fill: '#ffff00',
+				align: 'center'
+			});
+
+		objection.anchor.setTo(0.5, 0.5);
+		objection.alpha = 0
+		objection.angle = -45;
+		objection.x = game.world.centerX - 175;
+		objection.y = game.world.centerY;
+
+		game.add.tween(objection).to({
+			alpha: 1
+		}, 1).delay(1500).to({
+			alpha: 0
+		}, 1200).start().loop();
+
+
+
+		var holdIt = game.add.text(0, 0,
+			'Hold It!', {
+				font: '70px Arial',
+				fill: '#ffff00',
+				align: 'center'
+			});
+
+		holdIt.anchor.setTo(0.5, 0.5);
+		holdIt.alpha = 0;
+		holdIt.angle = 45;
+		holdIt.x = game.world.centerX + 175;
+		holdIt.y = game.world.centerY;
+
+		setTimeout(function() {
+			game.add.tween(holdIt).to({
+				alpha: 1
+			}, 1).delay(1500).to({
+				alpha: 0
+			}, 1200).start().loop();
+		}, 200);
 	},
 
 	/**
@@ -114,11 +159,7 @@ var menuState = {
 	 * Sets up the menu to accept a specific input to start the game and load the next state
 	 */
 	setUpInput: function() {
-		//Store the up arrow into a variable
-		var upKey = game.input.keyboard.addKey(Phaser.Keyboard.UP);
-
-		//Create a new Phaser keyboard variable: the up arrow key
-		upKey.onDown.addOnce(this.start, this);
+		//No Input for this game currently
 	},
 
 	/**

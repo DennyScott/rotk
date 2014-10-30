@@ -24,3 +24,9 @@ I have been thinking more and more that I will need a tutorial of some sort, so 
 ##October 29th, 2014
 -Added card counters to each ability in the buy screen
 -Updated the next button to continue to the game
+-Created Start Game Button
+-Created Blinking text in the Menu State
+-Cards Max at at 100 points
+-Next button appears at 30 cards
+-Cards are reduced if you go over 30, random
+-Added Goofy Menu Blinking labels

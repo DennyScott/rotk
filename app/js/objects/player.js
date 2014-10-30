@@ -19,8 +19,8 @@
 			_name = name;
 			_health = 50;
 			
-			//Create Text Object_
-			text = game.add.text(x, y, _createLabel(), {
+			//Create Text Object
+			_text = game.add.text(x, y, _createLabel(), {
 				font: '40px Geo',
 				fill: '#000000'
 			})
@@ -64,7 +64,7 @@
 
 		/**
 		 * Get the Height of the _text object
-		 * @return {[type]} [description]
+		 * @return {int} Current height of the object.
 		 */
 		this.getHeight = function() {
 			return _text.height;

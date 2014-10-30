@@ -200,11 +200,11 @@ var cardSelectionState = {
 
 	placeAbilitiesOnScreen: function() {
 		var currentPosition; //The current position of cards
-		var spaceBetweenObject = 200; //The space between cards in the same row
+		var spaceBetweenObject = 100; //The space between cards in the same row
 		var delayBetweenCards = 200; //In milliseconds
-		var startY = game.world.centerY - 220; //Where the animation starts for the cards
-		var endY = game.world.centerY - 160; //Where the animation ends for the cards
-		var verticalSpaceBetweenCards = 300; //The space between rows of cards
+		var startY = game.world.centerY - 100; //Where the animation starts for the cards
+		var endY = game.world.centerY - 80; //Where the animation ends for the cards
+		var verticalSpaceBetweenCards = 150; //The space between rows of cards
 
 		for (var i = 0; i < this.abilities.length; i++) {
 
@@ -245,10 +245,13 @@ var cardSelectionState = {
 
 		this.placeCardLabel(x, endY, this[key].card);
 
+		this[key].scale.x = .5;
+		this[key].scale.y = .5;
+
 	},
 
 	placeCardLabel: function(x, y, card) {
-		var label = game.add.sprite(x, y + 80 + 20, 'priceLabel')
+		var label = game.add.sprite(x, y + 40 + 20, 'priceLabel')
 		label.anchor.setTo(0.5, 0.5);
 		label.textArea = game.add.text(0, 0,
 			card.cost, {
@@ -257,6 +260,9 @@ var cardSelectionState = {
 			});
 		label.textArea.anchor.setTo(0.5, 0.3);
 		label.addChild(label.textArea);
+
+		label.scale.x = .5;
+		label.scale.y = .5;
 	},
 
 	setUpCardAnimation: function(card, endY, timeDelay) {

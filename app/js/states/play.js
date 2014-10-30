@@ -11,10 +11,10 @@ var playState = {
 
 	create: function() {
 		var board = new game.board(game.world.centerX, game.world.centerY, 0.5);
-		game.global.currentBoard = new game.board(game.world.centerX, game.world.centerY, 0.5);	
-		game.global.playerOne = new game.player('Denny', 0 , 10);
+		game.global.currentBoard = new game.board(game.world.centerX, game.world.centerY, 0.5);
+		game.global.playerOne = new game.player('Denny', 0, 10);
 		game.global.playerTwo = new game.player('Travis', 0, game.global.playerOne.getHeight() + 20);
-		game.global.arrow = new game.arrow(game.world.centerX + 200, 
+		game.global.arrow = new game.arrow(game.world.centerX + 200,
 			0, .5);
 
 		this.comboValue = 10;
@@ -23,6 +23,7 @@ var playState = {
 		while (this.hand.length < this.fullHand) {
 			this.drawCard();
 		}
+		this.setKeyOnCards();
 		this.createVisibleCards();
 	},
 
@@ -39,7 +40,7 @@ var playState = {
 		} else {
 			sprite = 'abilityCommand';
 			text = card.value;
-			if(card.value === 'Awe') {
+			if (card.value === 'Awe') {
 				var randNum = game.rnd.integerInRange(1, 9);
 				card.aweValue = randNum;
 				text = card.value + '\n' + randNum;
@@ -87,30 +88,55 @@ var playState = {
 		game.global.cards.splice(randNum, 1)
 	},
 
-	useCard: function (view) {
+	useCard: function(view) {
 		delete view.card.visibleCard; //Used to remove refrence to the view.  Will probably need to remove it from the actual view as well
-		if(view.card.type === 'number'){
+		if (view.card.type === 'number') {
 			var combo = game.global.currentBoard.playCard(view.card.value, view.card.color);
 			this.checkCombo(combo);
 		}
+
+		this.removeCard(view.card);
 	},
 
 	checkCombo: function(combo) {
-		if(combo.win.length > 0){
+		if (combo.win.length > 0) {
 			this.handleCombo(combo.win, game.global.playerOne.heal, game.global.playerTwo.takeDamage);
 		}
 
-		if(combo.lose.length > 0){
+		if (combo.lose.length > 0) {
 			this.handleCombo(combo.lose, game.global.playerOne.takeDamage, game.global.playerTwo.heal);
 		}
 	},
 
-	handleCombo: function(combo, currentPlayerEffect, opposingPlayerEffect){
-		for(var i = 0; i < combo.length; i++){
-				game.global.currentBoard.clearCombo(combo[i]);
-				currentPlayerEffect(this.comboValue);
-				opposingPlayerEffect(this.comboValue);
-				game.global.arrow.flip();
-			}
-	}
+	handleCombo: function(combo, currentPlayerEffect, opposingPlayerEffect) {
+		for (var i = 0; i < combo.length; i++) {
+			game.global.currentBoard.clearCombo(combo[i]);
+			currentPlayerEffect(this.comboValue);
+			opposingPlayerEffect(this.comboValue);
+			game.global.arrow.flip();
+		}
+	},
+
+	removeCard: function(card) {
+		if (card.visibleCard) {
+			this.removeCardFromView(card.visibleCard);
+		}
+		this.removeCardFromHand(card);
+		delete card.visibleCard; //Used to remove refrence to the view.  Will probably need to remove it from the actual view as well
+	},
+
+	removeCardFromHand: function(card) {
+		this.hand.splice(card.handKey, 1);
+		this.setKeyOnCards();
+	},
+
+	removeCardFromView: function(view) {
+		view.kill();
+	},
+
+	setKeyOnCards: function() {
+		for (var i = 0; i < this.hand.length; i++) {
+			this.hand[i].handKey = i;
+		}
+	},
 };

@@ -30,3 +30,6 @@ I have been thinking more and more that I will need a tutorial of some sort, so 
 -Next button appears at 30 cards
 -Cards are reduced if you go over 30, random
 -Added Goofy Menu Blinking labels
+
++Put hand in player object
++create a card object

@@ -22,14 +22,12 @@ Other then that I have been refactoring a lot, trying to make the code more read
 I have been thinking more and more that I will need a tutorial of some sort, so we'll see what kind of time I have before weeks end.  I've only been able to work on this so far for a grand total of like 5 hours, so if I could get a good solid day of work on this coming up, that would be awesome!  Well check back for another blog post later!
 
 ##October 29th, 2014
--Added card counters to each ability in the buy screen
--Updated the next button to continue to the game
--Created Start Game Button
--Created Blinking text in the Menu State
--Cards Max at at 100 points
--Next button appears at 30 cards
--Cards are reduced if you go over 30, random
--Added Goofy Menu Blinking labels
+Alright so, a lot done today.  First I added counters to each ability in the card selection screen, and have them increment when being bought, as well as updated most buttons throughout the whole game.  I created some text to blink on the main screen, and set cards to max out at 100 points and not allow you to buy any extra cards.  Once your deck is at 30 cards, the game will allow you to continue.  
 
-+Put hand in player object
-+create a card object
+After this I jumped into the play state and got some serious buisness done.  While denny has all logic on the board on his hands, the logic with the cards is overseen by me.  so first I added the ability to play number cards, and have their effects actually pipe into the board, which went really easy with Denny's API.  I then split it so you were drawn seven cards, and upon playing a card, that card is used, and then removed from your hand, as well as the view.  There should be cards being drawn, but it actually won't technically happen here as both players actually draw at the same time after they both play a card.  
+
+I also have the user randomly drawing cards at the very start of the game.  I am debating sorting the cards for the user, or having them have the ability to sort it themselves, but thats nothing that is at the top of my TODO list right now.  Next I created a second Deck, hand, and views for a second player.  Denny was nice enough to create the player class and objects for me, all I had to do was create some outward facing attributes.  
+
+Now whenever a player plays a card it actually switches to the other players hand for them to play a card.  It should be said the initial version will play like this, except that there will be a timer to have the other player take over.  I really wish I had tim to write AI, but I fear it would be to simple due to time constraints for almost every user over the age of 2.  So for now, I will probably have to leave it at this.  Weekends coming up though so who knows!  
+
+By tomorrow evening this will definitly be in a playable state, but I really need to attach funtionality for ability cards.  The next thing up on my todo is actually to transfer the cards to actual classes rather then Javascript objects because it is stupidly unorganized in the code right now, and Dennys gunna beat the hell outta me if I dont do it soon, as well as a lot of the draw options and such being baked into the player object.  After that play testing!

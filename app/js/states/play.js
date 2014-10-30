@@ -14,6 +14,9 @@ var playState = {
 		game.global.currentBoard = new game.board(game.world.centerX, game.world.centerY, 0.5);	
 		game.global.playerOne = new game.player('Denny', 0 , 10);
 		game.global.playerTwo = new game.player('Travis', 0, game.global.playerOne.getHeight() + 20);
+		game.global.arrow = new game.arrow(game.world.centerX + 200, 
+			0, .5);
+
 		this.comboValue = 10;
 
 
@@ -107,6 +110,7 @@ var playState = {
 				game.global.currentBoard.clearCombo(combo[i]);
 				currentPlayerEffect(this.comboValue);
 				opposingPlayerEffect(this.comboValue);
+				game.global.arrow.flip();
 			}
 	}
 };

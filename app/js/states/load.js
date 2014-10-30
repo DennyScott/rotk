@@ -46,6 +46,8 @@ var loadState = {
 		game.load.image('redTile', 'assets/RedSquare.png');
 		game.load.image('blueTile', 'assets/BlueSquare.png');
 		game.load.image('greenTile', 'assets/GreenSquare.png');
+		game.load.image('upArrow', 'assets/up.png');
+		game.load.image('downArrow', 'assets/Down.png');
 	},
 
 	loadNextState: function() {

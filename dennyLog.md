@@ -40,3 +40,9 @@ After much procrastinating, I allowed for scaleing of the game board. It took a 
 
 I added a player class, and created two player objects. They contain their health, and allow simple ways to heal and damage. We're planning on adding a visual scale to show how well the player is doing, but for now, their health is displayed a text data.
 
+I also handled a combo in the game board. Currently, we don't have '2 players' playing, so I have when a combo occurs, player one is the 'playing' character. When a combo connects, it will order the 'winning' combos first, and then the losing combos. This all takes place within the play state.
+
+I added an arrow to signify which end of numbers are the strongest. If the arrow is up, playing a high number is better. If the arrow is down, playing a low number is better. This was again created as an object. This arrow is then "turned" each combo.
+
+The game is just about in a playable state. It will definitly be good to go by tomrrow night. Hopefully we can start bouncing the game to some family and friends and see what they think.
+

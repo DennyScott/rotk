@@ -23,6 +23,7 @@
 		var _initalize = function(x, y, scale) {
 
 			if(typeof scale === 'undefined'){scale = 1;};
+			
 			//Create the Outer Board
 			_outerBoard = game.add.sprite(x, y, 'blackTile');
 			_outerBoard.anchor.setTo(0.5, 0.5); //Anchor will be middle of object
@@ -108,7 +109,19 @@
 				win: winCounter,
 				lose: loseCounter
 			};
-			console.log(combos);
+			return combos;
+		};
+
+		/**
+		 * Clear a combo of three values. This will take the tile and turn them back to white
+		 * tiles.
+		 * 
+		 * @param  {Array} combo Three Values to clear.
+		 */
+		this.clearCombo = function(combo){
+			for(var i = 0; i < combo.length; i++){
+				_tileArray[combo[i] - 1].changeTileColor('white'); //Change tiles back to white
+			}
 		};
 
 		/**

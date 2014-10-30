@@ -265,7 +265,6 @@
 		_initalize(x, y, scale); //Start the Constructor
 
 		game.global = game.global || {}; //Create the Global variable if it does not exist
-		game.global.currentBoard = _board; //Place the game board (this) in the currentBoard directory
 
 	}
 

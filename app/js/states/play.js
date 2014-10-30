@@ -1,11 +1,11 @@
 var playState = {
 	preload: function() {
 		this.fullHand = 7; //How many cards are in a full hand
-		this.hand = [];
 		this.currentXPosition = game.world.centerX - 300;
 		this.currentYPosition = game.world.centerY + (game.world.centerY * .75);
+		this.currentPlayersTurn;
 		for (var i = 0; i < game.global.cards.length; i++) {
-			game.global.cards[i].visibleCard = undefined;
+			delete game.global.cards[i].visibleCard;
 		}
 	},
 
@@ -15,15 +15,55 @@ var playState = {
 		game.global.playerOne = new game.player('Denny', 0, 10);
 		game.global.playerTwo = new game.player('Travis', 0, game.global.playerOne.getHeight() + 20);
 
-		while (this.hand.length < this.fullHand) {
-			this.drawCard();
+		//THIS WILL BE REMOVED ONCE THE SECOND PLAYER CAN CHOOSE HIS CARDS
+		game.global.playerOne.cards = game.global.cards;
+		game.global.playerTwo.cards = [];
+		for (var i = 0; i < game.global.cards.length; i++) {
+			var card = {};
+			for(var thing in game.global.cards[i]) {
+				card[thing] = game.global.cards[i][thing];
+			}
+			game.global.playerTwo.cards.push(card);
 		}
+
+		//END OF THE REMOVE SECTION
+
+		game.global.playerOne.hand = [];
+		game.global.playerTwo.hand = [];
+
+		game.global.playerOne.opponent = game.global.playerTwo;
+		game.global.playerTwo.opponent = game.global.playerOne;
+
+		game.global.playerOne.name = 'Player One';
+		game.global.playerTwo.name = 'Player Two';
+
+		while (game.global.playerOne.hand.length < this.fullHand) {
+			this.drawCard(game.global.playerOne);
+		}
+
+		while (game.global.playerTwo.hand.length < this.fullHand) {
+			this.drawCard(game.global.playerTwo);
+		}
+
+		this.currentPlayer = game.global.playerOne;
 		this.setKeyOnCards();
 		this.createVisibleCards();
+		this.killPlayerCards(this.currentPlayer.opponent);
 	},
 
 	update: function() {
 
+	},
+
+	changePlayersTurn: function() {
+		this.currentPlayer = this.currentPlayer.opponent;
+		this.changeHand();
+		this.setKeyOnCards();
+	},
+
+	changeHand: function () {
+		this.killPlayerCards(this.currentPlayer.opponent);
+		this.resetPlayerCards(this.currentPlayer);
 	},
 
 	createCard: function(card, i) {
@@ -64,23 +104,28 @@ var playState = {
 	},
 
 	createVisibleCards: function() {
-		for (var i = 0; i < this.hand.length; i++) {
-			if (typeof this.hand[i].visibleCard !== 'undefined') {
-				return;
-			}
-
-			this.createCard(this.hand[i], i);
-			// this.hand[i].visibleCard
+		for (var i = 0; i < this.currentPlayer.hand.length; i++) {
+			this.createCard(game.global.playerOne.hand[i], i);
+			this.createCard(game.global.playerTwo.hand[i], i);
 		}
+		this.killPlayerCards(this.currentPlayer.opponent);
 	},
 
-	drawCard: function() {
-		var randNum = game.rnd.integerInRange(0, game.global.cards.length - 1);
+	drawCard: function(player) {
+		var randNum = game.rnd.integerInRange(0, player.cards.length - 1);
 
 		//This line will remove a card from the deck, and put it into your hand
-		this.hand.push(game.global.cards[randNum]);
+		player.hand.push(player.cards[randNum]);
 
-		game.global.cards.splice(randNum, 1)
+		player.cards.splice(randNum, 1)
+	},
+
+	killPlayerCards: function (player) {
+		console.log(player);
+		for(var i = 0; i < player.hand.length; i++) {
+			console.log(player.hand[i].visibleCard);
+			player.hand[i].visibleCard.kill();
+		}
 	},
 
 	removeCard: function(card) {
@@ -92,7 +137,7 @@ var playState = {
 	},
 
 	removeCardFromHand: function(card) {
-		this.hand.splice(card.handKey, 1);
+		this.currentPlayer.hand.splice(card.handKey, 1);
 		this.setKeyOnCards();
 	},
 
@@ -100,9 +145,15 @@ var playState = {
 		view.kill();
 	},
 
+	resetPlayerCards: function(player) {
+		for (var i = 0; i < player.hand.length; i++) {
+			player.hand[i].visibleCard.reset(this.currentXPosition + (i * 100), this.currentYPosition);
+		}
+	},
+
 	setKeyOnCards: function() {
-		for (var i = 0; i < this.hand.length; i++) {
-			this.hand[i].handKey = i;
+		for (var i = 0; i < this.currentPlayer.hand.length; i++) {
+			this.currentPlayer.hand[i].handKey = i;
 		}
 	},
 
@@ -112,5 +163,6 @@ var playState = {
 		}
 
 		this.removeCard(view.card);
+		this.changePlayersTurn();
 	}
 };

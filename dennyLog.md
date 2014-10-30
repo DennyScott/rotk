@@ -38,3 +38,5 @@ After attempting a good chunk of my night at testing, I had to leave it. Karma a
 
 After much procrastinating, I allowed for scaleing of the game board. It took a bit of tricky math to get all the tile's position's correctly, but it's good to go now. 
 
+I added a player class, and created two player objects. They contain their health, and allow simple ways to heal and damage. We're planning on adding a visual scale to show how well the player is doing, but for now, their health is displayed a text data.
+

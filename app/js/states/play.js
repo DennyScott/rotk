@@ -14,6 +14,11 @@ var playState = {
 		game.global.currentBoard = new game.board(game.world.centerX, game.world.centerY, 0.5);
 		game.global.playerOne = new game.player('Denny', 0, 10);
 		game.global.playerTwo = new game.player('Travis', 0, game.global.playerOne.getHeight() + 20);
+		game.global.arrow = new game.arrow(game.world.centerX + 200,
+			0, .5);
+
+		this.comboValue = 10;
+
 
 		//THIS WILL BE REMOVED ONCE THE SECOND PLAYER CAN CHOOSE HIS CARDS
 		game.global.playerOne.cards = game.global.cards;
@@ -121,10 +126,28 @@ var playState = {
 	},
 
 	killPlayerCards: function (player) {
-		console.log(player);
 		for(var i = 0; i < player.hand.length; i++) {
 			console.log(player.hand[i].visibleCard);
 			player.hand[i].visibleCard.kill();
+		}
+	},
+
+	checkCombo: function(combo) {
+		if (combo.win.length > 0) {
+			this.handleCombo(combo.win, game.global.playerOne.heal, game.global.playerTwo.takeDamage);
+		}
+
+		if (combo.lose.length > 0) {
+			this.handleCombo(combo.lose, game.global.playerOne.takeDamage, game.global.playerTwo.heal);
+		}
+	},
+
+	handleCombo: function(combo, currentPlayerEffect, opposingPlayerEffect) {
+		for (var i = 0; i < combo.length; i++) {
+			game.global.currentBoard.clearCombo(combo[i]);
+			currentPlayerEffect(this.comboValue);
+			opposingPlayerEffect(this.comboValue);
+			game.global.arrow.flip();
 		}
 	},
 
@@ -159,7 +182,8 @@ var playState = {
 
 	useCard: function(view) {
 		if (view.card.type === 'number') {
-			game.global.currentBoard.playCard(view.card.value, view.card.color);
+			var combo = game.global.currentBoard.playCard(view.card.value, view.card.color);
+			this.checkCombo(combo);
 		}
 
 		this.removeCard(view.card);

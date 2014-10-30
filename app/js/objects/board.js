@@ -4,24 +4,31 @@
 	 * Board Object. This will include each small tile, and the larger outer board. This will handle the creation of these
 	 * objects, and any events needed triggererd on these objects.
 	 */
-	var Board = function() {
+	var Board = function(x, y, scale) {
 		var _board = this;
 		var _completeBoard = game.add.group(); //Entire Board Group
 		var _outerBoard; //OuterBoard, parent of child tiles
+		var _outerBoardScale;
 		var _positions; //Coordinates for each Tile
 		var _tileArray = []; //Array of all created Tile Objects
 		var _positionArray = [2, 9, 3, 8, 1, 7, 4, 6, 5]; //Left to Right, top to Bottom positioning.
 		var _combinations = []; //Possible Combinations in the game
 		var tiles = game.add.group(_completeBoard, 'tiles', true); //Group for all tiles
 		var _scale = 0.333333; //Scale of the smaller tiles compared to the larger tiles.
+		var _trueTileScale;
 
 		/**
 		 * Constructor
 		 */
-		var _initalize = function() {
+		var _initalize = function(x, y, scale) {
+
+			if(typeof scale === 'undefined'){scale = 1;};
 			//Create the Outer Board
-			_outerBoard = game.add.sprite(game.world.centerX, game.world.centerY, 'blackTile');
+			_outerBoard = game.add.sprite(x, y, 'blackTile');
 			_outerBoard.anchor.setTo(0.5, 0.5); //Anchor will be middle of object
+			_outerBoard.scale.x = scale;
+			_outerBoard.scale.y = scale;
+			_outerBoardScale = scale;
 
 			_getPositions(); //Calculate all positions for tiles based on _outerBoard
 			_createTileArray(); //Place the tiles in an array, following an order for gameplay
@@ -206,13 +213,13 @@
 		 */
 		var _getPositions = function() {
 			//The below 6 positions defined all 6 positons a value can take. (3x3 = 9)
-			var xLeft = 0 - (_outerBoard.width / 2);
-			var xCenter = xLeft + (_outerBoard.width * _scale);
-			var xRight = 0 + (_outerBoard.width / 2) - (_outerBoard.width * _scale);
+			var xLeft = 0 - (_outerBoard.width/(2 * _outerBoardScale));
+			var xCenter = xLeft + (_outerBoard.width * (_scale * (1/_outerBoardScale)));
+			var xRight = xCenter + (_outerBoard.width * (_scale * (1/_outerBoardScale)));
 
-			var yTop = 0 - (_outerBoard.height / 2);
-			var yCenter = yTop + (_outerBoard.height * _scale);
-			var yBottom = 0 + (_outerBoard.height / 2) - (_outerBoard.height * _scale);
+			var yTop = 0 - (_outerBoard.height / (2 * _outerBoardScale));
+			var yCenter = yTop + (_outerBoard.height * (_scale * (1/_outerBoardScale)));
+			var yBottom = yCenter + (_outerBoard.height * (_scale * (1/_outerBoardScale)));
 
 			//We then take these 6 positions, and place them in combinations together, to create
 			//all 9 posibilities.
@@ -255,7 +262,7 @@
 			}];
 		};
 
-		_initalize(); //Start the Constructor
+		_initalize(x, y, scale); //Start the Constructor
 
 		game.global = game.global || {}; //Create the Global variable if it does not exist
 		game.global.currentBoard = _board; //Place the game board (this) in the currentBoard directory

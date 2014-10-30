@@ -24,7 +24,12 @@ var cardSelectionState = {
 		if (game.global.cards.length >= this.neededAmountOfCards) {
 			this.destroyARandomNumberCard();
 		}
-		game.global.cards.push(item.card);
+		var newObj = {};
+
+		for(var thing in item.card) {
+			newObj[thing] = item.card[thing];
+		}
+		game.global.cards.push(newObj);
 
 		this.addButton()
 	},
@@ -233,7 +238,7 @@ var cardSelectionState = {
 		this[key].card = ability;
 		this[key].textArea = game.add.text(0, 0,
 			this[key].card.value, {
-				font: '25px Arial',
+				font: '30px Arial',
 				fill: '#ffffff'
 			});
 		this[key].textArea.anchor.setTo(0.5, 0.4);

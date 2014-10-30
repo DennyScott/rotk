@@ -35,7 +35,7 @@
 		 */
 		this.addSprite = function(x, y, scale, group) {
 			if(typeof scale === 'undefined'){
-				_scale = 1; //No Scale Designated.
+				scale = 1; //No Scale Designated.
 			}
 			_scale = scale; //Set Instance Scale
 			_renderSprite(x, y, group); //Render the Tile

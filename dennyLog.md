@@ -30,3 +30,11 @@ I first handled this with a simple combo counter, but decided that it probably i
 The biggest negative yet. I've been using mostly Test-Driven Development these days, but in my excitement to get coding a game, I've been finding myself just playing around, rather then starting with testing. I might try to refactor some of my code with tests, and then start TDD. If not, it certainly will be a learning lesson next time. I've found myself slowed down a couple times by not having correct testing.
 
 The game is coming along well so far, other then the awkward bright blue background we're using. Hopefully it's in a playable state by tomorrow!
+
+##October 29th, 2014
+I started to add testing to my functions. In the past, I've either had to expose my javascript functions to test, or not test a function. After reading an excellent post on testing private functions here http://philipwalton.com/articles/how-to-unit-test-private-functions-in-javascript/, I've decided to do something similar. I'm not sure how much testing will be worked into this game, but I'd love to have the whole app tested.
+
+After attempting a good chunk of my night at testing, I had to leave it. Karma and Phaser don't play well together in relation to load.image, and Phaser.loading images. Unfortantly, I don't have time to work around it, and hopefully I can think of something over the week/weekend.
+
+After much procrastinating, I allowed for scaleing of the game board. It took a bit of tricky math to get all the tile's position's correctly, but it's good to go now. 
+

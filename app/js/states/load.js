@@ -35,10 +35,12 @@ var loadState = {
 		//Load a new asset that we will use in the menu state
 		game.load.image('background', 'assets/background.png');
 		game.load.image('abilityCommand', 'assets/yellowCircle.png');
+		game.load.image('abilityWithQuantity', 'assets/yellowCircleWithQuantity.png');
 		game.load.image('redCommand', 'assets/redCircle.png');
 		game.load.image('blueCommand', 'assets/blueCircle.png');
 		game.load.image('greenCommand', 'assets/greenCircle.png');
 		game.load.image('priceLabel', 'assets/redLabel.png');
+		game.load.image('nextButton', 'assets/BlackLabel.png');
 		game.load.image('blackTile', 'assets/BlackSquare.png');
 		game.load.image('whiteTile', 'assets/WhiteSquare.png');
 		game.load.image('redTile', 'assets/RedSquare.png');

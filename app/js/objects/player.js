@@ -34,6 +34,14 @@
 			return name + "'s Health: " + _health;
 		}
 
+		this.isHoldingDefenceCard = function(){
+
+		},
+
+		this.removeDefenseCard = function() {
+			
+		}
+
 		/**
 		 * Get Players Health
 		 * @return {int} Current Health

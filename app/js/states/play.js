@@ -20,18 +20,28 @@ var playState = {
 		this.comboValue = 10;
 
 
-		//THIS WILL BE REMOVED ONCE THE SECOND PLAYER CAN CHOOSE HIS CARDS
+		//THIS WILL BE REMOVED ONCE THE SECOND PLAYER CAN CHOOSE HIS CARDS-------------------------------------------
 		game.global.playerOne.cards = game.global.cards;
 		game.global.playerTwo.cards = [];
-		for (var i = 0; i < game.global.cards.length; i++) {
-			var card = {};
-			for (var thing in game.global.cards[i]) {
-				card[thing] = game.global.cards[i][thing];
+
+		for (var x = 0; x < 3; x++) {
+			var color;
+
+			if (x === 0) {
+				color = 'red';
+			} else if (x === 1) {
+				color = 'blue';
+			} else {
+				color = 'green';
 			}
-			game.global.playerTwo.cards.push(card);
+
+			for (var i = 1; i <= 27 / 3; i++) {
+
+				game.global.playerTwo.cards.push(new game.RegularCommand('number', i, color));
+			}
 		}
 
-		//END OF THE REMOVE SECTION
+		//END OF THE REMOVE SECTION---------------------------------------------------------------------------------
 
 		game.global.playerOne.hand = [];
 		game.global.playerTwo.hand = [];

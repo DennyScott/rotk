@@ -18,7 +18,6 @@
 		 */
 		var _initalize = function(owner, value, description, cost) {
 			game.AbilityCommand.call(_command, owner, value, description, cost);
-			this.description = description
 		};
 
 		_initalize(owner, value, description, cost); //Call Constructor

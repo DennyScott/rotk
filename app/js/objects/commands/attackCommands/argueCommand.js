@@ -1,13 +1,13 @@
 (function() {
 
 	/**
-	 * An fault command, which usually does some damage to  a players opponent.
+	 * An argue command, which usually does some damage to  a players opponent.
 	 * @param {Player} owner        The owner of this command
 	 * @param {string} value        The value of the card, such as taunt
 	 * @param {strin} description  The description of the given card
 	 * @param {function} combatAction The function that will run when this card is played
 	 */
-	var FaultCommand = function(owner) {
+	var ArgueCommand = function(owner) {
 		_command = this;
 
 		/**
@@ -18,9 +18,9 @@
 		 * @return {void}              No Return Value
 		 */
 		var _initalize = function(owner) {
-			var value = 'Fault';
-			var cost = 15;
-			var description = 'An Attack command that will trump any regular command and cause a bit of damage to your opponent';
+			var value = 'Argue';
+			var cost = 20;
+			var description = 'An Attack command that will trump any regular command, as well as Fault, and cause a medium amount of damage to your opponent';
 			game.AttackCommand.call(_command, owner, value, description, cost);
 		};
 
@@ -28,11 +28,11 @@
 		_initalize(owner); //Call Constructor
 
 		this.combatAction = function () {
-			console.log('Fault Combat Action Called');
+			console.log('Argue Combat Action Called');
 		};
 	}
 
-	FaultCommand.prototype = Object.create(game.AttackCommand.prototype);
+	ArgueCommand.prototype = Object.create(game.AttackCommand.prototype);
 
-	game.FaultCommand = FaultCommand; //Add to global Namespace
+	game.ArgueCommand = ArgueCommand; //Add to global Namespace
 })();

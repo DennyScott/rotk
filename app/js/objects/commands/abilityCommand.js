@@ -1,18 +1,19 @@
 (function() {
 
 
-	var AbilityCommand = function(owner, value, description) {
+	var AbilityCommand = function(owner, value, description, cost) {
 		_command = this;
 		this.description;
+		this.cost;
 
 		
-		var _initalize = function(owner, value, description) {
+		var _initalize = function(owner, value, description, cost) {
 			var type = 'ability';
 			game.Command.call(_command, owner, type, value);
 			this.description = description
 		};
 
-		_initalize(owner, value); //Call Constructor
+		_initalize(owner, value, description, cost); //Call Constructor
 
 		var _addVisibleCommand = _command.addVisibleCommand;
 

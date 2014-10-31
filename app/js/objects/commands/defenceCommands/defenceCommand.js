@@ -6,7 +6,7 @@
 	 * @param {string} value        The value of the card, such as taunt
 	 * @param {strin} description  The description of the given card
 	 */
-	var DefenceCommand = function(owner, value, description) {
+	var DefenceCommand = function(owner, value, description, cost) {
 		_command = this;
 
 		/**
@@ -17,12 +17,10 @@
 		 * @return {Void}                 No Return value
 		 */
 		var _initalize = function(owner, value, description) {
-			game.AbilityCommand.call(_command, owner, value, description);
-			_command.combatAction = combatAction || function() {};
-			_command.nonCombatAction = nonCombatAction || function() {};
+			game.AbilityCommand.call(_command, owner, value, description, cost);
 		};
 
-		_initalize(owner, value, description); //Call Constructor
+		_initalize(owner, value, description, cost); //Call Constructor
 
 		this.combatAction = function() {};
 		this.nonCombatAction = function() {};

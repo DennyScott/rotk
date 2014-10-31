@@ -5,7 +5,7 @@
 	 * @param {Player} owner       The owner of this command
 	 * @param {string} description the decription of the card
 	 */
-	var AweCommand = function(owner, description) {
+	var AweCommand = function(owner) {
 		_command = this;
 
 		/**
@@ -15,11 +15,13 @@
 		 * @return {void}             No Return Value
 		 */
 		var _initalize = function(owner, description) {
+			var cost = 15;
+			var description = 'An Ability card that will do some damage to your opponent every turn it is on the board';
 			var value = game.rnd.integerInRange(1, 9);
-			game.AbilityCommand.call(_command, owner, value);
+			game.AbilityCommand.call(_command, owner, value, cost);
 		};
 
-		_initalize(owner, description); //Call Constructor
+		_initalize(owner); //Call Constructor
 	}
 
 	AweCommand.prototype = Object.create(game.AbilityCommand.prototype);

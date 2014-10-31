@@ -1,13 +1,13 @@
 (function() {
 
 	/**
-	 * An fault command, which usually does some damage to  a players opponent.
+	 * An Taunt command, which usually does some damage to  a players opponent.
 	 * @param {Player} owner        The owner of this command
 	 * @param {string} value        The value of the card, such as taunt
 	 * @param {strin} description  The description of the given card
 	 * @param {function} combatAction The function that will run when this card is played
 	 */
-	var FaultCommand = function(owner) {
+	var TauntCommand = function(owner) {
 		_command = this;
 
 		/**
@@ -18,9 +18,9 @@
 		 * @return {void}              No Return Value
 		 */
 		var _initalize = function(owner) {
-			var value = 'Fault';
-			var cost = 15;
-			var description = 'An Attack command that will trump any regular command and cause a bit of damage to your opponent';
+			var value = 'Taunt';
+			var cost = 45;
+			var description = 'An Attack command that will trump any regular command, as well as Fault and Argue, and cause a massive amount of damage to your opponent, as well as make your opponent inactive for the following 2 turns';
 			game.AttackCommand.call(_command, owner, value, description, cost);
 		};
 
@@ -28,11 +28,11 @@
 		_initalize(owner); //Call Constructor
 
 		this.combatAction = function () {
-			console.log('Fault Combat Action Called');
+			console.log('Taunt Combat Action Called');
 		};
 	}
 
-	FaultCommand.prototype = Object.create(game.AttackCommand.prototype);
+	TauntCommand.prototype = Object.create(game.AttackCommand.prototype);
 
-	game.FaultCommand = FaultCommand; //Add to global Namespace
+	game.TauntCommand = TauntCommand; //Add to global Namespace
 })();

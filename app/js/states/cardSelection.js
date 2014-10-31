@@ -114,11 +114,11 @@ var cardSelectionState = {
 
 			for (var i = 1; i <= this.allNumbers / this.amountOfColors; i++) {
 
-				this.cards.push({
+				this.cards.push(new game.Card({
 					type: 'number',
 					value: i,
 					color: color
-				});
+				}));
 			}
 		}
 		game.global.cards = this.cards;

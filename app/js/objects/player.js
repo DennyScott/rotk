@@ -35,6 +35,24 @@
 		}
 
 		/**
+		 * Check if the player is currently holding a defence card. The defence card
+		 * cannot be in the procces of 'being played' this turn.
+		 * 
+		 * @return {Boolean} Player is holding defence card?
+		 */
+		this.isHoldingDefenceCard = function(){
+			//Must check if the player played this defence card this turn
+		},
+
+		/**
+		 * Use the defence card that the player is currently holding.
+		 * 
+		 */
+		this.useDefenseCard = function() {
+
+		}
+
+		/**
 		 * Get Players Health
 		 * @return {int} Current Health
 		 */

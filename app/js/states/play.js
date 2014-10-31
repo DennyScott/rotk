@@ -1,12 +1,9 @@
 var playState = {
 	preload: function() {
 		this.fullHand = 7; //How many cards are in a full hand
+		this.hand = [];
 		this.currentXPosition = game.world.centerX - 300;
 		this.currentYPosition = game.world.centerY + (game.world.centerY * .75);
-		this.currentPlayersTurn;
-		for (var i = 0; i < game.global.cards.length; i++) {
-			delete game.global.cards[i].view();
-		}
 	},
 
 	create: function() {
@@ -17,8 +14,9 @@ var playState = {
 		game.global.arrow = new game.arrow(game.world.centerX + 200,
 			0, .5);
 
-		this.comboValue = 10;
-
+		game.global.comboValue = 10;
+		game.global.turnDamage = 5;
+		game.global.aweDamage = 5;
 
 		//THIS WILL BE REMOVED ONCE THE SECOND PLAYER CAN CHOOSE HIS CARDS-------------------------------------------
 		game.global.playerOne.cards = game.global.cards;
@@ -101,7 +99,6 @@ var playState = {
 
 	drawCard: function(player) {
 		var randNum = game.rnd.integerInRange(0, player.cards.length - 1);
-
 		//This line will remove a card from the deck, and put it into your hand
 		player.hand.push(player.cards[randNum]);
 
@@ -112,6 +109,15 @@ var playState = {
 		for (var i = 0; i < player.hand.length; i++) {
 			player.hand[i].view().kill();
 		}
+	},
+
+	useCard: function(view) {
+		if (view.card.type === 'number') {
+			var combo = game.global.currentBoard.playNumberCard(view.card.value, view.card.color);
+			this.checkCombo(combo);
+		}
+		this.removeCard(view.card);
+		this.changePlayersTurn();
 	},
 
 	checkCombo: function(combo) {
@@ -127,8 +133,8 @@ var playState = {
 	handleCombo: function(combo, currentPlayerEffect, opposingPlayerEffect) {
 		for (var i = 0; i < combo.length; i++) {
 			game.global.currentBoard.clearCombo(combo[i]);
-			currentPlayerEffect(this.comboValue);
-			opposingPlayerEffect(this.comboValue);
+			currentPlayerEffect(game.global.comboValue);
+			opposingPlayerEffect(game.global.comboValue);
 			game.global.arrow.flip();
 		}
 	},
@@ -161,14 +167,4 @@ var playState = {
 			this.currentPlayer.hand[i].handKey = i;
 		}
 	},
-
-	useCard: function(view) {
-		if (view.card.type === 'number') {
-			var combo = game.global.currentBoard.playCard(view.card.value, view.card.color);
-			this.checkCombo(combo);
-		}
-
-		this.removeCard(view.card);
-		this.changePlayersTurn();
-	}
 };

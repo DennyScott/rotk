@@ -16,6 +16,7 @@
 		var tiles = game.add.group(_completeBoard, 'tiles', true); //Group for all tiles
 		var _scale = 0.333333; //Scale of the smaller tiles compared to the larger tiles.
 		var _trueTileScale;
+		var _awes = [];
 
 		/**
 		 * Constructor
@@ -101,8 +102,9 @@
 		 * @param  {[int]} number Number/position of the card
 		 * @param  {[string]} color  The color to make the card. Can be blue, red, green, black, and white
 		 */
-		this.playCard = function(number, color) {
+		this.playNumberCard = function(number, color) {
 			_tileArray[number - 1].changeTileColor(color); //Change current Tile Color
+			_removeAwe(number);
 			var winCounter = _checkCombinations(number, color, _checkCombinationTileForSameColor); //Check if the placed tile causes winners
 			var loseCounter = _checkCombinations(number, color, _checkCombinationTileForOposingColors); //Check if the placed tile causes losers
 			var combos = {
@@ -111,6 +113,40 @@
 			};
 			return combos;
 		};
+
+		/**
+		 * Play Awe Card. This card will be placed on the board, but cannot be combo'd.
+		 * Each turn, the other opponent is damaged while this number exists.
+		 * 
+		 * @param  {int} number Number to place card on.
+		 * @param  {player} player Player to Damage
+		 */
+		this.playAweCard = function(number, player){
+			_tileArray[number - 1].changeTileColor('black'); //Place tile on Board
+			_awes.push({number: number, player: player}); //Store Awe Value
+		}
+
+		/**
+		 * Get all Current Awes
+		 * @return {Array} Array of all Awe Objects
+		 */
+		this.getAwes = function() {
+			return _awes;
+		}
+
+		/**
+		 * Checks if number exists in the awe array. If it does, remove
+		 * it.
+		 * 
+		 * @param  {int} number Number to check awe array with
+		 */
+		var _removeAwe = function(number){
+			for(var i = 0; i < _awes.length; i++){
+				if(_awes[i].number === number){
+					_awes.splice(i, 1);
+				}
+			}
+		}
 
 		/**
 		 * Clear a combo of three values. This will take the tile and turn them back to white

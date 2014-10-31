@@ -6,6 +6,8 @@ game.global = {
 	score: 0
 };
 
+game.chainProperties = {}; //Used For Different Chains (Attack, defense, etc)
+
 //Add all the states
 game.state.add('boot', bootState);
 game.state.add('load', loadState);

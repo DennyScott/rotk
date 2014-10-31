@@ -15,16 +15,16 @@
 
 		_initalize(owner, value, description, cost); //Call Constructor
 
-		var _addVisibleCommand = _command.addVisibleCommand;
+		var _createView = _command.createView;
 
 		/**
 		 * Adds the card to the view
 		 * @param {int} x The x position of the command
 		 * @param {int} y The y positoon of the card
 		 */
-		this.addVisibleCommand = function(x, y) {
+		this.createView = function(x, y) {
 			var sprite = 'abilityCommand'
-			_addVisibleCommand(x, y, sprite);
+			_createView(x, y, sprite);
 		}
 	}
 

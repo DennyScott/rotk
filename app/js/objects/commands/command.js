@@ -31,8 +31,34 @@
 		 * @param {int} y      The y position of the command
 		 * @param {String} sprite The key for the sprite this object uses
 		 */
-		this.addVisibleCommand = function (x, y, sprite) {
+		this.createView = function(x, y, sprite) {
 			_sprite = game.add.sprite(x, y, sprite); //Create Sprite
+
+			_sprite.innerText = game.add.text(0, 0,
+				value, {
+					font: '30px Arial',
+					fill: '#ffffff',
+					align: 'center'
+				});
+			_sprite.innerText.anchor.setTo(0.5, 0.5);
+			_sprite.addChild(_sprite.innerText);
+			_sprite.anchor.setTo(0.5, 0.5);
+
+			_sprite.inputEnabled = true;
+			_sprite.input.useHandCursor = true; //if you want a hand cursor
+			_sprite.card = _command; //This is to create a two way binding that both sides have reference to eachother
+		}
+
+		this.clearView = function () {
+			_sprite = undefined;
+		}
+
+		/**
+		 * Returns the view to the user
+		 * @return {Phaser.Sprite} The sprite of the command
+		 */
+		this.view = function() {
+			return _sprite;
 		}
 
 		_initalize(owner, type, value); //Call Constructor

@@ -26,7 +26,7 @@ var cardSelectionState = {
 		}
 		var newObj = {};
 
-		for(var thing in item.card) {
+		for (var thing in item.card) {
 			newObj[thing] = item.card[thing];
 		}
 		game.global.cards.push(newObj);
@@ -60,7 +60,7 @@ var cardSelectionState = {
 
 	createAbilities: function() {
 		this.abilities = [{
-			type: 'Ability',
+			type: 'Awe',
 			value: 'Awe',
 			cost: 10,
 			description: 'An Ability card that will do some damage to your opponent every turn it is on the board'
@@ -114,11 +114,7 @@ var cardSelectionState = {
 
 			for (var i = 1; i <= this.allNumbers / this.amountOfColors; i++) {
 
-				this.cards.push(new game.Card({
-					type: 'number',
-					value: i,
-					color: color
-				}));
+				this.cards.push(new game.RegularCommand('number', i, color));
 			}
 		}
 		game.global.cards = this.cards;
@@ -304,7 +300,7 @@ var cardSelectionState = {
 		this.budgetLabel.text = this.budgetLabelText + this.budget;
 	},
 
-	updateSpriteCounter: function (item) {
+	updateSpriteCounter: function(item) {
 		item.spriteCount++;
 		item.textSpriteCount.text = item.spriteCount + '';
 	}

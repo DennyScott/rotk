@@ -63,7 +63,7 @@ game.eventChain = {
 	},
 
 	performAweDamage: function(){
-
+		game.chainProperties.aweChain.handleAwe();
 	},
 
 	isCommand: function(card, type) {

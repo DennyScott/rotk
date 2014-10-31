@@ -22,7 +22,7 @@ game.chainProperties.numberChain = {
 
 	playCard: function(cards) {
 		for (var i = 0; i < cards.length; i++) {
-			var combo = game.global.currentBoard.playCard(cards[i].value, cards[i].color);
+			var combo = game.global.currentBoard.playNumberCard(cards[i].value, cards[i].color);
 			this.checkCombo(combo, cards[i]);
 		}
 	},

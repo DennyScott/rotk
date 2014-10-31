@@ -7,7 +7,7 @@ game.eventChain = {
 	 * @param  {Object} oneCard One players Card
 	 * @param  {Object} twoCard The other Players Card
 	 */
-	playHand: function(oneCard, twoCard){
+	playCards: function(oneCard, twoCard){
 		//This will be used to determine if the round has a winner
 		game.global.turnWon = false; 
 

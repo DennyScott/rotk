@@ -116,6 +116,7 @@ var playState = {
 			var combo = game.global.currentBoard.playNumberCard(view.card.value, view.card.color);
 			this.checkCombo(combo);
 		}
+		//game.eventChain.playCards(playerOneCard, playerTwoCard); FOR TRAVIS
 		this.removeCard(view.card);
 		this.changePlayersTurn();
 	},

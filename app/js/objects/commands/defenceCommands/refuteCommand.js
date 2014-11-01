@@ -26,8 +26,11 @@
 		this.combatAction = function() {
 			console.log('Refute Commnad combat action called')
 		};
-		this.nonCombatAction = function() {
-			console.log('Refute Commnad non-combat action called')
+
+		this.nonCombatAction = function(card) {
+			card.owner = this.owner;
+			card.combatAction();
+			card.owner = this.owner.opponent;
 		};
 	}
 

@@ -18,11 +18,15 @@
 		 */
 		var _initalize = function(owner, value, description, cost) {
 			game.AbilityCommand.call(_command, owner, value, description, cost);
+
+			_command.damage = 5;
 		};
 
 		_initalize(owner, value, description, cost); //Call Constructor
 
-		this.combatAction = function () {};
+		this.combatAction = function (damage) {
+			_command.owner.opponent.takeDamage(damage);
+		};
 	}
 
 	AttackCommand.prototype = Object.create(game.AbilityCommand.prototype);

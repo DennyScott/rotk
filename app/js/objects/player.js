@@ -230,6 +230,7 @@
 		this.takeDamage = function(amount) {
 			_health -= amount;
 			_text.text = _createLabel(); //Display Current Health
+			this.opponent.heal(amount);
 			return _health;
 		}
 

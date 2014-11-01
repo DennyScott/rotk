@@ -22,13 +22,17 @@
 			var cost = 15;
 			var description = 'An Attack command that will trump any regular command and cause a bit of damage to your opponent';
 			game.AttackCommand.call(_command, owner, value, description, cost);
+
+			_command.damage = 10;
 		};
 
 
 		_initalize(owner); //Call Constructor
 
+		var _combatAction = _command.combatAction;
+
 		this.combatAction = function () {
-			console.log('Fault Combat Action Called');
+			_combatAction(this.damage);
 		};
 	}
 

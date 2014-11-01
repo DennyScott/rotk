@@ -12,6 +12,7 @@
 		this.owner;
 		this.type;
 		this.value;
+		this.damage;
 
 		/**
 		 * Coonstructor for the command class
@@ -23,6 +24,7 @@
 			_command.type = type;
 			_command.value = value;
 			_command.owner = owner
+			_command.damage = 0;
 		};
 
 		/**

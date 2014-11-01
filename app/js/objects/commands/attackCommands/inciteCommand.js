@@ -22,13 +22,17 @@
 			var cost = 30;
 			var description = 'An Attack command that will trump any regular command, as well as Fault and Argue, and cause a large amount of damage to your opponent, as well as make your opponent inactive for the following 2 turns';
 			game.AttackCommand.call(_command, owner, value, description, cost);
+
+			_command.damage = 25;
 		};
 
 
 		_initalize(owner); //Call Constructor
 
+		var _combatAction = _command.combatAction;
+
 		this.combatAction = function () {
-			console.log('Incite Combat Action Called');
+			_combatAction(this.damage);
 		};
 	}
 

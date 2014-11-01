@@ -19,6 +19,10 @@
 			var description = 'An Ability card that will do some damage to your opponent every turn it is on the board';
 			var value = game.rnd.integerInRange(1, 9);
 			game.AbilityCommand.call(_command, owner, value, cost);
+
+
+
+			_command.damage = 5;
 		};
 
 		_initalize(owner); //Call Constructor

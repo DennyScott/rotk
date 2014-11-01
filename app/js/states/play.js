@@ -4,16 +4,11 @@ var playState = {
 	},
 
 	create: function() {
-		var board = new game.board(game.world.centerX, game.world.centerY, 0.5);
 		game.global.currentBoard = new game.board(game.world.centerX, game.world.centerY, 0.5);
 		game.global.playerOne.createView(0, 10);
 		game.global.playerTwo.createView(0, game.global.playerOne.getHeight() + 20);
 		game.global.arrow = new game.arrow(game.world.centerX + 200,
 			0, .5);
-
-		game.global.comboValue = 10;
-		game.global.turnDamage = 5;
-		game.global.aweDamage = 5;
 
 		//THIS WILL BE REMOVED ONCE THE SECOND PLAYER CAN CHOOSE HIS CARDS-------------------------------------------
 		game.global.playerOne.deck = game.global.cards;
@@ -40,7 +35,7 @@ var playState = {
 
 		game.global.playerOne.prepare(this.useCard, this);
 		game.global.playerTwo.prepare(this.useCard, this);
-		this.setUpInitalTurn();
+		this.currentPlayer.startTurn();
 
 	},
 
@@ -53,11 +48,7 @@ var playState = {
 		this.currentPlayer.opponent.endTurn();
 		this.currentPlayer.startTurn();
 	},
-
-	setUpInitalTurn: function() {
-		this.currentPlayer.startTurn();
-	},
-
+	
 	useCard: function(view) {
 		if (view.card.type === 'number') {
 			var combo = game.global.currentBoard.playNumberCard(view.card.value, view.card.color);

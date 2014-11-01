@@ -3,7 +3,10 @@ var game = new Phaser.Game(800, 840, Phaser.AUTO, 'gameDiv');
 
 //Define our 'global variable'
 game.global = {
-	fullHand: 7
+	fullHand: 7,
+	comboValue: 10,
+	turnDamage: 5,
+	aweDamage: 5
 };
 
 game.chainProperties = {}; //Used For Different Chains (Attack, defense, etc)

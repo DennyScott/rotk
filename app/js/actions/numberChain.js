@@ -11,7 +11,7 @@ game.chainProperties.numberChain = {
 	bothNumber: function(oneCard, twoCard) {
 		//Get Comparotor method. This is dependent on the current
 		//direction of the arrow.
-		var comparator = global.arrow.isUp()?this.isGreater:this.isLessThan;
+		var comparator = game.global.arrow.isUp()?this.isGreater:this.isLessThan;
 		var result = comparator(oneCard.value, twoCard.value); //Get winning value
 
 		//One Card wins, and gets to damage the opponent
@@ -126,7 +126,7 @@ game.chainProperties.numberChain = {
 	handleCombo: function(combo, currentPlayerEffect, opposingPlayerEffect) {
 		for (var i = 0; i < combo.length; i++) {
 			game.global.currentBoard.clearCombo(combo[i]); //Clear the cards from the board used in combo.
-			currentPlayerEffect(game.gloabl.comboValue); //Perform action on card holding player
+			currentPlayerEffect(game.global.comboValue); //Perform action on card holding player
 			opposingPlayerEffect(game.global.comboValue); //Perform action on opponent
 			game.global.arrow.flip(); //Flip the arrow
 		}

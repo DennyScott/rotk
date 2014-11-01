@@ -29,8 +29,8 @@ game.eventChain = {
 	 */
 	handleAttackCommands: function(oneCard, twoCard){
 		//Check if either cards is an "Attack Command" card
-		var oneCardAttack = isCommand(oneCard, 'AttackCommand'); 
-		var twoCardAttack = isCommand(twoCard, 'AttackCommand');
+		var oneCardAttack = this.isCommand(oneCard, game.AttackCommand); 
+		var twoCardAttack = this.isCommand(twoCard, game.AttackCommand);
 		
 		if(oneCardAttack && twoCardAttack){
 			//Both players played an attack command
@@ -54,8 +54,8 @@ game.eventChain = {
 	 */
 	handleNumberCards: function(oneCard, twoCard){
 		//Check if either cards is a number card
-		var oneCardNumber = isCommand(oneCard, 'RegularCommand');
-		var twoCardNumber = isCommand(twoCard, 'RegularCommand');
+		var oneCardNumber = this.isCommand(oneCard, game.RegularCommand);
+		var twoCardNumber = this.isCommand(twoCard, game.RegularCommand);
 
 		if(oneCardNumber && twoCardNumber){
 			//Both Players played a number card
@@ -79,8 +79,8 @@ game.eventChain = {
 	 */
 	handleDefenseCommands: function(oneCard, twoCard){
 		//Check if either card is a defence command
-		var oneCardDefense = isCommand(oneCard, 'DefenseCommand');
-		var twoCardDefense = isCommand(twoCard, 'DefenseCommand');
+		var oneCardDefense = this.isCommand(oneCard, game.DefenceCommand);
+		var twoCardDefense = this.isCommand(twoCard, game.DefenceCommand);
 
 		if(oneCardDefense && twoCardDefense){
 			//Both Players played a Defence Card
@@ -104,8 +104,8 @@ game.eventChain = {
 	 */
 	handleAweCards: function(oneCard, twoCard){
 		//Check if either card is an 'awe command'.
-		var oneCardAwe = isCommand(oneCard, 'AweCommand');
-		var twoCardAwe = isCommand(twoCard, 'AweCommand');
+		var oneCardAwe = this.isCommand(oneCard, game.AweCommand);
+		var twoCardAwe = this.isCommand(twoCard, game.AweCommand);
 
 		if(oneCardAwe && twoCardAwe){
 			game.chainProperties.aweChain.bothAwe(oneCardAwe, twoCardAwe);

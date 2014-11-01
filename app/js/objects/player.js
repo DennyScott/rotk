@@ -160,6 +160,12 @@
 		 */
 		this.isHoldingDefenceCard = function() {
 			//Must check if the player played this defence card this turn
+			for(var i = 0; i < _this.hand.length; i++){
+				if(_this.hand[i] instanceof game.DefenceCommand){
+					return true;
+				}
+			}
+
 			return false;
 		},
 
@@ -168,7 +174,11 @@
 		 *
 		 */
 		this.useDefenseCard = function() {
-
+			for(var i = 0; i < _this.hand.length; i++){
+				if(_this.hand[i] instanceof game.DefenceCommand){
+					_removeCommand(_this.hand[i]);	
+				}
+			}
 		}
 
 		/**

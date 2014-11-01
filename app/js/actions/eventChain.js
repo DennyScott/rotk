@@ -40,7 +40,7 @@ game.eventChain = {
 			game.chainProperties.attackChain.singleAttack(oneCard);
 		}else if(twoCardAttack){
 			//Only twoCard played an Attack Command
-			game.chainProperties.attackChain.singleAttack(oneCard);
+			game.chainProperties.attackChain.singleAttack(twoCard);
 		}
 	},
 

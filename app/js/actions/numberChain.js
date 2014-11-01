@@ -139,7 +139,6 @@ game.chainProperties.numberChain = {
 	 * @param  {Object} card Number Card Played
 	 */
 	damageOpponent: function(card) {
-		console.log(card);
 		card.owner.opponent.takeDamage(game.global.turnDamage);
 		game.global.turnWon = true;
 	}

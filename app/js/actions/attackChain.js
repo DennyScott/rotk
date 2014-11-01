@@ -57,7 +57,8 @@ game.chainProperties.attackChain = {
 		//Does the opponent hold a defence card
 		if(card.owner.opponent.isHoldingDefenceCard()){
 			//Cancel Animation
-			card.owner.opponent.useDefenseCard();
+			var defenceCard = card.owner.opponent.useDefenseCard();
+			defenceCard.performNonCombatAction(card); //Use the defense noncombat action.
 		}else{
 			card.combatAction(); //Peform Attack Command
 		}

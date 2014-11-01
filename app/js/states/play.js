@@ -40,8 +40,8 @@ var playState = {
 
 		//END OF THE REMOVE SECTION---------------------------------------------------------------------------------
 
-		game.global.playerOne.prepare();
-		game.global.playerTwo.prepare();
+		game.global.playerOne.prepare(this.useCard, this);
+		game.global.playerTwo.prepare(this.useCard, this);
 		this.setUpInitalTurn();
 
 	},
@@ -96,13 +96,6 @@ var playState = {
 	setUpInitalTurn: function() {
 		this.resetPlayerCards(this.currentPlayer);
 		this.setKeyOnCards();
-		// command.view().events.onInputDown.add(function() {
-		// 	console.log('used card')
-		// }, this);
-
-		//NEEDS TO BE AT END
-		// card.view().scale.x = 0.5;
-		// card.view().scale.y = 0.5;
 	},
 
 	useCard: function(view) {

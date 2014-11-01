@@ -25,8 +25,14 @@
 
 		};
 
-		var _createView = function(command, i) {
+		var _createView = function(command, i, clickEvent, context) {
 			command.createView(0, 0);
+			
+			command.view().events.onInputDown.add(clickEvent, context);
+			
+			
+			command.view().scale.x = 0.5;
+			command.view().scale.y = 0.5;
 		}
 
 		/**
@@ -37,9 +43,9 @@
 			return name + "'s Health: " + _health;
 		}
 
-		var _createVisibleCards = function() {
+		var _createVisibleCards = function(clickEvent, context) {
 			for (var i = 0; i < _this.hand.length; i++) {
-				_createView(_this.hand[i], i);
+				_createView(_this.hand[i], i, clickEvent, context);
 			}
 
 			_killAllCards();
@@ -160,10 +166,10 @@
 			return _health;
 		}
 
-		this.prepare = function() {
+		this.prepare = function(clickEvent, context) {
 			_drawInitalCards();
 			_setKeyOnCards();
-			_createVisibleCards();
+			_createVisibleCards(clickEvent, context);
 
 
 		}

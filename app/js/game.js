@@ -6,7 +6,10 @@ game.global = {
 	fullHand: 7,
 	comboValue: 10,
 	turnDamage: 5,
-	aweDamage: 5
+	aweDamage: 5,
+	allNumbers: 27, //To get a 1 to 9 of each color (i.e Red, Blue, and Green)
+	neededAmountOfCards: 30,
+	amountOfColors: 3
 };
 
 game.chainProperties = {}; //Used For Different Chains (Attack, defense, etc)

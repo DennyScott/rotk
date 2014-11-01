@@ -25,15 +25,14 @@
 			_this.hand = [];
 			_this.deck = [];
 			_this.hasChosenCards = false;
-			// _createBaseCards();
+			_createBaseCommands();
 
 		};
 
-		var _createBaseCards = function() {
-			this.cards = [];
-			game.global.currentPlayer.hand = [];
+		var _createBaseCommands = function() {
+			_this.hand = [];
 
-			for (var x = 0; x < this.amountOfColors; x++) {
+			for (var x = 0; x < game.global.amountOfColors; x++) {
 				var color;
 
 				if (x === 0) {
@@ -44,12 +43,11 @@
 					color = 'green';
 				}
 
-				for (var i = 1; i <= this.allNumbers / this.amountOfColors; i++) {
+				for (var i = 1; i <= game.global.allNumbers / game.global.amountOfColors; i++) {
 
-					this.cards.push(new game.RegularCommand('number', i, color));
+					_this.deck.push(new game.RegularCommand(_this, i, color));
 				}
 			}
-			game.global.currentPlayer.deck = this.cards;
 		};
 
 		var _createView = function(command, i, clickEvent, context) {

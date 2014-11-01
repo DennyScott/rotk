@@ -7,6 +7,7 @@ game.chainProperties.aweChain = {
 	 * @param  {Object} card Awe Command Card
 	 */
 	playAwe: function(card){
+		console.log(card);
 		game.global.currentBoard.playAweCard(card.value, card.owner.opponent);	
 	},
 
@@ -17,9 +18,8 @@ game.chainProperties.aweChain = {
 	 */
 	handleAwe: function(){
 		var awes = game.global.currentBoard.getAwes(); //Get all Awes
-		
 		//Iterate through each awe, damaging the opponent
-		for(var i = 0; i > awes.length; i++){
+		for(var i = 0; i < awes.length; i++){
 			awes[i].player.takeDamage(game.global.aweDamage);
 		}	
 	}	

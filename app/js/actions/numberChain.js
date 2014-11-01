@@ -106,12 +106,12 @@ game.chainProperties.numberChain = {
 	checkCombo: function(combo, card) {
 		//Handle Winning Combos
 		if (combo.win.length > 0) {
-			this.handleCombo(combo.win, card.owner.heal, card.owner.opponent.takeDamage);
+			this.handleCombo(combo.win, card.owner.opponent.takeDamage);
 		}
 
 		//Handle Losing Combos
 		if (combo.lose.length > 0) {
-			this.handleCombo(combo.lose, card.owner.takeDamage, card.owner.opponent.heal);
+			this.handleCombo(combo.lose, card.owner.takeDamage);
 		}
 	},
 
@@ -123,11 +123,10 @@ game.chainProperties.numberChain = {
 	 * @param  {Function} currentPlayerEffect  Function to perform on player who played card
 	 * @param  {[Function]} opposingPlayerEffect Function to perform on opponent
 	 */
-	handleCombo: function(combo, currentPlayerEffect, opposingPlayerEffect) {
+	handleCombo: function(combo, playerEffect, opposingPlayerEffect) {
 		for (var i = 0; i < combo.length; i++) {
 			game.global.currentBoard.clearCombo(combo[i]); //Clear the cards from the board used in combo.
-			currentPlayerEffect(game.global.comboValue); //Perform action on card holding player
-			opposingPlayerEffect(game.global.comboValue); //Perform action on opponent
+			playerEffect(game.global.comboValue); //Damage necessary player
 			game.global.arrow.flip(); //Flip the arrow
 		}
 	},

@@ -108,11 +108,11 @@ game.eventChain = {
 		var twoCardAwe = this.isCommand(twoCard, game.AweCommand);
 
 		if(oneCardAwe && twoCardAwe){
-			game.chainProperties.aweChain.bothAwe(oneCardAwe, twoCardAwe);
+			game.chainProperties.aweChain.bothAwe(oneCard, twoCard);
 		} else if(oneCardAwe){
-			game.chainProperties.aweChain.playAwe(oneCardAwe);
+			game.chainProperties.aweChain.playAwe(oneCard);
 		} else if(twoCardAwe){
-			game.chainProperties.aweChain.playAwe(twoCardAwe);
+			game.chainProperties.aweChain.playAwe(twoCard);
 		}
 	},
 

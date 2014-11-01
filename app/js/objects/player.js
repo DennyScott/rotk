@@ -112,6 +112,10 @@
 			});
 		}
 
+		this.drawCard = function () {
+			_drawCard();
+		}
+
 		this.endTurn = function() {
 			_killAllCards();
 			_setKeyOnCards();

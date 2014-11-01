@@ -8,6 +8,8 @@
 		var _name; //Players Name
 		var _health; //Players Health
 		var _text; //The Text Object to display
+		var _cardContext;
+		var _cardClickEvent
 		this.opponent;
 		this.hand;
 		this.budget;
@@ -50,10 +52,10 @@
 			}
 		};
 
-		var _createView = function(command, i, clickEvent, context) {
+		var _createView = function(command, i) {
 			command.createView(0, 0);
 
-			command.view().events.onInputDown.add(clickEvent, context);
+			command.view().events.onInputDown.add(_cardClickEvent, _cardContext);
 
 
 			command.view().scale.x = 0.5;
@@ -68,9 +70,11 @@
 			return name + "'s Health: " + _health;
 		}
 
-		var _createVisibleCards = function(clickEvent, context) {
+		var _createVisibleCards = function() {
 			for (var i = 0; i < _this.hand.length; i++) {
-				_createView(_this.hand[i], i, clickEvent, context);
+				if (typeof _this.hand[i].view() === 'undefined') {
+					_createView(_this.hand[i], i);
+				}
 			}
 
 			_killAllCards();
@@ -139,6 +143,7 @@
 
 		this.drawCards = function() {
 			_drawMaxCards();
+			_createVisibleCards();
 		}
 
 		this.endTurn = function() {
@@ -158,8 +163,8 @@
 		 */
 		this.isHoldingDefenceCard = function() {
 			//Must check if the player played this defence card this turn
-			for(var i = 0; i < _this.hand.length; i++){
-				if(_this.hand[i] instanceof game.DefenceCommand){
+			for (var i = 0; i < _this.hand.length; i++) {
+				if (_this.hand[i] instanceof game.DefenceCommand) {
 					return true;
 				}
 			}
@@ -172,9 +177,9 @@
 		 *
 		 */
 		this.useDefenseCard = function() {
-			for(var i = 0; i < _this.hand.length; i++){
-				if(_this.hand[i] instanceof game.DefenceCommand){
-					_removeCommand(_this.hand[i]);	
+			for (var i = 0; i < _this.hand.length; i++) {
+				if (_this.hand[i] instanceof game.DefenceCommand) {
+					_removeCommand(_this.hand[i]);
 				}
 			}
 		}
@@ -248,9 +253,11 @@
 		}
 
 		this.prepare = function(clickEvent, context) {
+			_cardContext = context
+			_cardClickEvent = clickEvent;
 			_drawMaxCards();
 			_setKeyOnCards();
-			_createVisibleCards(clickEvent, context);
+			_createVisibleCards();
 
 
 		}

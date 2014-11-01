@@ -27,7 +27,7 @@ var playState = {
 	endOfTurnChain: function() {
 		game.eventChain.playCards(game.global.round[game.global.playerOne.name()], game.global.round[game.global.playerTwo.name()]);
 		this.drawCards();
-	}
+	},
 
 	drawCards: function(){
 		game.global.playerOne.drawCards();

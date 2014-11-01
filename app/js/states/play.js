@@ -10,29 +10,6 @@ var playState = {
 		game.global.arrow = new game.arrow(game.world.centerX + 200,
 			0, .5);
 
-		//THIS WILL BE REMOVED ONCE THE SECOND PLAYER CAN CHOOSE HIS CARDS-------------------------------------------
-		game.global.playerOne.deck = game.global.cards;
-		game.global.playerTwo.deck = [];
-
-		for (var x = 0; x < 3; x++) {
-			var color;
-
-			if (x === 0) {
-				color = 'red';
-			} else if (x === 1) {
-				color = 'blue';
-			} else {
-				color = 'green';
-			}
-
-			for (var i = 1; i <= 27 / 3; i++) {
-
-				game.global.playerTwo.deck.push(new game.RegularCommand('number', i, color));
-			}
-		}
-
-		//END OF THE REMOVE SECTION---------------------------------------------------------------------------------
-
 		game.global.playerOne.prepare(this.useCard, this);
 		game.global.playerTwo.prepare(this.useCard, this);
 		this.currentPlayer.startTurn();

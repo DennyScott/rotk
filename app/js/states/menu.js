@@ -69,6 +69,7 @@ var menuState = {
 		game.global.playerTwo = new game.player('Travis');
 		game.global.playerOne.opponent = game.global.playerTwo;
 		game.global.playerTwo.opponent = game.global.playerOne;
+		game.global.currentPlayer = game.global.playerOne;
 	},
 
 	/**

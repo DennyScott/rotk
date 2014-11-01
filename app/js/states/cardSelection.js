@@ -6,10 +6,11 @@ var cardSelectionState = {
 		this.budget = 100;
 		this.labelEntranceMilliseconds = 1000;
 		this.budgetLabelText = 'Budget Remaining: ';
+		game.global.currentPlayer = game.global.currentPlayer;
 	},
 
 	create: function() {
-		this.createAllCards();
+		this.createAllBaseCards();
 		this.createAbilities();
 		this.createMoneyLabel();
 		this.createInstructionLabel();
@@ -21,7 +22,7 @@ var cardSelectionState = {
 	},
 
 	addAbilityToDeck: function(item) {
-		if (game.global.cards.length >= this.neededAmountOfCards) {
+		if (game.global.currentPlayer.deck.length >= this.neededAmountOfCards) {
 			this.destroyARandomNumberCard();
 		}
 		var newCommand;
@@ -41,13 +42,13 @@ var cardSelectionState = {
 		} else if (item.card.value === 'Taunt') {
 			newCommand = new game.TauntCommand(player);
 		}
-		game.global.cards.push(newCommand);
+		game.global.currentPlayer.deck.push(newCommand);
 
 		this.addButton();
 	},
 
 	addButton: function() {
-		if (game.global.cards.length === this.neededAmountOfCards) {
+		if (game.global.currentPlayer.deck.length === this.neededAmountOfCards) {
 			this.createButton();
 		}
 	},
@@ -109,9 +110,9 @@ var cardSelectionState = {
 		}];
 	},
 
-	createAllCards: function() {
+	createAllBaseCards: function() {
 		this.cards = [];
-		game.global.hand = [];
+		game.global.currentPlayer.hand = [];
 
 		for (var x = 0; x < this.amountOfColors; x++) {
 			var color;
@@ -129,7 +130,7 @@ var cardSelectionState = {
 				this.cards.push(new game.RegularCommand('number', i, color));
 			}
 		}
-		game.global.cards = this.cards;
+		game.global.currentPlayer.deck = this.cards;
 	},
 
 	createButton: function() {
@@ -185,7 +186,7 @@ var cardSelectionState = {
 
 	destroyARandomNumberCard: function() {
 		//This line will erase a random card in the first 27 number cards only.
-		var destroyPosition = game.global.cards.splice(game.rnd.integerInRange(0, this.allNumbers - 1), 1);
+		var destroyPosition = game.global.currentPlayer.deck.splice(game.rnd.integerInRange(0, this.allNumbers - 1), 1);
 	},
 
 	getLineStartPosition: function(i, spaceBetweenObject, currentPosition) {
@@ -208,7 +209,13 @@ var cardSelectionState = {
 	},
 
 	loadState: function() {
-		game.state.start('play');
+		game.global.currentPlayer.hasChosenCommands = true;
+		game.global.currentPlayer = game.global.currentPlayer.opponent;
+		if(game.global.currentPlayer.hasChosenCommands !== true) {
+			game.state.start('cardSelection')
+		} else {
+			game.state.start('play');
+		}
 	},
 
 	placeAbilitiesOnScreen: function() {

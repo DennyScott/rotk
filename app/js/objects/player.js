@@ -10,6 +10,8 @@
 		var _text; //The Text Object to display
 		this.opponent;
 		this.hand;
+		this.budget;
+		this.hasChosenCards;
 
 		/**
 		 * Constructor
@@ -22,6 +24,7 @@
 			_health = 50;
 			_this.hand = [];
 			_this.deck = [];
+			_this.hasChosenCards = false;
 
 		};
 

@@ -22,4 +22,6 @@ node_modules
 www
 out
 app/lib
+*.nw
+node-webkit.app
 

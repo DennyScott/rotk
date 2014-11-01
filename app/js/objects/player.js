@@ -27,10 +27,10 @@
 
 		var _createView = function(command, i, clickEvent, context) {
 			command.createView(0, 0);
-			
+
 			command.view().events.onInputDown.add(clickEvent, context);
-			
-			
+
+
 			command.view().scale.x = 0.5;
 			command.view().scale.y = 0.5;
 		}
@@ -72,6 +72,32 @@
 			}
 		}
 
+		var _removeCommand = function(command) {
+			if (command.view()) {
+				_removeCommandFromView(command.view());
+			}
+			_removeCommandFromHand(command);
+			command.clearView(); //Used to remove refrence to the view.  Will probably need to remove it from the actual view as well
+		}
+
+		var _removeCommandFromHand = function(command) {
+			_this.hand.splice(command.handKey, 1);
+			_setKeyOnCards();
+		}
+
+		var _removeCommandFromView = function(view) {
+			view.kill();
+		}
+
+		var _resetAllCards = function() {
+			var currentXPosition = game.world.centerX - 300;
+			var currentYPosition = game.world.centerY + (game.world.centerY * .75);
+
+			for (var i = 0; i < _this.hand.length; i++) {
+				_this.hand[i].view().reset(currentXPosition + (i * 100), currentYPosition);
+			}
+		}
+
 		var _setKeyOnCards = function() {
 			for (var i = 0; i < _this.hand.length; i++) {
 				_this.hand[i].handKey = i;
@@ -84,6 +110,11 @@
 				font: '40px Geo',
 				fill: '#000000'
 			});
+		}
+
+		this.endTurn = function() {
+			_killAllCards();
+			_setKeyOnCards();
 		}
 
 		/**
@@ -140,6 +171,11 @@
 			return _text.height;
 		}
 
+		this.startTurn = function() {
+			_resetAllCards();
+			_setKeyOnCards();
+		}
+
 		/**
 		 * Player takes damage, reducing the number from the
 		 * health, then displaying.
@@ -173,6 +209,12 @@
 
 
 		}
+
+		this.removeCommand = function(command) {
+			_removeCommand(command);
+
+		}
+
 
 
 		_initalize(name); //Call constructor

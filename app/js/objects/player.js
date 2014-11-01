@@ -25,7 +25,31 @@
 			_this.hand = [];
 			_this.deck = [];
 			_this.hasChosenCards = false;
+			// _createBaseCards();
 
+		};
+
+		var _createBaseCards = function() {
+			this.cards = [];
+			game.global.currentPlayer.hand = [];
+
+			for (var x = 0; x < this.amountOfColors; x++) {
+				var color;
+
+				if (x === 0) {
+					color = 'red';
+				} else if (x === 1) {
+					color = 'blue';
+				} else {
+					color = 'green';
+				}
+
+				for (var i = 1; i <= this.allNumbers / this.amountOfColors; i++) {
+
+					this.cards.push(new game.RegularCommand('number', i, color));
+				}
+			}
+			game.global.currentPlayer.deck = this.cards;
 		};
 
 		var _createView = function(command, i, clickEvent, context) {
@@ -115,7 +139,7 @@
 			});
 		}
 
-		this.drawCard = function () {
+		this.drawCard = function() {
 			_drawCard();
 		}
 
@@ -124,7 +148,7 @@
 			_setKeyOnCards();
 		}
 
-		this.name = function(){
+		this.name = function() {
 			return _name;
 		}
 

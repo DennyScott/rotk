@@ -24,8 +24,8 @@
 
 		_initalize(owner, value, description, cost); //Call Constructor
 
-		this.combatAction = function (damage) {
-			_command.owner.opponent.takeDamage(damage);
+		this.combatAction = function (damage, owner) {
+			owner.opponent.takeDamage(damage);
 		};
 	}
 

@@ -32,7 +32,7 @@
 		var _combatAction = _command.combatAction;
 
 		this.combatAction = function () {
-			_combatAction(this.damage);
+			_combatAction(this.damage, this.owner);
 		};
 	}
 

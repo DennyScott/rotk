@@ -126,7 +126,7 @@ game.chainProperties.numberChain = {
 	handleCombo: function(combo, currentPlayerEffect, opposingPlayerEffect) {
 		for (var i = 0; i < combo.length; i++) {
 			game.global.currentBoard.clearCombo(combo[i]); //Clear the cards from the board used in combo.
-			currentPlayerEffect(game.gloabl.comboValue); //Perform action on card holding player
+			currentPlayerEffect(game.global.comboValue); //Perform action on card holding player
 			opposingPlayerEffect(game.global.comboValue); //Perform action on opponent
 			game.global.arrow.flip(); //Flip the arrow
 		}

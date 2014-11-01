@@ -59,7 +59,6 @@ game.chainProperties.attackChain = {
 			//Cancel Animation
 			card.owner.opponent.useDefenseCard();
 		}else{
-			console.log(card);
 			card.combatAction(); //Peform Attack Command
 		}
 	}

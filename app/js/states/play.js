@@ -97,6 +97,11 @@ var playState = {
 			0, .5);
 	},
 
+	clearBoard: function () {
+		game.global.playerOne.clearCards();
+		game.global.playerTwo.clearCards();
+	},
+
 	clearRound: function() {
 		game.global.round = {};
 	},

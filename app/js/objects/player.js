@@ -97,7 +97,9 @@
 
 		var _killAllCards = function() {
 			for (var i = 0; i < _this.hand.length; i++) {
-				_this.hand[i].view().kill();
+				if(typeof _this.hand[i].view() !== 'undefined'){
+					_this.hand[i].view().kill();
+				}
 			}
 		}
 
@@ -132,6 +134,10 @@
 				_this.hand[i].handKey = i;
 			}
 		};
+
+		this.clearCards = function() {
+			_killAllCards();
+		}
 
 		this.createView = function(x, y) {
 			//Create Text Object

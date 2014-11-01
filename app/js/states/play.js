@@ -17,11 +17,21 @@ var playState = {
 
 
 		if (game.global.endTurn) {
-			game.eventChain.playCards(game.global.round[game.global.playerOne.name()], game.global.round[game.global.playerTwo.name()]);
+			this.endOfTurnChain();
 		}
 
 		this.changePlayersTurn();
 		game.global.endTurn = !game.global.endTurn;
+	},
+
+	endOfTurnChain: function() {
+		game.eventChain.playCards(game.global.round[game.global.playerOne.name()], game.global.round[game.global.playerTwo.name()]);
+		this.drawCards();
+	}
+
+	drawCards: function(){
+		game.global.playerOne.drawCards();
+		game.global.playerTwo.drawCards();
 	},
 
 	changePlayersTurn: function() {

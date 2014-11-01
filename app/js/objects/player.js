@@ -85,7 +85,7 @@
 			_this.deck.splice(randNum, 1)
 		}
 
-		var _drawInitalCards = function() {
+		var _drawMaxCards = function() {
 			while (_this.hand.length < game.global.fullHand) {
 				_drawCard();
 			}
@@ -137,8 +137,8 @@
 			});
 		}
 
-		this.drawCard = function() {
-			_drawCard();
+		this.drawCards = function() {
+			_drawMaxCards();
 		}
 
 		this.endTurn = function() {
@@ -248,7 +248,7 @@
 		}
 
 		this.prepare = function(clickEvent, context) {
-			_drawInitalCards();
+			_drawMaxCards();
 			_setKeyOnCards();
 			_createVisibleCards(clickEvent, context);
 

@@ -107,6 +107,7 @@
 			}
 			_removeCommandFromHand(command);
 			command.clearView(); //Used to remove refrence to the view.  Will probably need to remove it from the actual view as well
+			_setKeyOnCards();
 		}
 
 		var _removeCommandFromHand = function(command) {
@@ -197,9 +198,13 @@
 		};
 
 		this.removeAllAttackCards = function() {
+			console.log('in remove attack cards');
+			console.log(_this.hand.length);
 			for(var i = 0; i < _this.hand.length; i++){
 				if(_this.hand[i] instanceof game.AttackCommand){
 					_removeCommand(_this.hand[i]);
+					i--;
+					console.log('removing attack card');
 				}
 			}
 		};

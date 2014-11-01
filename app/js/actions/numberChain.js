@@ -11,7 +11,7 @@ game.chainProperties.numberChain = {
 	bothNumber: function(oneCard, twoCard) {
 		//Get Comparotor method. This is dependent on the current
 		//direction of the arrow.
-		var comparator = global.arrow.isUp()?this.isGreater:this.isLessThan;
+		var comparator = game.global.arrow.isUp()?this.isGreater:this.isLessThan;
 		var result = comparator(oneCard.value, twoCard.value); //Get winning value
 
 		//One Card wins, and gets to damage the opponent
@@ -139,6 +139,7 @@ game.chainProperties.numberChain = {
 	 * @param  {Object} card Number Card Played
 	 */
 	damageOpponent: function(card) {
+		console.log(card);
 		card.owner.opponent.takeDamage(game.global.turnDamage);
 		game.global.turnWon = true;
 	}

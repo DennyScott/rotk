@@ -198,13 +198,10 @@
 		};
 
 		this.removeAllAttackCards = function() {
-			console.log('in remove attack cards');
-			console.log(_this.hand.length);
 			for(var i = 0; i < _this.hand.length; i++){
 				if(_this.hand[i] instanceof game.AttackCommand){
 					_removeCommand(_this.hand[i]);
 					i--;
-					console.log('removing attack card');
 				}
 			}
 		};

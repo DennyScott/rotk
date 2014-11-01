@@ -43,22 +43,4 @@ var playState = {
 		game.global.endTurn = !game.global.endTurn;
 	},
 
-	checkCombo: function(combo) {
-		if (combo.win.length > 0) {
-			this.handleCombo(combo.win, game.global.playerOne.heal, game.global.playerTwo.takeDamage);
-		}
-
-		if (combo.lose.length > 0) {
-			this.handleCombo(combo.lose, game.global.playerOne.takeDamage, game.global.playerTwo.heal);
-		}
-	},
-
-	handleCombo: function(combo, currentPlayerEffect, opposingPlayerEffect) {
-		for (var i = 0; i < combo.length; i++) {
-			game.global.currentBoard.clearCombo(combo[i]);
-			currentPlayerEffect(game.global.comboValue);
-			opposingPlayerEffect(game.global.comboValue);
-			game.global.arrow.flip();
-		}
-	},
 };

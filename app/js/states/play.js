@@ -9,6 +9,10 @@ var playState = {
 		game.global.playerTwo.createView(0, game.global.playerOne.getHeight() + 20);
 		game.global.arrow = new game.arrow(game.world.centerX + 200,
 			0, .5);
+		game.global.round = {
+			endRound: false
+		}
+
 
 		game.global.playerOne.prepare(this.useCard, this);
 		game.global.playerTwo.prepare(this.useCard, this);
@@ -25,15 +29,18 @@ var playState = {
 		this.currentPlayer.opponent.endTurn();
 		this.currentPlayer.startTurn();
 	},
-	
+
 	useCard: function(view) {
-		if (view.card.type === 'number') {
-			var combo = game.global.currentBoard.playNumberCard(view.card.value, view.card.color);
-			this.checkCombo(combo);
-		}
-		//game.eventChain.playCards(playerOneCard, playerTwoCard); FOR TRAVIS
+		game.global.round[this.currentPlayer.name()] = view.card;
 		this.currentPlayer.removeCommand(view.card);
+
+
+		if (game.global.endTurn) {
+			game.eventChain.playCards(game.global.round[game.global.playerOne.name()], game.global.round[game.global.playerTwo.name()]);
+		}
+		
 		this.changePlayersTurn();
+		game.global.endTurn = !game.global.endTurn;
 	},
 
 	checkCombo: function(combo) {

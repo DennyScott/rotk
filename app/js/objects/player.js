@@ -124,6 +124,10 @@
 			_setKeyOnCards();
 		}
 
+		this.name = function(){
+			return _name;
+		}
+
 		/**
 		 * Check if the player is currently holding a defence card. The defence card
 		 * cannot be in the procces of 'being played' this turn.
@@ -132,6 +136,7 @@
 		 */
 		this.isHoldingDefenceCard = function() {
 			//Must check if the player played this defence card this turn
+			return false;
 		},
 
 		/**

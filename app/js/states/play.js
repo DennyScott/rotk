@@ -61,7 +61,7 @@ var playState = {
 		if(typeof card === 'undefined'){
 			card = {};
 		}
-	}
+	},
 
 	changePlayersTurn: function() {
 		//If a player has caused the other player to 'skip turns', we will make the 

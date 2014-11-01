@@ -1,6 +1,7 @@
 var menuState = {
 
 	create: function() {
+		this.createPlayers();
 		this.loadLocalStorage(); //Sets up local storage options, including loading previous high scores	
 		this.setHighScore(); //Sets up the high score to be saved to local storage if last game was higher
 		this.createBackgroundImage(); //Creates a background image for the menu
@@ -61,6 +62,13 @@ var menuState = {
 				alpha: 0
 			}, 1200).start().loop();
 		}, 200);
+	},
+
+	createPlayers: function() {
+		game.global.playerOne = new game.player('Denny');
+		game.global.playerTwo = new game.player('Travis');
+		game.global.playerOne.opponent = game.global.playerTwo;
+		game.global.playerTwo.opponent = game.global.playerOne;
 	},
 
 	/**

@@ -1,26 +1,18 @@
 var playState = {
 	preload: function() {
-		this.fullHand = 7; //How many cards are in a full hand
-		this.hand = [];
-		this.currentXPosition = game.world.centerX - 300;
-		this.currentYPosition = game.world.centerY + (game.world.centerY * .75);
+		this.currentPlayer = game.global.playerOne;
 	},
 
 	create: function() {
-		var board = new game.board(game.world.centerX, game.world.centerY, 0.5);
 		game.global.currentBoard = new game.board(game.world.centerX, game.world.centerY, 0.5);
-		game.global.playerOne = new game.player('Denny', 0, 10);
-		game.global.playerTwo = new game.player('Travis', 0, game.global.playerOne.getHeight() + 20);
+		game.global.playerOne.createView(0, 10);
+		game.global.playerTwo.createView(0, game.global.playerOne.getHeight() + 20);
 		game.global.arrow = new game.arrow(game.world.centerX + 200,
 			0, .5);
 
-		game.global.comboValue = 10;
-		game.global.turnDamage = 5;
-		game.global.aweDamage = 5;
-
 		//THIS WILL BE REMOVED ONCE THE SECOND PLAYER CAN CHOOSE HIS CARDS-------------------------------------------
-		game.global.playerOne.cards = game.global.cards;
-		game.global.playerTwo.cards = [];
+		game.global.playerOne.deck = game.global.cards;
+		game.global.playerTwo.deck = [];
 
 		for (var x = 0; x < 3; x++) {
 			var color;
@@ -35,33 +27,16 @@ var playState = {
 
 			for (var i = 1; i <= 27 / 3; i++) {
 
-				game.global.playerTwo.cards.push(new game.RegularCommand('number', i, color));
+				game.global.playerTwo.deck.push(new game.RegularCommand('number', i, color));
 			}
 		}
 
 		//END OF THE REMOVE SECTION---------------------------------------------------------------------------------
 
-		game.global.playerOne.hand = [];
-		game.global.playerTwo.hand = [];
+		game.global.playerOne.prepare(this.useCard, this);
+		game.global.playerTwo.prepare(this.useCard, this);
+		this.currentPlayer.startTurn();
 
-		game.global.playerOne.opponent = game.global.playerTwo;
-		game.global.playerTwo.opponent = game.global.playerOne;
-
-		game.global.playerOne.name = 'Player One';
-		game.global.playerTwo.name = 'Player Two';
-
-		while (game.global.playerOne.hand.length < this.fullHand) {
-			this.drawCard(game.global.playerOne);
-		}
-
-		while (game.global.playerTwo.hand.length < this.fullHand) {
-			this.drawCard(game.global.playerTwo);
-		}
-
-		this.currentPlayer = game.global.playerOne;
-		this.setKeyOnCards();
-		this.createVisibleCards();
-		this.killPlayerCards(this.currentPlayer.opponent);
 	},
 
 	update: function() {
@@ -70,54 +45,17 @@ var playState = {
 
 	changePlayersTurn: function() {
 		this.currentPlayer = this.currentPlayer.opponent;
-		this.changeHand();
-		this.setKeyOnCards();
+		this.currentPlayer.opponent.endTurn();
+		this.currentPlayer.startTurn();
 	},
-
-	changeHand: function() {
-		this.killPlayerCards(this.currentPlayer.opponent);
-		this.resetPlayerCards(this.currentPlayer);
-	},
-
-	createCard: function(card, i) {
-		card.createView(this.currentXPosition + (i * 100), this.currentYPosition);
-
-		card.view().events.onInputDown.add(this.useCard, this);
-
-		//NEEDS TO BE AT END
-		card.view().scale.x = 0.5;
-		card.view().scale.y = 0.5;
-	},
-
-	createVisibleCards: function() {
-		for (var i = 0; i < this.currentPlayer.hand.length; i++) {
-			this.createCard(game.global.playerOne.hand[i], i);
-			this.createCard(game.global.playerTwo.hand[i], i);
-		}
-		this.killPlayerCards(this.currentPlayer.opponent);
-	},
-
-	drawCard: function(player) {
-		var randNum = game.rnd.integerInRange(0, player.cards.length - 1);
-		//This line will remove a card from the deck, and put it into your hand
-		player.hand.push(player.cards[randNum]);
-
-		player.cards.splice(randNum, 1)
-	},
-
-	killPlayerCards: function(player) {
-		for (var i = 0; i < player.hand.length; i++) {
-			player.hand[i].view().kill();
-		}
-	},
-
+	
 	useCard: function(view) {
 		if (view.card.type === 'number') {
 			var combo = game.global.currentBoard.playNumberCard(view.card.value, view.card.color);
 			this.checkCombo(combo);
 		}
 		//game.eventChain.playCards(playerOneCard, playerTwoCard); FOR TRAVIS
-		this.removeCard(view.card);
+		this.currentPlayer.removeCommand(view.card);
 		this.changePlayersTurn();
 	},
 
@@ -137,35 +75,6 @@ var playState = {
 			currentPlayerEffect(game.global.comboValue);
 			opposingPlayerEffect(game.global.comboValue);
 			game.global.arrow.flip();
-		}
-	},
-
-	removeCard: function(card) {
-		if (card.view()) {
-			this.removeCardFromView(card.view());
-		}
-		this.removeCardFromHand(card);
-		card.clearView(); //Used to remove refrence to the view.  Will probably need to remove it from the actual view as well
-	},
-
-	removeCardFromHand: function(card) {
-		this.currentPlayer.hand.splice(card.handKey, 1);
-		this.setKeyOnCards();
-	},
-
-	removeCardFromView: function(view) {
-		view.kill();
-	},
-
-	resetPlayerCards: function(player) {
-		for (var i = 0; i < player.hand.length; i++) {
-			player.hand[i].view().reset(this.currentXPosition + (i * 100), this.currentYPosition);
-		}
-	},
-
-	setKeyOnCards: function() {
-		for (var i = 0; i < this.currentPlayer.hand.length; i++) {
-			this.currentPlayer.hand[i].handKey = i;
 		}
 	},
 };

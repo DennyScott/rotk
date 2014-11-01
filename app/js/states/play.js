@@ -27,7 +27,6 @@ var playState = {
 		if (game.global.endTurn) {
 			this.endOfTurnChain();
 		}
-
 		this.changePlayersTurn(); //Change to the opponents turn
 		game.global.endTurn = !game.global.endTurn;
 	},
@@ -35,13 +34,14 @@ var playState = {
 	endOfTurnChain: function() {
 		//Check if either player has not played a card. If they haven't, give them an empty object.
 		//This is because some players may 'skip' turns
-		playersCardExists(game.global.round[game.global.playerOne.name()]);
-		playerCardExists(game.global.round[game.global.playerTwo.name()]);
+		this.playerCardExists(game.global.round[game.global.playerOne.name()]);
+		this.playerCardExists(game.global.round[game.global.playerTwo.name()]);
 
 		//Try both cards in the event chain
 		game.eventChain.playCards(game.global.round[game.global.playerOne.name()], game.global.round[game.global.playerTwo.name()]);
 
 		this.drawCards(); //Both players draw a card
+		this.clearRound();
 	},
 
 	/**
@@ -68,13 +68,25 @@ var playState = {
 		//If a player has caused the other player to 'skip turns', we will make the 
 		//current player continue their turns for multiple turns. (Until cancel turns is
 		//out of numbers)
-		if(typeof game.global.cancelTurns !== 'undefined' && game.global.cancelTurns > 0){
+		if(typeof game.global.cancelTurns !== 'undefined' && game.global.cancelTurns > -1){
 			game.global.cancelTurns--;
-		}else{
-			game.global.currentPlayer = game.global.currentPlayer.opponent;
-			game.global.currentPlayer.opponent.endTurn();
 			game.global.currentPlayer.startTurn();
+			game.global.endTurn = false;
+
+			if(game.global.cancelTurns === -1){
+				this.flipTurn(game.global.playerOne);
+				game.global.endTurn = true;
+
+			}
+		}else{
+			this.flipTurn(game.global.currentPlayer.opponent);
 		}
+	},
+
+	flipTurn: function(player) {
+		game.global.currentPlayer = player;
+		game.global.currentPlayer.opponent.endTurn();
+		game.global.currentPlayer.startTurn();
 	},
 
 	createBoardAssets: function() {
@@ -85,10 +97,12 @@ var playState = {
 			0, .5);
 	},
 
+	clearRound: function() {
+		game.global.round = {};
+	},
+
 	prepareForGame: function() {
-		game.global.round = {
-			endRound: false
-		}
+		this.clearRound();
 
 		game.global.playerOne.prepare(this.useCard, this);
 		game.global.playerTwo.prepare(this.useCard, this);

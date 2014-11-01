@@ -9,18 +9,19 @@ game.chainProperties.numberChain = {
 	 * @param  {Object} twoCard A Number Card
 	 */
 	bothNumber: function(oneCard, twoCard) {
+		console.log(game.global.arrow.isUp());
 		//Get Comparotor method. This is dependent on the current
 		//direction of the arrow.
 		var comparator = game.global.arrow.isUp()?this.isGreater:this.isLessThan;
 		var result = comparator(oneCard.value, twoCard.value); //Get winning value
 
 		//One Card wins, and gets to damage the opponent
-		 if(result = 1){
+		 if(result === 1){
 		 	this.damageOpponent(oneCard);
 			this.playCard([oneCard, twoCard]);
 		 }
 		 //Two Card Wins, and gets to damage the opponent
-		 else if(result = -1){
+		 else if(result === -1){
 		 	this.damageOpponent(twoCard);
 			this.playCard([twoCard, oneCard]);
 		 }
@@ -40,9 +41,9 @@ game.chainProperties.numberChain = {
 	 * @return {int}     Value representing the greater item
 	 */
 	isGreater: function(oneCard, twoCard){
-		if(oneCard.value > twoCard.value){
+		if(oneCard > twoCard){
 			return 1;
-		}else if(oneCard.value < twoCard.value){
+		}else if(oneCard < twoCard){
 			return -1;
 		}else{
 			return 0;
@@ -58,9 +59,9 @@ game.chainProperties.numberChain = {
 	 * @return {int}     Value representing the lesser item.
 	 */
 	isLessThan: function(oneCard, twoCard){
-		if(oneCard.value < twoCard.value){
+		if(oneCard < twoCard){
 			return 1;
-		}else if(oneCard.value > twoCard.value){
+		}else if(oneCard > twoCard){
 			return -1;
 		}else{
 			return 0;
@@ -123,7 +124,7 @@ game.chainProperties.numberChain = {
 	 * @param  {Function} currentPlayerEffect  Function to perform on player who played card
 	 * @param  {[Function]} opposingPlayerEffect Function to perform on opponent
 	 */
-	handleCombo: function(combo, playerEffect, opposingPlayerEffect) {
+	handleCombo: function(combo, playerEffect) {
 		for (var i = 0; i < combo.length; i++) {
 			game.global.currentBoard.clearCombo(combo[i]); //Clear the cards from the board used in combo.
 			playerEffect(game.global.comboValue); //Damage necessary player

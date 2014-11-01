@@ -26,7 +26,7 @@ var cardSelectionState = {
 			this.destroyARandomNumberCard();
 		}
 		var newCommand;
-		var player = 'player';
+		var player = game.global.currentPlayer;
 		if (item.card.value === 'Awe') {
 			newCommand = new game.AweCommand(player);
 		} else if (item.card.value === 'Plead') {
@@ -127,7 +127,7 @@ var cardSelectionState = {
 
 			for (var i = 1; i <= this.allNumbers / this.amountOfColors; i++) {
 
-				this.cards.push(new game.RegularCommand('number', i, color));
+				this.cards.push(new game.RegularCommand(game.global.currentPlayer, i, color));
 			}
 		}
 		game.global.currentPlayer.deck = this.cards;

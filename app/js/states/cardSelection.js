@@ -1,8 +1,5 @@
 var cardSelectionState = {
 	preload: function() {
-		this.allNumbers = 27; //To get a 1 to 9 of each color (i.e Red, Blue, and Green)
-		this.neededAmountOfCards = 30;
-		this.amountOfColors = 3;
 		this.budget = 100;
 		this.labelEntranceMilliseconds = 1000;
 		this.budgetLabelText = 'Budget Remaining: ';
@@ -10,7 +7,6 @@ var cardSelectionState = {
 	},
 
 	create: function() {
-		this.createAllBaseCards();
 		this.createAbilities();
 		this.createMoneyLabel();
 		this.createInstructionLabel();
@@ -22,7 +18,7 @@ var cardSelectionState = {
 	},
 
 	addAbilityToDeck: function(item) {
-		if (game.global.currentPlayer.deck.length >= this.neededAmountOfCards) {
+		if (game.global.currentPlayer.deck.length >= game.global.neededAmountOfCards) {
 			this.destroyARandomNumberCard();
 		}
 		var newCommand;
@@ -48,7 +44,7 @@ var cardSelectionState = {
 	},
 
 	addButton: function() {
-		if (game.global.currentPlayer.deck.length === this.neededAmountOfCards) {
+		if (game.global.currentPlayer.deck.length === game.global.neededAmountOfCards) {
 			this.createButton();
 		}
 	},
@@ -108,29 +104,6 @@ var cardSelectionState = {
 			cost: 45,
 			description: ''
 		}];
-	},
-
-	createAllBaseCards: function() {
-		this.cards = [];
-		game.global.currentPlayer.hand = [];
-
-		for (var x = 0; x < this.amountOfColors; x++) {
-			var color;
-
-			if (x === 0) {
-				color = 'red';
-			} else if (x === 1) {
-				color = 'blue';
-			} else {
-				color = 'green';
-			}
-
-			for (var i = 1; i <= this.allNumbers / this.amountOfColors; i++) {
-
-				this.cards.push(new game.RegularCommand(game.global.currentPlayer, i, color));
-			}
-		}
-		game.global.currentPlayer.deck = this.cards;
 	},
 
 	createButton: function() {

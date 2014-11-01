@@ -24,7 +24,7 @@
 		_initalize(owner); //Call Constructor
 
 		this.combatAction = function() {
-			console.log('Refute Commnad combat action called')
+			this.owner.opponent.removeAllAttackCards();
 		};
 
 		this.nonCombatAction = function(card) {

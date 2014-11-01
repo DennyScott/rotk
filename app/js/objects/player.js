@@ -109,6 +109,7 @@
 			}
 			_removeCommandFromHand(command);
 			command.clearView(); //Used to remove refrence to the view.  Will probably need to remove it from the actual view as well
+			_setKeyOnCards();
 		}
 
 		var _removeCommandFromHand = function(command) {
@@ -176,7 +177,7 @@
 			}
 
 			return false;
-		},
+		};
 
 		/**
 		 * Use the defence card that the player is currently holding.
@@ -185,10 +186,31 @@
 		this.useDefenseCard = function() {
 			for (var i = 0; i < _this.hand.length; i++) {
 				if (_this.hand[i] instanceof game.DefenceCommand) {
+					var temp = _this.hand[i];
 					_removeCommand(_this.hand[i]);
+					return temp;
 				}
 			}
-		}
+		};
+
+		this.removeAttackCard = function() {
+			var notFound = true;
+			for(var i = 0; i < _this.hand.length && notFound; i++){
+				if(_this.hand[i] instanceof game.AttackCommand){
+					_removeCommand(_this.hand[i]);
+					notFound = false;
+				}
+			}
+		};
+
+		this.removeAllAttackCards = function() {
+			for(var i = 0; i < _this.hand.length; i++){
+				if(_this.hand[i] instanceof game.AttackCommand){
+					_removeCommand(_this.hand[i]);
+					i--;
+				}
+			}
+		};
 
 		/**
 		 * Get Players Health

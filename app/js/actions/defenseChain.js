@@ -19,9 +19,6 @@ game.chainProperties.defenseChain = {
 	 * @param  {Object} oneCard A defence command card.
 	 */
 	singleDefence: function(oneCard){
-		if(!game.global.turnWon){
 			oneCard.combatAction();
-		}
-		
 	}
 }

@@ -1,9 +1,8 @@
 var playState = {
 	preload: function() {
-		this.fullHand = 7; //How many cards are in a full hand
-		this.hand = [];
 		this.currentXPosition = game.world.centerX - 300;
 		this.currentYPosition = game.world.centerY + (game.world.centerY * .75);
+		this.currentPlayer = game.global.playerOne;
 	},
 
 	create: function() {
@@ -19,8 +18,8 @@ var playState = {
 		game.global.aweDamage = 5;
 
 		//THIS WILL BE REMOVED ONCE THE SECOND PLAYER CAN CHOOSE HIS CARDS-------------------------------------------
-		game.global.playerOne.cards = game.global.cards;
-		game.global.playerTwo.cards = [];
+		game.global.playerOne.deck = game.global.cards;
+		game.global.playerTwo.deck = [];
 
 		for (var x = 0; x < 3; x++) {
 			var color;
@@ -35,33 +34,16 @@ var playState = {
 
 			for (var i = 1; i <= 27 / 3; i++) {
 
-				game.global.playerTwo.cards.push(new game.RegularCommand('number', i, color));
+				game.global.playerTwo.deck.push(new game.RegularCommand('number', i, color));
 			}
 		}
 
 		//END OF THE REMOVE SECTION---------------------------------------------------------------------------------
 
-		game.global.playerOne.hand = [];
-		game.global.playerTwo.hand = [];
+		game.global.playerOne.prepare();
+		game.global.playerTwo.prepare();
+		this.setUpInitalTurn();
 
-		game.global.playerOne.opponent = game.global.playerTwo;
-		game.global.playerTwo.opponent = game.global.playerOne;
-
-		game.global.playerOne.name = 'Player One';
-		game.global.playerTwo.name = 'Player Two';
-
-		while (game.global.playerOne.hand.length < this.fullHand) {
-			this.drawCard(game.global.playerOne);
-		}
-
-		while (game.global.playerTwo.hand.length < this.fullHand) {
-			this.drawCard(game.global.playerTwo);
-		}
-
-		this.currentPlayer = game.global.playerOne;
-		this.setKeyOnCards();
-		this.createVisibleCards();
-		this.killPlayerCards(this.currentPlayer.opponent);
 	},
 
 	update: function() {
@@ -109,6 +91,18 @@ var playState = {
 		for (var i = 0; i < player.hand.length; i++) {
 			player.hand[i].view().kill();
 		}
+	},
+
+	setUpInitalTurn: function() {
+		this.resetPlayerCards(this.currentPlayer);
+		this.setKeyOnCards();
+		// command.view().events.onInputDown.add(function() {
+		// 	console.log('used card')
+		// }, this);
+
+		//NEEDS TO BE AT END
+		// card.view().scale.x = 0.5;
+		// card.view().scale.y = 0.5;
 	},
 
 	useCard: function(view) {
@@ -164,8 +158,6 @@ var playState = {
 	},
 
 	setKeyOnCards: function() {
-		for (var i = 0; i < this.currentPlayer.hand.length; i++) {
-			this.currentPlayer.hand[i].handKey = i;
-		}
+
 	},
 };

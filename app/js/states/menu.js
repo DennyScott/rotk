@@ -67,6 +67,8 @@ var menuState = {
 	createPlayers: function() {
 		game.global.playerOne = new game.player('Denny');
 		game.global.playerTwo = new game.player('Travis');
+		game.global.playerOne.opponent = game.global.playerTwo;
+		game.global.playerTwo.opponent = game.global.playerOne;
 	},
 
 	/**

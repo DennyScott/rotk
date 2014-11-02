@@ -1,6 +1,5 @@
 var playState = {
-	preload: function() {
-	},
+	preload: function() {},
 
 	create: function() {
 		this.createBoardAssets();
@@ -14,7 +13,7 @@ var playState = {
 	/**
 	 * The current player has selected a card, which sends an event to this function.
 	 * The view contains the event of the card selected.
-	 * 
+	 *
 	 * @param  {Event} view Event of the card selected
 	 */
 	useCard: function(view) {
@@ -27,6 +26,7 @@ var playState = {
 		if (game.global.endTurn) {
 			this.endOfTurnChain();
 		}
+
 		this.changePlayersTurn(); //Change to the opponents turn
 		game.global.endTurn = !game.global.endTurn;
 	},
@@ -47,7 +47,7 @@ var playState = {
 	/**
 	 * Both Players Draw a Card
 	 */
-	drawCards: function(){
+	drawCards: function() {
 		game.global.playerOne.drawCards();
 		game.global.playerTwo.drawCards();
 	},
@@ -55,11 +55,11 @@ var playState = {
 	/**
 	 * If the player passes a card that doesn't exist, we give them an empty object. This
 	 * will primarily be used when a player has "skipped" a turn.
-	 * 
+	 *
 	 * @param  {Object} card Card to Check
 	 */
-	playerCardExists: function(card){
-		if(typeof card === 'undefined'){
+	playerCardExists: function(card) {
+		if (typeof card === 'undefined') {
 			card = {};
 		}
 	},
@@ -68,17 +68,17 @@ var playState = {
 		//If a player has caused the other player to 'skip turns', we will make the 
 		//current player continue their turns for multiple turns. (Until cancel turns is
 		//out of numbers)
-		if(typeof game.global.cancelTurns !== 'undefined' && game.global.cancelTurns > -1){
+		if (typeof game.global.cancelTurns !== 'undefined' && game.global.cancelTurns > -1) {
 			game.global.cancelTurns--;
 			game.global.currentPlayer.startTurn();
 			game.global.endTurn = false;
 
-			if(game.global.cancelTurns === -1){
+			if (game.global.cancelTurns === -1) {
 				this.flipTurn(game.global.playerOne);
 				game.global.endTurn = true;
 
 			}
-		}else{
+		} else {
 			this.flipTurn(game.global.currentPlayer.opponent);
 		}
 	},
@@ -86,18 +86,25 @@ var playState = {
 	flipTurn: function(player) {
 		game.global.currentPlayer = player;
 		game.global.currentPlayer.opponent.endTurn();
-		game.global.currentPlayer.startTurn();
+		this.waitForTurn();
 	},
 
 	createBoardAssets: function() {
 		game.global.currentBoard = new game.board(game.world.centerX, game.world.centerY, 0.5);
 		game.global.playerOne.createView(0, 10);
 		game.global.playerTwo.createView(0, game.global.playerOne.getHeight() + 20);
-		game.global.arrow = new game.arrow(game.world.centerX + 200,
-			0, .5);
+		game.global.arrow = new game.arrow(game.world.centerX + 100,
+			game.world.height * .25, .5);
+		game.global.currentTurnIndicatior = game.add.text(game.world.centerX + 10, 30,
+			'Current Player: ' + game.global.currentPlayer.name(), {
+				font: '30px Arial',
+				fill: '#000000',
+				align: 'center'
+			});
+		game.global.currentTurnIndicatior.anchor.setTo(0, 0.5);
 	},
 
-	clearBoard: function () {
+	clearBoard: function() {
 		game.global.playerOne.clearCards();
 		game.global.playerTwo.clearCards();
 	},
@@ -112,5 +119,39 @@ var playState = {
 		game.global.playerOne.prepare(this.useCard, this);
 		game.global.playerTwo.prepare(this.useCard, this);
 		game.global.currentPlayer.startTurn();
+
+	},
+
+	waitForTurn: function() {
+		var playerNameText = game.global.currentPlayer.name() + "'s turn starts in"
+		this.playerNameWarning = game.add.text(game.world.centerX, game.world.centerY + 30,
+			playerNameText, {
+				font: '30px Arial',
+				fill: '#000000',
+				align: 'center'
+			});
+		this.playerNameWarning.anchor.setTo(0.5, 0.5);
+
+		this.timeRemainText = 5;
+		this.timeRemainWarning = game.add.text(game.world.centerX, game.world.centerY,
+			this.timeRemainText, {
+				font: '60px Arial',
+				fill: '#000000',
+				align: 'center'
+			});
+		this.timeRemainWarning.anchor.setTo(0.5, 0.5);
+
+		var self = this;
+		this.countdown = setInterval(function() {
+			self.timeRemainText--;
+			self.timeRemainWarning.text = self.timeRemainText;
+			if (self.timeRemainText <= 0) {
+				clearInterval(self.countdown);
+				self.playerNameWarning.destroy();
+				self.timeRemainWarning.destroy();
+				game.global.currentPlayer.startTurn();
+				game.global.currentTurnIndicatior.text = 'Current Player: ' + game.global.currentPlayer.name();
+			}
+		}, 1000);
 	}
 };

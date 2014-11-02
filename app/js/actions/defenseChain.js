@@ -1,6 +1,6 @@
 var game = window.game || {};
 
-game.chainProperties.defenseChain = {
+game.chainProperties.defenceChain = {
 
 	/**
 	 * Both players played a defense card. If they both play a defence card,

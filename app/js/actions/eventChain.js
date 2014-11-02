@@ -26,7 +26,7 @@ game.eventChain = {
 			_this.handleCommand(game.AttackCommand, game.chainProperties.attackChain);
 			_this.handleCommand(game.RegularCommand, game.chainProperties.numberChain);
 			_this.handleCommand(game.DefenceCommand, game.chainProperties.defenceChain);
-			_this.handleCommand(game.AweCommand, game.chainProperties.AweChain);
+			_this.handleCommand(game.AweCommand, game.chainProperties.aweChain);
 			_this.performAweDamage();
 		}, 4000);
 		

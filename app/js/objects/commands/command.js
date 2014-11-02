@@ -1,7 +1,7 @@
 (function() {
 
 	var game = window.game || {};
-	
+
 	/**
 	 * The Command class, this is the class all other commands will inherit off of.  It has the basic things that must be in every card.
 	 * @param {Player} owner The owner of this card
@@ -10,11 +10,11 @@
 	 */
 	var Command = function(owner, type, value) {
 		var _command = this;
-		var _sprite;
-		this.owner;
-		this.type;
-		this.value;
-		this.damage;
+		var _sprite = undefined;
+		this.owner = undefined;
+		this.type = undefined;
+		this.value = undefined;
+		this.damage = undefined;
 
 		/**
 		 * Coonstructor for the command class
@@ -25,7 +25,7 @@
 		var _initalize = function(owner, type, value) {
 			_command.type = type;
 			_command.value = value;
-			_command.owner = owner
+			_command.owner = owner;
 			_command.damage = 0;
 		};
 
@@ -51,11 +51,11 @@
 			_sprite.inputEnabled = true;
 			_sprite.input.useHandCursor = true; //if you want a hand cursor
 			_sprite.card = _command; //This is to create a two way binding that both sides have reference to eachother
-		}
+		};
 
 		this.clearView = function () {
 			_sprite = undefined;
-		}
+		};
 
 		/**
 		 * Returns the view to the user
@@ -63,10 +63,10 @@
 		 */
 		this.view = function() {
 			return _sprite;
-		}
+		};
 
 		_initalize(owner, type, value); //Call Constructor
-	}
+	};
 
 	game.Command = Command; //Add to global Namespace
 })();

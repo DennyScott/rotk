@@ -1,4 +1,5 @@
 (function() {
+	var game = window.game || {};
 
 	/**
 	 * Board Object. This will include each small tile, and the larger outer board. This will handle the creation of these
@@ -23,8 +24,10 @@
 		 */
 		var _initalize = function(x, y, scale) {
 
-			if(typeof scale === 'undefined'){scale = 1;};
-			
+			if (typeof scale === 'undefined') {
+				scale = 1;
+			};
+
 			//Create the Outer Board
 			_outerBoard = game.add.sprite(x, y, 'blackTile');
 			_outerBoard.anchor.setTo(0.5, 0.5); //Anchor will be middle of object
@@ -93,8 +96,8 @@
 				[2, 9, 3],
 				[4, 1, 3],
 				[2, 1, 5]
-			]
-		}
+			];
+		};
 
 		/**
 		 * Play a Card, passing the number and the value. This will pass the responsibility
@@ -117,14 +120,17 @@
 		/**
 		 * Play Awe Card. This card will be placed on the board, but cannot be combo'd.
 		 * Each turn, the other opponent is damaged while this number exists.
-		 * 
+		 *
 		 * @param  {int} number Number to place card on.
 		 * @param  {player} player Player to Damage
 		 */
-		this.playAweCard = function(number, player){
+		this.playAweCard = function(number, player) {
 			_tileArray[number - 1].changeTileColor('black'); //Place tile on Board
-			_awes.push({number: number, player: player}); //Store Awe Value
-		}
+			_awes.push({
+				number: number,
+				player: player
+			}); //Store Awe Value
+		};
 
 		/**
 		 * Get all Current Awes
@@ -132,30 +138,30 @@
 		 */
 		this.getAwes = function() {
 			return _awes;
-		}
+		};
 
 		/**
 		 * Checks if number exists in the awe array. If it does, remove
 		 * it.
-		 * 
+		 *
 		 * @param  {int} number Number to check awe array with
 		 */
-		var _removeAwe = function(number){
-			for(var i = 0; i < _awes.length; i++){
-				if(_awes[i].number === number){
+		var _removeAwe = function(number) {
+			for (var i = 0; i < _awes.length; i++) {
+				if (_awes[i].number === number) {
 					_awes.splice(i, 1);
 				}
 			}
-		}
+		};
 
 		/**
 		 * Clear a combo of three values. This will take the tile and turn them back to white
 		 * tiles.
-		 * 
+		 *
 		 * @param  {Array} combo Three Values to clear.
 		 */
-		this.clearCombo = function(combo){
-			for(var i = 0; i < combo.length; i++){
+		this.clearCombo = function(combo) {
+			for (var i = 0; i < combo.length; i++) {
 				_tileArray[combo[i] - 1].changeTileColor('white'); //Change tiles back to white
 			}
 		};
@@ -163,7 +169,7 @@
 		/**
 		 * Check if the number placed, in unision with the color, is the same or opposite color
 		 * as two other values paired in the combinations array. If any combination
-		 * has three colors that are the same or different, that is a combo. 
+		 * has three colors that are the same or different, that is a combo.
 		 * The rules of the compare are defined by the comparingRules method passed into this
 		 * function.
 		 *
@@ -226,12 +232,12 @@
 		var _defaultColors = function(color) {
 			//Is this one of the default colors?
 			if (color === 'white' || color === 'black') {
-				return true
+				return true;
 			}
 
 			//The color was not one of the default colors
 			return false;
-		}
+		};
 
 		/**
 		 * Check if the combination of three values are the same color. If
@@ -252,7 +258,7 @@
 			}
 
 			return true; //All three values were the same color, return true
-		}
+		};
 
 		/**
 		 * Collect the positions from the outerboard size. This will first collect the X positions left
@@ -262,13 +268,13 @@
 		 */
 		var _getPositions = function() {
 			//The below 6 positions defined all 6 positons a value can take. (3x3 = 9)
-			var xLeft = 0 - (_outerBoard.width/(2 * _outerBoardScale));
-			var xCenter = xLeft + (_outerBoard.width * (_scale * (1/_outerBoardScale)));
-			var xRight = xCenter + (_outerBoard.width * (_scale * (1/_outerBoardScale)));
+			var xLeft = 0 - (_outerBoard.width / (2 * _outerBoardScale));
+			var xCenter = xLeft + (_outerBoard.width * (_scale * (1 / _outerBoardScale)));
+			var xRight = xCenter + (_outerBoard.width * (_scale * (1 / _outerBoardScale)));
 
 			var yTop = 0 - (_outerBoard.height / (2 * _outerBoardScale));
-			var yCenter = yTop + (_outerBoard.height * (_scale * (1/_outerBoardScale)));
-			var yBottom = yCenter + (_outerBoard.height * (_scale * (1/_outerBoardScale)));
+			var yCenter = yTop + (_outerBoard.height * (_scale * (1 / _outerBoardScale)));
+			var yBottom = yCenter + (_outerBoard.height * (_scale * (1 / _outerBoardScale)));
 
 			//We then take these 6 positions, and place them in combinations together, to create
 			//all 9 posibilities.
@@ -315,7 +321,7 @@
 
 		game.global = game.global || {}; //Create the Global variable if it does not exist
 
-	}
+	};
 
 	game.board = Board; //Add the Board to the game object
 })();

@@ -77,11 +77,13 @@ var playState = {
 		if (typeof game.global.cancelTurns !== 'undefined' && game.global.cancelTurns > -1) {
 			game.global.cancelTurns--;
 			game.global.currentPlayer.startTurn();
-			game.global.endTurn = false;
+			game.global.endTurn = true;
 
 			if (game.global.cancelTurns === -1) {
+				game.global.endTurn = false;
+				game.global.cancelTurns = undefined;
 				this.flipTurn(game.global.playerOne);
-				game.global.endTurn = true;
+
 
 			}
 		} else {

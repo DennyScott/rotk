@@ -167,7 +167,7 @@ window.states.cardSelectionState = {
 		var currentPosition; //The current position of cards
 		var minHorizontalSpace = 80;
 		var moreHorizontalSpace = game.world.width * 0.15;
-		var minVerticalSpace = 120;
+		var minVerticalSpace = 100;
 		var moreVerticalSpace = game.world.height * 0.25;
 		var spaceBetweenObject = moreHorizontalSpace > minHorizontalSpace ? moreHorizontalSpace : minHorizontalSpace; //The space between cards in the same row
 		var verticalSpaceBetweenCards = moreHorizontalSpace > minVerticalSpace ? moreVerticalSpace : minVerticalSpace; //The space between rows of cards
@@ -238,8 +238,8 @@ window.states.cardSelectionState = {
 
 		this.placeCardLabel(x, endY, this[key].card);
 
-		this[key].scale.x = 0.5;
-		this[key].scale.y = 0.5;
+		this[key].scale.x = 0.4;
+		this[key].scale.y = 0.4;
 		delete ability.timeDelay;
 
 	},
@@ -263,7 +263,7 @@ window.states.cardSelectionState = {
 		var playerNameText = game.global.currentPlayer.name() + ",\nChoose Your Abilities!";
 		this.playerNameWarning = game.add.text(game.world.centerX, game.world.height * 0.15 - 10,
 			playerNameText, {
-				font: '30px Arial',
+				font: '25px Arial',
 				fill: '#ffffff',
 				align: 'center'
 			});

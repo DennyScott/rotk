@@ -29,7 +29,7 @@ game.chainProperties.numberChain = {
 		 //Both Numbers were the same, neither are placed.
 		 else{
 		 	//Cancel out animation
-		 	game.global.round.isTie = true;
+		 	game.animations.cardsEqual(oneCard, twoCard);
 		 }
 	},
 

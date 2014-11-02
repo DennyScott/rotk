@@ -34,7 +34,7 @@ game.animations = {
 	},
 
 	removeCards: function() {
-		var tween = game.add.tween(this.twoCard.view()).to({
+		game.add.tween(this.twoCard.view()).to({
 			alpha: 0,
 		}, 600, Phaser.Easing.Linear.None, true, 600);
 
@@ -59,9 +59,11 @@ game.animations = {
 			y: oneCard.view().y - 20
 		}, 800, Phaser.Easing.Linear.None, true, 1000);
 
-		game.add.tween(twoCard.view()).to({
+		var tween = game.add.tween(twoCard.view()).to({
 			alpha: 0,
 			y: twoCard.view().y - 20
 		}, 800, Phaser.Easing.Linear.None, true, 1000);
+
+		tween.onComplete.add(this.removeCards, this);
 	}
 }

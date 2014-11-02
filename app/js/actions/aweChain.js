@@ -7,7 +7,6 @@ game.chainProperties.aweChain = {
 	 * @param  {Object} card Awe Command Card
 	 */
 	playAwe: function(card, otherCard){
-		console.log(card);
 		game.global.currentBoard.playAweCard(card.value, card.owner.opponent);
 
 		if(!game.global.turnWon){

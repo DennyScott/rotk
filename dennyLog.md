@@ -46,3 +46,8 @@ I added an arrow to signify which end of numbers are the strongest. If the arrow
 
 The game is just about in a playable state. It will definitly be good to go by tomrrow night. Hopefully we can start bouncing the game to some family and friends and see what they think.
 
+##November 1
+* Changed Combo Damage from 10 to 25
+* Changed Turn Win Damage from 5 to 10
+* Added "Miss 2 turn" to Incite
+* Start with 120 Points

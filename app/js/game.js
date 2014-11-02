@@ -4,8 +4,8 @@ var game = new Phaser.Game(800, 840, Phaser.AUTO, 'gameDiv');
 //Define our 'global variable'
 game.global = {
 	fullHand: 7,
-	comboValue: 10,
-	turnDamage: 5,
+	comboValue: 25,
+	turnDamage: 10,
 	aweDamage: 5,
 	allNumbers: 27, //To get a 1 to 9 of each color (i.e Red, Blue, and Green)
 	neededAmountOfCards: 30,

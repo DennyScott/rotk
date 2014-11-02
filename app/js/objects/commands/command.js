@@ -1,5 +1,7 @@
 (function() {
 
+	var game = window.game || {};
+	
 	/**
 	 * The Command class, this is the class all other commands will inherit off of.  It has the basic things that must be in every card.
 	 * @param {Player} owner The owner of this card

@@ -1,5 +1,7 @@
 (function() {
 
+	var game = window.game || {};
+	
 	/**
 	 * A Regular command, with is a command that is a color and a number
 	 * @param {Player} owner the owner of this card
@@ -7,8 +9,8 @@
 	 * @param {String} color The string value of the card, i.e. green ,red, or blue
 	 */
 	var RegularCommand = function(owner, value, color) {
-		_command = this;
-		this.color;
+		var _command = this;
+		this.color = undefined;
 		
 		/**
 		 * Initalizes the regular command
@@ -35,8 +37,8 @@
 		this.createView = function (x, y) {
 			var sprite = color.toLowerCase() + 'Command';
 			_createView(x, y, sprite);
-		}
-	}
+		};
+	};
 
 	RegularCommand.prototype = Object.create(game.Command.prototype);
 

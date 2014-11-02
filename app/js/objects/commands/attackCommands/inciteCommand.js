@@ -29,7 +29,7 @@
 		};
 
 		var _setIncite = function () {
-			_command.hello = 'hello';
+			_command.details = 'This is the Incite Command';
 		};
 
 

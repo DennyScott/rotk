@@ -1,6 +1,6 @@
 (function() {
 	var game = window.game || {};
-	
+
 	/**
 	 * An argue command, which usually does some damage to  a players opponent.
 	 * @param {Player} owner        The owner of this command
@@ -35,7 +35,7 @@
 		this.combatAction = function () {
 			_combatAction(this.damage, this.owner);
 		};
-	}
+	};
 
 	ArgueCommand.prototype = Object.create(game.AttackCommand.prototype);
 

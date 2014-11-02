@@ -20,6 +20,7 @@ game.state.add('load', loadState);
 game.state.add('menu', menuState);
 game.state.add('cardSelection', cardSelectionState);
 game.state.add('play', playState);
+game.state.add('victory', victoryState);
 
 
 //Start the boot state

@@ -269,6 +269,10 @@
 			_health -= amount;
 			_text.text = _createLabel(); //Display Current Health
 			_this.opponent.heal(amount);
+			if(_health <= 0) {
+				game.global.winner = _this.opponent;
+				game.state.start('victory');
+			}
 			return _health;
 		};
 

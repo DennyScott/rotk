@@ -57,7 +57,7 @@ game.animations = {
 				y: loser.view().y - 20
 			}, 1200, Phaser.Easing.Linear.None, true, 800);
 			tween.onComplete.add(_this.removeCards, _this);
-		}, 1200)
+		}, 1200);
 
 	},
 
@@ -124,20 +124,20 @@ game.animations = {
 
 	animateDefenceCard: function(dView) {
 		game.add.tween(dView.scale).to({
-			x: dView.scale.x + .1,
-			y: dView.scale.x + .1,
+			x: dView.scale.x + 0.1,
+			y: dView.scale.x + 0.1,
 		}, 300, Phaser.Easing.Linear.None, true, 50)
 			.to({
-				x: dView.scale.x - .2,
-				y: dView.scale.x - .2,
+				x: dView.scale.x - 0.2,
+				y: dView.scale.x - 0.2,
 			}, 300, Phaser.Easing.Linear.None, true, 50)
 			.to({
-				x: dView.scale.x + .15,
-				y: dView.scale.x + .15,
+				x: dView.scale.x + 0.15,
+				y: dView.scale.x + 0.15,
 			}, 200, Phaser.Easing.Linear.None, true, 50)
 			.to({
-				x: dView.scale.x - .05,
-				y: dView.scale.x - .05,
+				x: dView.scale.x - 0.05,
+				y: dView.scale.x - 0.05,
 			}, 100, Phaser.Easing.Linear.None, true, 50);
 
 		game.add.tween(dView).to({

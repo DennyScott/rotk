@@ -1,7 +1,7 @@
 (function() {
 
 	var game = window.game || {};
-	
+
 	/**
 	 * An Taunt command, which usually does some damage to  a players opponent.
 	 * @param {Player} owner        The owner of this command
@@ -24,9 +24,14 @@
 			var cost = 45;
 			var description = 'An Attack command that will trump any regular command, as well as Fault and Argue, and cause a massive amount of damage to your opponent, as well as make your opponent inactive for the following 2 turns';
 			game.AttackCommand.call(_command, owner, value, description, cost);
+			_setVitals();
+
+		};
+
+		_setVitals = function() {
 			_command.KOTurns = 1;
 			_command.damage = 20;
-		};
+		}
 
 
 		_initalize(owner); //Call Constructor

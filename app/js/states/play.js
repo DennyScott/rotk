@@ -103,23 +103,21 @@ window.states.playState = {
 	},
 
 	createBoardAssets: function() {
-		game.global.currentBoard = new game.board(game.world.centerX, game.world.centerY, 0.5);
+		game.global.currentBoard = new game.board(game.world.centerX, game.world.height * 0.40, 0.4);
 		game.global.playerOne.createView(10, 10);
 		game.global.playerTwo.createView(10, game.global.playerOne.getHeight() + 20);
-		game.global.arrow = new game.arrow(game.world.centerX + 100,
-			game.world.height * 0.28, 0.25);
-		game.global.currentTurnIndicatior = game.add.text(game.world.centerX + 10, 0,
+		game.global.arrow = new game.arrow(game.world.width * .70,
+			game.world.height * 0.50, 0.25);
+		game.global.currentTurnIndicatior = game.add.text(game.world.width + 100, 30,
 			'Current Player: ' + game.global.currentPlayer.name(), {
-				font: '30px Geo',
+				font: '20px Geo',
 				fill: '#ffffff',
 				align: 'center'
 			});
-		game.global.currentTurnIndicatior.alpha = 0;
 		game.add.tween(game.global.currentTurnIndicatior).to({
-			y: 30,
-			alpha: 1
-		}, 1000, Phaser.Easing.Linear.None, true);
-		game.global.currentTurnIndicatior.anchor.setTo(0, 0.5);
+			x: game.world.width - 10,
+		}, 1000, Phaser.Easing.Bounce.Out, true);
+		game.global.currentTurnIndicatior.anchor.setTo(1, 0.5);
 	},
 
 	clearBoard: function() {
@@ -142,18 +140,18 @@ window.states.playState = {
 
 	waitForTurn: function() {
 		var playerNameText = game.global.currentPlayer.name() + "'s turn starts in";
-		this.playerNameWarning = game.add.text(150, game.world.height * 0.25,
+		this.playerNameWarning = game.add.text(100, game.world.height * 0.65,
 			playerNameText, {
-				font: '30px Arial',
+				font: '20px Arial',
 				fill: '#ffffff',
 				align: 'center'
 			});
 		this.playerNameWarning.anchor.setTo(0.5, 0.5);
 
 		this.timeRemainText = 5;
-		this.timeRemainWarning = game.add.text(150, game.world.height * 0.25 + 45,
+		this.timeRemainWarning = game.add.text(100, game.world.height * 0.65 + 25,
 			this.timeRemainText, {
-				font: '60px Arial',
+				font: '20px Arial',
 				fill: '#ffffff',
 				align: 'center'
 			});

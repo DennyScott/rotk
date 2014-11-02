@@ -60,8 +60,8 @@
 			command.view().events.onInputDown.add(_cardClickEvent, _cardContext);
 
 
-			command.view().scale.x = 0.5;
-			command.view().scale.y = 0.5;
+			command.view().scale.x = 0.4;
+			command.view().scale.y = 0.4;
 		};
 
 		/**
@@ -126,11 +126,11 @@
 		};
 
 		var _resetAllCards = function() {
-			var currentXPosition = game.world.centerX - 300;
+			var currentXPosition = game.world.centerX - 210;
 			var currentYPosition = game.world.centerY + (game.world.centerY * 0.75);
 
 			for (var i = 0; i < _this.hand.length; i++) {
-				_this.hand[i].view().reset(currentXPosition + (i * 100), currentYPosition);
+				_this.hand[i].view().reset(currentXPosition + (i * 70), currentYPosition);
 			}
 		};
 
@@ -147,7 +147,7 @@
 		this.createView = function(x, y) {
 			//Create Text Object
 			_text = game.add.text(-400, y, _createLabel(), {
-				font: '30px Geo',
+				font: '20px Geo',
 				fill: '#ffffff'
 			});
 			game.add.tween(_text).to({

@@ -1,3 +1,4 @@
+var Phaser = window.Phaser || {};
 // We initialising Phaser
 var game = new Phaser.Game(window.innerWidth, window.innerHeight, Phaser.AUTO, 'gameDiv');
 

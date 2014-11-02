@@ -7,7 +7,7 @@
 	 * @param {strin} description  The description of the given card
 	 */
 	var RefuteCommand = function(owner) {
-		_command = this;
+		var _command = this;
 
 		/**
 		 * Initalizes the object

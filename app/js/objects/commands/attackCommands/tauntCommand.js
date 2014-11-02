@@ -22,20 +22,12 @@
 			var cost = 45;
 			var description = 'An Attack command that will trump any regular command, as well as Fault and Argue, and cause a massive amount of damage to your opponent, as well as make your opponent inactive for the following 2 turns';
 			game.AttackCommand.call(_command, owner, value, description, cost);
-
-			_command.damage = 30;
+			_command.KOTurns = 2;
+			_command.damage = 35;
 		};
 
 
 		_initalize(owner); //Call Constructor
-
-		var _combatAction = _command.combatAction;
-
-		this.combatAction = function () {
-			_combatAction(this.damage, this.owner);
-			game.global.currentPlayer = this.owner;
-			game.global.cancelTurns = 2;
-		};
 	}
 
 	TauntCommand.prototype = Object.create(game.AttackCommand.prototype);

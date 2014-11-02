@@ -7,7 +7,7 @@
 	 * @param {strin} description  The description of the given card
 	 */
 	var AttackCommand = function(owner, value, description, cost) {
-		_command = this;
+		var _command = this;
 
 		/**
 		 * Initalizes the cards
@@ -24,8 +24,13 @@
 
 		_initalize(owner, value, description, cost); //Call Constructor
 
-		this.combatAction = function (damage, owner) {
-			owner.opponent.takeDamage(damage);
+		this.combatAction = function() {
+			_command.owner.opponent.takeDamage(_command.damage);
+
+			if (_command.KOTurns) {
+				game.global.currentPlayer = this.owner;
+				game.global.cancelTurns = _command.KOTurns;
+			}
 		};
 	}
 

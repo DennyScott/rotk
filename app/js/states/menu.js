@@ -18,7 +18,6 @@ window.states.menuState = {
 		this.createStartLabel(); //Create the start Label to tell the user to start the game
 		this.createBlinkingText(); //Creates the blinking objection and hold it in the title screen
 		this.setUpInput(); //Sets up user input when the menu begins to start the game
-		this.setUpMute(); //Sets up the mute option in the top left of the screen
 	},
 	/**
 	 * Creates a background image behind the menu
@@ -32,7 +31,7 @@ window.states.menuState = {
 	createBlinkingText: function() {
 		var objection = game.add.text(0, 0,
 			'Objection!', {
-				font: '70px Arial',
+				font: '40px Arial',
 				fill: '#ffff00',
 				align: 'center'
 			});
@@ -40,7 +39,7 @@ window.states.menuState = {
 		objection.anchor.setTo(0.5, 0.5);
 		objection.alpha = 0;
 		objection.angle = -45;
-		objection.x = game.world.centerX - 175;
+		objection.x = game.world.width * 0.25;
 		objection.y = game.world.centerY;
 
 		game.add.tween(objection).to({
@@ -53,7 +52,7 @@ window.states.menuState = {
 
 		var holdIt = game.add.text(0, 0,
 			'Hold It!', {
-				font: '70px Arial',
+				font: '40px Arial',
 				fill: '#ffff00',
 				align: 'center'
 			});
@@ -61,7 +60,7 @@ window.states.menuState = {
 		holdIt.anchor.setTo(0.5, 0.5);
 		holdIt.alpha = 0;
 		holdIt.angle = 45;
-		holdIt.x = game.world.centerX + 175;
+		holdIt.x = game.world.width * 0.75;
 		holdIt.y = game.world.centerY;
 
 		setTimeout(function() {
@@ -132,7 +131,7 @@ window.states.menuState = {
 		var startX = game.world.width + 180;
 		var endX = game.world.centerX;
 
-		this.nextButton = game.add.button(startX, game.world.height - 60, 'nextButton', this.start, this);
+		this.nextButton = game.add.button(startX, game.world.height * 0.9, 'nextButton', this.start, this);
 		this.nextButton.anchor.setTo(0.5, 0.55);
 		var text = 'Start Game';
 		this.nextButton.buttonText = game.add.text(0, 0,
@@ -168,7 +167,7 @@ window.states.menuState = {
 
 		//Create a tween on teh label
 		game.add.tween(nameLabel).to({
-			y: 80
+			y: game.world.height * 0.15
 		}, 1000).easing(Phaser.Easing.Bounce.Out)
 			.start();
 	},
@@ -178,22 +177,5 @@ window.states.menuState = {
 	 */
 	setUpInput: function() {
 		//No Input for this game currently
-	},
-
-	/**
-	 * Initalizes and has the mute button in the top left to react to player input
-	 */
-	setUpMute: function() {
-		//Add the mute button that calls the toggleSound function when pressed
-		this.muteButton = game.add.button(20, 20, 'mute', this.toggleSound, this);
-
-		//If the mouse is over the button it becomes a hand cursor
-		this.muteButton.input.useHandCursor = true;
-
-		//If the game is already muted
-		if (game.sound.mute) {
-			//Change the frame to already display the mute symbol
-			this.muteButton.frame = 1;
-		}
 	}
 };

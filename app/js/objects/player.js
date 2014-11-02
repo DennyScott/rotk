@@ -81,12 +81,14 @@
 		};
 
 		var _drawCard = function() {
-			var randNum = game.rnd.integerInRange(0, _this.deck.length - 1);
+			if (_this.deck.length > 0) {
+				var randNum = game.rnd.integerInRange(0, _this.deck.length - 1);
 
-			//This line will remove a card from the deck, and put it into your hand
-			_this.hand.push(_this.deck[randNum]);
+				//This line will remove a card from the deck, and put it into your hand
+				_this.hand.push(_this.deck[randNum]);
 
-			_this.deck.splice(randNum, 1)
+				_this.deck.splice(randNum, 1)
+			}
 		}
 
 		var _drawMaxCards = function() {

@@ -31,8 +31,10 @@
 
 		var _combatAction = _command.combatAction;
 
-		this.combatAction = function () {
+		this.combatAction = function() {
 			_combatAction(this.damage, this.owner);
+			game.global.currentPlayer = this.owner;
+			game.global.cancelTurns = 2;
 		};
 	}
 

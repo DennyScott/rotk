@@ -1,4 +1,5 @@
 (function() {
+	var game = window.game || {};
 
 	/**
 	 * An Incite command, which usually does some damage to  a players opponent.
@@ -31,6 +32,5 @@
 	};
 
 	InciteCommand.prototype = Object.create(game.AttackCommand.prototype);
-	var game = window.game || {};
 	game.InciteCommand = InciteCommand; //Add to global Namespace
 })();

@@ -1,5 +1,6 @@
 var game = window.game || {};
 var Phaser = window.Phaser || {};
+
 game.animations = {
 	showCards: function(oneCard, twoCard) {
 		this.clearBoard();
@@ -7,25 +8,35 @@ game.animations = {
 		if (typeof oneCard !== 'undefined') {
 			this.oneCard = oneCard;
 			this.oneCard.createView(0, 0);
-			this.createCard(oneCard, game.world.centerX - oneCard.view().width, game.world.height - oneCard.view().height, 0.75, -20);
+			this.createCard(oneCard, {
+				x: game.world.centerX - oneCard.view().width, 
+				y: game.world.height - oneCard.view().height, 
+				scale: 0.75, 
+				fromTween: -20
+			});
 		}
 
 		if (typeof twoCard !== 'undefined') {
 			this.twoCard = twoCard;
 			this.twoCard.createView(0, 0);
-			this.createCard(twoCard, game.world.centerX + twoCard.view().width, game.world.height - twoCard.view().height, 0.75, 20);
+			this.createCard(twoCard, {
+				x: game.world.centerX + twoCard.view().width, 
+				y: game.world.height - twoCard.view().height, 
+				scale: 0.75, 
+				fromTween: 20
+			});
 		}
 
 	},
 
-	createCard: function(card, x, y, scale, fromTween) {
-		card.view().scale.x = card.view().scale.y = scale;
-		card.view().x = x + fromTween;
-		card.view().y = y;
+	createCard: function(card, options) {
+		card.view().scale.x = card.view().scale.y = options.scale;
+		card.view().x = options.x + options.fromTween;
+		card.view().y = options.y;
 		card.view().alpha = 0;
 		game.add.tween(card.view()).to({
 			alpha: 1,
-			x: x
+			x: options.x
 		}, 800, Phaser.Easing.Linear.None, true, 1000);
 	},
 

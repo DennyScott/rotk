@@ -4,8 +4,8 @@
 	
 	var AbilityCommand = function(owner, value, description, cost) {
 		var _command = this;
-		this.description;
-		this.cost;
+		this.description = undefined;
+		this.cost = undefined;
 
 		
 		var _initalize = function(owner, value, description, cost) {

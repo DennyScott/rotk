@@ -29,9 +29,8 @@
 			this.owner.opponent.removeAttackCard();
 		};
 		this.nonCombatAction = function() {
-			console.log('Plead Commnad non-combat action called')
 		};
-	}
+	};
 
 	PleadCommand.prototype = Object.create(game.DefenceCommand.prototype);
 

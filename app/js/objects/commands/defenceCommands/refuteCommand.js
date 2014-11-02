@@ -33,7 +33,7 @@
 			card.combatAction();
 			card.owner = this.owner.opponent;
 		};
-	}
+	};
 
 	RefuteCommand.prototype = Object.create(game.DefenceCommand.prototype);
 

@@ -8,7 +8,7 @@
 	 * @param {string} description the decription of the card
 	 */
 	var AweCommand = function(owner) {
-		_command = this;
+		var _command = this;
 
 		/**
 		 * initalizes the awe command

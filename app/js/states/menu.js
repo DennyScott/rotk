@@ -1,4 +1,5 @@
 var menuState = {
+	window.game = window.game || {};
 
 	create: function() {
 		this.createPlayers();
@@ -29,7 +30,7 @@ var menuState = {
 			});
 
 		objection.anchor.setTo(0.5, 0.5);
-		objection.alpha = 0
+		objection.alpha = 0;
 		objection.angle = -45;
 		objection.x = game.world.centerX - 175;
 		objection.y = game.world.centerY;
@@ -187,4 +188,4 @@ var menuState = {
 			this.muteButton.frame = 1;
 		}
 	}
-}
+};

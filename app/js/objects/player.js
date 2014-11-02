@@ -9,7 +9,7 @@
 		var _health; //Players Health
 		var _text; //The Text Object to display
 		var _cardContext;
-		var _cardClickEvent
+		var _cardClickEvent;
 		this.opponent;
 		this.hand;
 		this.budget;
@@ -60,7 +60,7 @@
 
 			command.view().scale.x = 0.5;
 			command.view().scale.y = 0.5;
-		}
+		};
 
 		/**
 		 * Generate the label used to display the players current health
@@ -68,7 +68,7 @@
 		 */
 		var _createLabel = function() {
 			return name + "'s Health: " + _health;
-		}
+		};
 
 		var _createVisibleCards = function() {
 			for (var i = 0; i < _this.hand.length; i++) {
@@ -87,15 +87,15 @@
 				//This line will remove a card from the deck, and put it into your hand
 				_this.hand.push(_this.deck[randNum]);
 
-				_this.deck.splice(randNum, 1)
+				_this.deck.splice(randNum, 1);
 			}
-		}
+		};
 
 		var _drawMaxCards = function() {
 			while (_this.hand.length < game.global.fullHand) {
 				_drawCard();
 			}
-		}
+		};
 
 		var _killAllCards = function() {
 			for (var i = 0; i < _this.hand.length; i++) {
@@ -103,7 +103,7 @@
 					_this.hand[i].view().kill();
 				}
 			}
-		}
+		};
 
 		var _removeCommand = function(command) {
 			if (command.view()) {
@@ -112,25 +112,25 @@
 			_removeCommandFromHand(command);
 			command.clearView(); //Used to remove refrence to the view.  Will probably need to remove it from the actual view as well
 			_setKeyOnCards();
-		}
+		};
 
 		var _removeCommandFromHand = function(command) {
 			_this.hand.splice(command.handKey, 1);
 			_setKeyOnCards();
-		}
+		};
 
 		var _removeCommandFromView = function(view) {
 			view.kill();
-		}
+		};
 
 		var _resetAllCards = function() {
 			var currentXPosition = game.world.centerX - 300;
-			var currentYPosition = game.world.centerY + (game.world.centerY * .75);
+			var currentYPosition = game.world.centerY + (game.world.centerY * 0.75);
 
 			for (var i = 0; i < _this.hand.length; i++) {
 				_this.hand[i].view().reset(currentXPosition + (i * 100), currentYPosition);
 			}
-		}
+		};
 
 		var _setKeyOnCards = function() {
 			for (var i = 0; i < _this.hand.length; i++) {
@@ -140,7 +140,7 @@
 
 		this.clearCards = function() {
 			_killAllCards();
-		}
+		};
 
 		this.createView = function(x, y) {
 			//Create Text Object
@@ -151,17 +151,17 @@
 			game.add.tween(_text).to({
 				x: x
 			}, 1000, Phaser.Easing.Bounce.Out, true);
-		}
+		};
 
 		this.drawCards = function() {
 			_drawMaxCards();
 			_createVisibleCards();
-		}
+		};
 
 		this.endTurn = function() {
 			_killAllCards();
 			_setKeyOnCards();
-		}
+		};
 
 		this.name = function() {
 			return _name;
@@ -223,7 +223,7 @@
 		 */
 		this.health = function() {
 			return _health;
-		}
+		};
 
 		/**
 		 * Is the player at or below 0 health.
@@ -231,11 +231,11 @@
 		 */
 		this.isDead = function() {
 			if (_health <= 0) {
-				return true
+				return true;
 			} else {
 				return false;
 			}
-		}
+		};
 
 		/**
 		 * Get the width of the _text object.
@@ -243,7 +243,7 @@
 		 */
 		this.getWidth = function() {
 			return _text.width;
-		}
+		};
 
 		/**
 		 * Get the Height of the _text object
@@ -251,12 +251,12 @@
 		 */
 		this.getHeight = function() {
 			return _text.height;
-		}
+		};
 
 		this.startTurn = function() {
 			_resetAllCards();
 			_setKeyOnCards();
-		}
+		};
 
 		/**
 		 * Player takes damage, reducing the number from the
@@ -274,7 +274,7 @@
 				game.state.start('victory');
 			}
 			return _health;
-		}
+		};
 
 		/**
 		 * Player recieves health, increasing their health by the number
@@ -287,28 +287,29 @@
 			_health += amount;
 			_text.text = _createLabel(); //Display current health
 			return _health;
-		}
+		};
 
 		this.prepare = function(clickEvent, context) {
-			_cardContext = context
+			_cardContext = context;
 			_cardClickEvent = clickEvent;
 			_drawMaxCards();
 			_setKeyOnCards();
 			_createVisibleCards();
 
 
-		}
+		};
 
 		this.removeCommand = function(command) {
 			_removeCommand(command);
 
-		}
+		};
 
 
 
 		_initalize(name); //Call constructor
-	}
+	};
 
+	game = game || {};
 	game.player = Player; //Attach to global scope
 
 })();

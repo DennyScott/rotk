@@ -88,8 +88,6 @@ window.states.playState = {
 				game.global.endTurn = false;
 				game.global.cancelTurns = undefined;
 				this.flipTurn(game.global.playerOne);
-
-
 			}
 		} else {
 			this.flipTurn(game.global.currentPlayer.opponent);
@@ -103,14 +101,14 @@ window.states.playState = {
 	},
 
 	createBoardAssets: function() {
-		game.global.currentBoard = new game.board(game.world.centerX, game.world.height * 0.40, 0.4);
+		game.global.currentBoard = new game.board(game.world.centerX, game.world.height * 0.4, 0.7);
 		game.global.playerOne.createView(10, 10);
 		game.global.playerTwo.createView(10, game.global.playerOne.getHeight() + 20);
 		game.global.arrow = new game.arrow(game.world.width * 0.70,
-			game.world.height * 0.50, 0.25);
+			game.world.height * 0.50, 0.5);
 		game.global.currentTurnIndicatior = game.add.text(game.world.width + 100, 30,
 			'Current Player: ' + game.global.currentPlayer.name(), {
-				font: '20px Geo',
+				font: '35px Geo',
 				fill: '#ffffff',
 				align: 'center'
 			});
@@ -140,18 +138,18 @@ window.states.playState = {
 
 	waitForTurn: function() {
 		var playerNameText = game.global.currentPlayer.name() + "'s turn starts in";
-		this.playerNameWarning = game.add.text(100, game.world.height * 0.65,
+		this.playerNameWarning = game.add.text(10, game.world.height * 0.65,
 			playerNameText, {
-				font: '20px Arial',
+				font: '40px Arial',
 				fill: '#ffffff',
 				align: 'center'
 			});
-		this.playerNameWarning.anchor.setTo(0.5, 0.5);
+		this.playerNameWarning.anchor.setTo(0, 0.5);
 
 		this.timeRemainText = 5;
-		this.timeRemainWarning = game.add.text(100, game.world.height * 0.65 + 25,
+		this.timeRemainWarning = game.add.text(200, game.world.height * 0.65 + 45,
 			this.timeRemainText, {
-				font: '20px Arial',
+				font: '40px Arial',
 				fill: '#ffffff',
 				align: 'center'
 			});

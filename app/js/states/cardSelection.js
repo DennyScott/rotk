@@ -119,11 +119,11 @@ window.states.cardSelectionState = {
 		var text = 'Begin';
 		this.nextButton.buttonText = game.add.text(0, 0,
 			text, {
-				font: '20px Arial',
+				font: '30px Arial',
 				fill: '#ffffff',
 				align: 'center'
 			});
-		this.nextButton.buttonText.anchor.setTo(0.5, 0.5);
+		this.nextButton.buttonText.anchor.setTo(0.5, 0.4);
 		this.nextButton.addChild(this.nextButton.buttonText);
 		this.nextButton.input.useHandCursor = true; //if you want a hand cursor
 	},
@@ -133,14 +133,14 @@ window.states.cardSelectionState = {
 		var text = this.budgetLabelText + this.budget;
 		this.budgetLabel = game.add.text(-100, 20,
 			text, {
-				font: '15px Arial',
+				font: '25px Arial',
 				fill: '#ffffff',
 				align: 'center'
 			});
-		this.budgetLabel.anchor.setTo(0.5, 0.5);
+		this.budgetLabel.anchor.setTo(0, 0.5);
 
 		game.add.tween(this.budgetLabel).to({
-			x: 100
+			x: 10
 		}, this.labelEntranceMilliseconds).easing(Phaser.Easing.Bounce.Out).loop().start();
 	},
 
@@ -165,16 +165,16 @@ window.states.cardSelectionState = {
 
 	placeAbilitiesOnScreen: function() {
 		var currentPosition; //The current position of cards
-		var minHorizontalSpace = 80;
-		var moreHorizontalSpace = game.world.width * 0.15;
-		var minVerticalSpace = 100;
-		var moreVerticalSpace = game.world.height * 0.25;
+		var minHorizontalSpace = 120;
+		var moreHorizontalSpace = game.world.width * 0.20;
+		var minVerticalSpace = 200;
+		var moreVerticalSpace = game.world.height * 0.40;
 		var spaceBetweenObject = moreHorizontalSpace > minHorizontalSpace ? moreHorizontalSpace : minHorizontalSpace; //The space between cards in the same row
 		var verticalSpaceBetweenCards = moreHorizontalSpace > minVerticalSpace ? moreVerticalSpace : minVerticalSpace; //The space between rows of cards
 
 		var delayBetweenCards = 200; //In milliseconds
-		var startY = game.world.centerY - 100; //Where the animation starts for the cards
-		var endY = game.world.centerY - 60; //Where the animation ends for the cards
+		var startY = game.world.centerY - 150; //Where the animation starts for the cards
+		var endY = game.world.centerY - 100; //Where the animation ends for the cards
 
 
 		for (var i = 0; i < this.abilities.length; i++) {
@@ -238,32 +238,32 @@ window.states.cardSelectionState = {
 
 		this.placeCardLabel(x, endY, this[key].card);
 
-		this[key].scale.x = 0.4;
-		this[key].scale.y = 0.4;
+		this[key].scale.x = 0.9;
+		this[key].scale.y = 0.9;
 		delete ability.timeDelay;
 
 	},
 
 	placeCardLabel: function(x, y, card) {
-		var label = game.add.sprite(x, y + 50, 'priceLabel');
+		var label = game.add.sprite(x, y + 80, 'priceLabel');
 		label.anchor.setTo(0.5, 0.5);
 		label.textArea = game.add.text(0, 0,
 			card.cost, {
-				font: '20px Arial',
+				font: '25px Arial',
 				fill: '#ffffff'
 			});
 		label.textArea.anchor.setTo(0.5, 0.3);
 		label.addChild(label.textArea);
 
-		label.scale.x = 0.5;
-		label.scale.y = 0.5;
+		label.scale.x = 0.7;
+		label.scale.y = 0.7;
 	},
 
 	placeTextFieldAtTop: function() {
 		var playerNameText = game.global.currentPlayer.name() + ",\nChoose Your Abilities!";
 		this.playerNameWarning = game.add.text(game.world.centerX, game.world.height * 0.15 - 10,
 			playerNameText, {
-				font: '25px Arial',
+				font: '40px Arial',
 				fill: '#ffffff',
 				align: 'center'
 			});

@@ -1,3 +1,5 @@
+var game = window.game || {};
+var Phaser = window.Phaser || {};
 game.animations = {
 	showCards: function(oneCard, twoCard) {
 		this.clearBoard();
@@ -37,7 +39,7 @@ game.animations = {
 		var tween = game.add.tween(loser.view()).to({
 			alpha: 0,
 			y: loser.view().y - 20
-		}, 1200, Phaser.Easing.Linear.None, true, 800)
+		}, 1200, Phaser.Easing.Linear.None, true, 800);
 		tween.onComplete.add(this.removeCards, this);
 	},
 
@@ -50,7 +52,7 @@ game.animations = {
 	},
 
 	createTempView: function() {
-		return card = {
+		return {
 			view: function() {
 				var tempSprite = game.add.sprite(0, 0, 'redCommand');
 				tempSprite.alpha = 0;
@@ -96,4 +98,4 @@ game.animations = {
 
 		tween.onComplete.add(this.removeCards, this);
 	}
-}
+};

@@ -1,53 +1,56 @@
+var game = window.game || {};
+
 game.chainProperties.numberChain = {
+
 
 	/**
 	 * Both Players places a number card down. We now have to check which
 	 * number will win. Depending on the arrow direction, the lower or higher number
 	 * will win.
-	 * 
+	 *
 	 * @param  {Object} oneCard A Number Card
 	 * @param  {Object} twoCard A Number Card
 	 */
 	both: function(oneCard, twoCard) {
 		//Get Comparotor method. This is dependent on the current
 		//direction of the arrow.
-		var comparator = game.global.arrow.isUp()?this.isGreater:this.isLessThan;
+		var comparator = game.global.arrow.isUp() ? this.isGreater : this.isLessThan;
 		var result = comparator(oneCard.value, twoCard.value); //Get winning value
 
 		//One Card wins, and gets to damage the opponent
-		 if(result === 1){
-		 	game.animations.cardWinner(oneCard, twoCard);
-		 	this.damageOpponent(oneCard);
+		if (result === 1) {
+			game.animations.cardWinner(oneCard, twoCard);
+			this.damageOpponent(oneCard);
 			this.playCard([oneCard, twoCard]);
-		 }
-		 //Two Card Wins, and gets to damage the opponent
-		 else if(result === -1){
-		 	game.animations.cardWinner(twoCard, oneCard);
-		 	this.damageOpponent(twoCard);
+		}
+		//Two Card Wins, and gets to damage the opponent
+		else if (result === -1) {
+			game.animations.cardWinner(twoCard, oneCard);
+			this.damageOpponent(twoCard);
 			this.playCard([twoCard, oneCard]);
-		 }
-		 //Both Numbers were the same, neither are placed.
-		 else{
-		 	//Cancel out animation
-		 	game.animations.cardsEqual(oneCard, twoCard);
-		 }
+		}
+		//Both Numbers were the same, neither are placed.
+		else {
+			//Cancel out animation
+			game.animations.cardsEqual(oneCard, twoCard);
+		}
 	},
 
 	/**
 	 * Check if the first value is greater then the second. If it is
 	 * return a 1, if the second value is greater, then a -1, if they are
 	 * equal, return a 0
-	 * 
+	 *
 	 * @param  {Object}  oneCard A Number Card
 	 * @param  {Object}  twoCard A Number Card
 	 * @return {int}     Value representing the greater item
 	 */
-	isGreater: function(oneCard, twoCard){
-		if(oneCard > twoCard){
+	isGreater: function(oneCard, twoCard) {
+		if (oneCard > twoCard) {
 			return 1;
-		}else if(oneCard < twoCard){
+		} else if (oneCard < twoCard) {
 			return -1;
-		}else{
+		} else {
 			return 0;
 		}
 	},
@@ -55,17 +58,17 @@ game.chainProperties.numberChain = {
 	/**
 	 * Check if the first value is less than the second. If it is, return a 1,
 	 * if the second value is less, then a -1. If they are equal, return a 0.
-	 * 
+	 *
 	 * @param  {Object}  oneCard A Number Card
 	 * @param  {Object}  twoCard A Number Card
 	 * @return {int}     Value representing the lesser item.
 	 */
-	isLessThan: function(oneCard, twoCard){
-		if(oneCard < twoCard){
+	isLessThan: function(oneCard, twoCard) {
+		if (oneCard < twoCard) {
 			return 1;
-		}else if(oneCard > twoCard){
+		} else if (oneCard > twoCard) {
 			return -1;
-		}else{
+		} else {
 			return 0;
 		}
 	},
@@ -73,7 +76,7 @@ game.chainProperties.numberChain = {
 	/**
 	 * Play a single Number. If no one has one, damage the other player
 	 * with the card play.
-	 * 
+	 *
 	 * @param  {Object} card A Number Card
 	 */
 	single: function(card, otherCard) {
@@ -89,7 +92,7 @@ game.chainProperties.numberChain = {
 	/**
 	 * Play a Card on the baord. Once the card has been placed on the board, check
 	 * if a combo has been created.
-	 * 
+	 *
 	 * @param  {Array} cards Cards in the winning order
 	 */
 	playCard: function(cards) {
@@ -103,7 +106,7 @@ game.chainProperties.numberChain = {
 	/**
 	 * Check if their is a combo after the last play. This combo can be either a winning
 	 * combo, or a losing combo. If there is a combo, handle the combo.
-	 * 
+	 *
 	 * @param  {Object} combo Returned object from board, telling us if their is a combo
 	 * @param  {Object} card  Card played that could have created a combo
 	 */
@@ -120,9 +123,9 @@ game.chainProperties.numberChain = {
 	},
 
 	/**
-	 * Handle a Combo. This is a generic method, that will handle both winning and 
+	 * Handle a Combo. This is a generic method, that will handle both winning and
 	 * losing combos. The effects that are done to players are injected into the function.
-	 * 
+	 *
 	 * @param  {Array} combo                Array of Found Combos
 	 * @param  {Function} currentPlayerEffect  Function to perform on player who played card
 	 * @param  {[Function]} opposingPlayerEffect Function to perform on opponent
@@ -137,8 +140,8 @@ game.chainProperties.numberChain = {
 
 	/**
 	 * Damage the opponent of the player that used this card. Afterwards, state that
-	 * someone has won this round. 
-	 * 
+	 * someone has won this round.
+	 *
 	 * @param  {Object} card Number Card Played
 	 */
 	damageOpponent: function(card) {

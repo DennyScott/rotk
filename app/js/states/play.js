@@ -1,5 +1,6 @@
+var game = window.game || {};
+
 var playState = {
-	window.game = window.game || {};
 	preload: function() {},
 
 	create: function() {

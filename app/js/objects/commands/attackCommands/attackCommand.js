@@ -1,5 +1,6 @@
 (function() {
-
+	var game = window.game || {};
+	
 	/**
 	 * An attack command, which usually does some damage to  a players opponent.
 	 * @param {Player} owner        The owner of this command

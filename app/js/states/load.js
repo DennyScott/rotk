@@ -1,3 +1,5 @@
+var game = window.game || {};
+
 var loadState = {
 	preload: function() {
 		this.createLoadScreen(); //Creates the load screen to watch.  This must be first

@@ -1,3 +1,5 @@
+var game = window.game || {};
+
 var bootState = {
 	preload: function() {
 		//Load the image

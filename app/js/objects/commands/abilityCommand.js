@@ -1,6 +1,7 @@
 (function() {
 
-
+	var game = window.game || {};
+	
 	var AbilityCommand = function(owner, value, description, cost) {
 		var _command = this;
 		this.description;

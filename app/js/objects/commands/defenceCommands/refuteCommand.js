@@ -1,5 +1,6 @@
 (function() {
-
+	var game = window.game || {};
+	
 	/**
 	 * A Defence Command is a card that usually destroys or negates attacking cards, as well as maybe doing some other small effects
 	 * @param {Player} owner        The owner of this command

@@ -25,12 +25,12 @@ game.chainProperties.attackChain = {
 		//If oneCard has a higher precedent, it wins.
 		if(this.attackCommandOrder[oneCard.value.toLowerCase()] > this.attackCommandOrder[twoCard.value.toLowerCase()]){
 			game.animations.cardWinner(oneCard, twoCard);
-			this.performAttackCommand(oneCard);
+			this.performAttackCommand(oneCard, twoCard);
 		}
 		//If twoCard has a higher precendent, it wins
 		else if(this.attackCommandOrder[oneCard.value.toLowerCase()] < this.attackCommandOrder[twoCard.value.toLowerCase()]){
-			game.animations.cardWinner(oneCard, twoCard);
-			this.performAttackCommand(twoCard);
+			game.animations.cardWinner(twoCard, oneCard);
+			this.performAttackCommand(twoCard, oneCard);
 		}else{
 			//Cancel Animation, negate both players attack
 			game.aniamtions.cardsEqual(oneCard, twoCard);
@@ -47,7 +47,7 @@ game.chainProperties.attackChain = {
 	 */
 	single: function(oneCard, twoCard) {
 		game.animations.cardWinner(oneCard, twoCard);
-		this.performAttackCommand(oneCard);
+		this.performAttackCommand(oneCard, twoCard);
 		game.global.turnWon = true;
 	},
 
@@ -59,11 +59,12 @@ game.chainProperties.attackChain = {
 	 * 
 	 * @param  {Object} card An attack command card.
 	 */
-	performAttackCommand: function(card) {
+	performAttackCommand: function(card, loserCard) {
 		//Does the opponent hold a defence card
 		if(card.owner.opponent.isHoldingDefenceCard()){
 			//Cancel Animation
-			var defenceCard = card.owner.opponent.useDefenseCard();
+			var defenceCard = card.owner.opponent.useDefenseCard(loserCard);
+			game.animations.defenceCounter(loserCard, defenceCard);
 			defenceCard.nonCombatAction(card); //Use the defense noncombat action.
 		}else{
 			card.combatAction(); //Peform Attack Command

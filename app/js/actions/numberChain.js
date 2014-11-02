@@ -148,4 +148,4 @@ game.chainProperties.numberChain = {
 		card.owner.opponent.takeDamage(game.global.turnDamage);
 		game.global.turnWon = true;
 	}
-}
+};

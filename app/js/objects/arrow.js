@@ -9,7 +9,6 @@
 	 * @param {int} scale The Scale to display the arrow
 	 */
 	var Arrow = function(x, y, scale) {
-		var _arrow = this;
 		var _isUp; //Boolean of arrow direction
 		var _sprite; //The drawn sprite of the arrow
 		var upArrow = 'upArrow'; //Up Arrow Texture
@@ -50,7 +49,7 @@
 		 */
 		this.isUp = function() {
 			return _isUp;
-		}
+		};
 
 		/**
 		 * Rerender the arrow sprite in the passed texture direction, then
@@ -65,7 +64,8 @@
 		};
 
 		_initalize(x, y, scale); //Call Constructor
-	}
+	};
 
+	game = window.game || {};
 	game.arrow = Arrow; //Add to global Namespace
 })();

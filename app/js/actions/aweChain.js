@@ -1,3 +1,5 @@
+var game = window.game || {};
+
 game.chainProperties.aweChain = {
 	/**
 	 * Play an Awe Command Card. This card will sit on the board, and 
@@ -31,4 +33,4 @@ game.chainProperties.aweChain = {
 			awes[i].player.takeDamage(game.global.aweDamage);
 		}	
 	}	
-}
+};

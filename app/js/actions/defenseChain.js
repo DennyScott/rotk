@@ -1,3 +1,5 @@
+var game = window.game || {};
+
 game.chainProperties.defenseChain = {
 
 	/**
@@ -25,4 +27,4 @@ game.chainProperties.defenseChain = {
 				game.global.turnWon = true;
 			}
 	}
-}
+};

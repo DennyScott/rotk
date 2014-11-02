@@ -1,5 +1,7 @@
 (function() {
 	
+	var game = window.game || {};
+
 	/**
 	 * Tile Object. Used for the 9 Tiles displayed in the Game Board.
 	 * @param {[String]} text Number/Position to be displayed on Tile.
@@ -58,7 +60,7 @@
 		 */
 		this.color = function(){
 			return _color;
-		}
+		};
 
 		/**
 		 * Reload the texture for the current tile. This will remove the old

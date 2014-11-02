@@ -1,3 +1,5 @@
+var game = window.game || {};
+
 game.eventChain = {
 
 	/**
@@ -63,4 +65,4 @@ game.eventChain = {
 		}
 		return false;
 	},
-}
+};

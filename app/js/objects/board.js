@@ -6,7 +6,6 @@
 	 * objects, and any events needed triggererd on these objects.
 	 */
 	var Board = function(x, y, scale) {
-		var _board = this;
 		var _completeBoard = game.add.group(); //Entire Board Group
 		var _outerBoard; //OuterBoard, parent of child tiles
 		var _outerBoardScale;
@@ -16,7 +15,6 @@
 		var _combinations = []; //Possible Combinations in the game
 		var tiles = game.add.group(_completeBoard, 'tiles', true); //Group for all tiles
 		var _scale = 0.333333; //Scale of the smaller tiles compared to the larger tiles.
-		var _trueTileScale;
 		var _awes = [];
 
 		/**
@@ -26,7 +24,7 @@
 
 			if (typeof scale === 'undefined') {
 				scale = 1;
-			};
+			}
 
 			//Create the Outer Board
 			_outerBoard = game.add.sprite(x, y, 'blackTile');

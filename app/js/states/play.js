@@ -106,7 +106,7 @@ window.states.playState = {
 		game.global.currentBoard = new game.board(game.world.centerX, game.world.height * 0.40, 0.4);
 		game.global.playerOne.createView(10, 10);
 		game.global.playerTwo.createView(10, game.global.playerOne.getHeight() + 20);
-		game.global.arrow = new game.arrow(game.world.width * .70,
+		game.global.arrow = new game.arrow(game.world.width * 0.70,
 			game.world.height * 0.50, 0.25);
 		game.global.currentTurnIndicatior = game.add.text(game.world.width + 100, 30,
 			'Current Player: ' + game.global.currentPlayer.name(), {

@@ -9,7 +9,7 @@
 	 * @param {strin} description  The description of the given card
 	 */
 	var DefenceCommand = function(owner, value, description, cost) {
-		_command = this;
+		var _command = this;
 
 		/**
 		 * Initalizes the object
@@ -29,7 +29,7 @@
 
 		this.combatAction = function() {};
 		this.nonCombatAction = function() {};
-	}
+	};
 
 	DefenceCommand.prototype = Object.create(game.AbilityCommand.prototype);
 

@@ -1,4 +1,5 @@
 var playState = {
+	window.game = window.game || {};
 	preload: function() {},
 
 	create: function() {
@@ -98,7 +99,7 @@ var playState = {
 		game.global.playerOne.createView(10, 10);
 		game.global.playerTwo.createView(10, game.global.playerOne.getHeight() + 20);
 		game.global.arrow = new game.arrow(game.world.centerX + 100,
-			game.world.height * .28, .25);
+			game.world.height * 0.28, 0.25);
 		game.global.currentTurnIndicatior = game.add.text(game.world.centerX + 10, 0,
 			'Current Player: ' + game.global.currentPlayer.name(), {
 				font: '30px Geo',
@@ -132,8 +133,8 @@ var playState = {
 	},
 
 	waitForTurn: function() {
-		var playerNameText = game.global.currentPlayer.name() + "'s turn starts in"
-		this.playerNameWarning = game.add.text(150, game.world.height * .25,
+		var playerNameText = game.global.currentPlayer.name() + "'s turn starts in";
+		this.playerNameWarning = game.add.text(150, game.world.height * 0.25,
 			playerNameText, {
 				font: '30px Arial',
 				fill: '#ffffff',
@@ -142,7 +143,7 @@ var playState = {
 		this.playerNameWarning.anchor.setTo(0.5, 0.5);
 
 		this.timeRemainText = 5;
-		this.timeRemainWarning = game.add.text(150, game.world.height * .25 + 45,
+		this.timeRemainWarning = game.add.text(150, game.world.height * 0.25 + 45,
 			this.timeRemainText, {
 				font: '60px Arial',
 				fill: '#ffffff',

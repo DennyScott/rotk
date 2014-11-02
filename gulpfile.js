@@ -17,7 +17,7 @@ gulp.task('build', function() {
 gulp.task('movePackageJSON', function(){
 	gulp.src('./package.json')
 		.pipe(gulp.dest(path.dest));
-})
+});
 
 gulp.task('reload', function() {
 	gulp.src('./www')

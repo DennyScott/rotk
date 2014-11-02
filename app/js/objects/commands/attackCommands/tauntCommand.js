@@ -28,10 +28,10 @@
 
 		};
 
-		_setVitals = function() {
+		var _setVitals = function() {
 			_command.KOTurns = 1;
 			_command.damage = 20;
-		}
+		};
 
 
 		_initalize(owner); //Call Constructor

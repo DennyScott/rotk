@@ -25,12 +25,12 @@
 			game.AttackCommand.call(_command, owner, value, description, cost);
 			_command.KOTurns = 2;
 
-			_setIncite()
+			_setIncite();
 		};
 
 		var _setIncite = function () {
 			_command.hello = 'hello';
-		}
+		};
 
 
 

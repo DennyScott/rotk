@@ -11,7 +11,8 @@
 		var _initalize = function(owner, value, description, cost) {
 			var type = 'ability';
 			game.Command.call(_command, owner, type, value);
-			this.description = description
+			this.description = description;
+			this.cost = cost;
 		};
 
 		_initalize(owner, value, description, cost); //Call Constructor
@@ -26,8 +27,8 @@
 		this.createView = function(x, y) {
 			var sprite = 'abilityCommand'
 			_createView(x, y, sprite);
-		}
-	}
+		};
+	};
 
 	AbilityCommand.prototype = Object.create(game.Command.prototype);
 

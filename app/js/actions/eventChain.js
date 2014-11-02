@@ -11,6 +11,8 @@ game.eventChain = {
 		//This will be used to determine if the round has a winner
 		game.global.turnWon = false; 
 
+		game.animations.showCards(oneCard, twoCard);
+
 		//Go through the event Chain
 		this.handleAttackCommands(oneCard, twoCard);
 		this.handleNumberCards(oneCard, twoCard);

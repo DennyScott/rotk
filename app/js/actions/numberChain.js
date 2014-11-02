@@ -9,7 +9,6 @@ game.chainProperties.numberChain = {
 	 * @param  {Object} twoCard A Number Card
 	 */
 	bothNumber: function(oneCard, twoCard) {
-		console.log(game.global.arrow.isUp());
 		//Get Comparotor method. This is dependent on the current
 		//direction of the arrow.
 		var comparator = game.global.arrow.isUp()?this.isGreater:this.isLessThan;

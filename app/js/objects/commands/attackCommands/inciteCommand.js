@@ -19,9 +19,9 @@
 		 * @return {void}              No Return Value
 		 */
 		var _initalize = function(owner) {
-			var value = 'Incite';
 			var cost = 30;
 			var description = 'An Attack command that will trump any regular command, as well as Fault and Argue, and cause a large amount of damage to your opponent, as well as make your opponent inactive for the following 2 turns';
+			var value = 'Incite';
 			game.AttackCommand.call(_command, owner, value, description, cost);
 			_command.KOTurns = 2;
 		};

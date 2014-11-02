@@ -1,5 +1,6 @@
 (function() {
 
+	var game = window.game || {};
 	/**
 	 * Player Class
 	 */
@@ -165,7 +166,7 @@
 
 		this.name = function() {
 			return _name;
-		}
+		};
 
 		/**
 		 * Check if the player is currently holding a defence card. The defence card
@@ -269,7 +270,7 @@
 			_health -= amount;
 			_text.text = _createLabel(); //Display Current Health
 			_this.opponent.heal(amount);
-			if(_health <= 0) {
+			if (_health <= 0) {
 				game.global.winner = _this.opponent;
 				game.state.start('victory');
 			}

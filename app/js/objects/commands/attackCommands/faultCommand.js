@@ -27,7 +27,7 @@
 
 
 		_initalize(owner); //Call Constructor
-	}
+	};
 
 	FaultCommand.prototype = Object.create(game.AttackCommand.prototype);
 

@@ -1,8 +1,12 @@
-var game = window.game || {};
+var game;
+var Phaser;
+window.states = window.states || {};
+
 
 var victoryState = {
 	preload: function() {
-
+		game = window.game || {};
+		Phaser = window.Phaser || {};
 	},
 
 	create: function() {
@@ -59,12 +63,12 @@ var victoryState = {
 
 
 				this.nextButton.input.useHandCursor = true; //if you want a hand cursor
-			}, this)
+			}, this);
 
 		}, this);
 	},
 
-	menu: function () {
+	menu: function() {
 		game.state.start('menu');
 	}
-}
+};

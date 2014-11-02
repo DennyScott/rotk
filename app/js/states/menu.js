@@ -1,5 +1,6 @@
+var game = window.game || {};
+
 var menuState = {
-	window.game = window.game || {};
 
 	create: function() {
 		this.createPlayers();

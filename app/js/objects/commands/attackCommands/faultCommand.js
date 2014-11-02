@@ -1,5 +1,5 @@
 (function() {
-
+	var game = window.game || {};
 	/**
 	 * An fault command, which usually does some damage to  a players opponent.
 	 * @param {Player} owner        The owner of this command
@@ -8,7 +8,7 @@
 	 * @param {function} combatAction The function that will run when this card is played
 	 */
 	var FaultCommand = function(owner) {
-		_command = this;
+		var _command = this;
 
 		/**
 		 * Initalizes the cards
@@ -22,18 +22,11 @@
 			var cost = 15;
 			var description = 'An Attack command that will trump any regular command and cause a bit of damage to your opponent';
 			game.AttackCommand.call(_command, owner, value, description, cost);
-
-			_command.damage = 10;
+			_command.damage = 15;
 		};
 
 
 		_initalize(owner); //Call Constructor
-
-		var _combatAction = _command.combatAction;
-
-		this.combatAction = function () {
-			_combatAction(this.damage, this.owner);
-		};
 	}
 
 	FaultCommand.prototype = Object.create(game.AttackCommand.prototype);

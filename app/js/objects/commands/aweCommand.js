@@ -1,5 +1,7 @@
 (function() {
 
+	var game = window.game || {};
+	
 	/**
 	 * The awe command is a command that will as long as it stays on the board, do a little damage to the opponent every turn
 	 * @param {Player} owner       The owner of this command

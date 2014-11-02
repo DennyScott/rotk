@@ -1,5 +1,6 @@
 (function() {
-
+	var game = window.game || {};
+	
 	/**
 	 * An argue command, which usually does some damage to  a players opponent.
 	 * @param {Player} owner        The owner of this command
@@ -8,7 +9,7 @@
 	 * @param {function} combatAction The function that will run when this card is played
 	 */
 	var ArgueCommand = function(owner) {
-		_command = this;
+		var _command = this;
 
 		/**
 		 * Initalizes the cards
@@ -23,7 +24,7 @@
 			var description = 'An Attack command that will trump any regular command, as well as Fault, and cause a medium amount of damage to your opponent';
 			game.AttackCommand.call(_command, owner, value, description, cost);
 
-			_command.damage = 15;
+			_command.damage = 20;
 		};
 
 

@@ -1,3 +1,5 @@
+var game = window.game || {};
+
 var victoryState = {
 	preload: function() {
 

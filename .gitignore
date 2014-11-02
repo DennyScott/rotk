@@ -1,6 +1,5 @@
 # Android
 platforms
-plugins
 platforms/android/assets/www
 platforms/android/bin/
 platforms/android/gen/
@@ -15,6 +14,9 @@ platforms/ios/.staging
  
 # Emulator logs
 platforms/ios/cordova/console.log
+
+##Plugins
+plugins/com.ludei.webview.plus
 
 # Project
 node_modules

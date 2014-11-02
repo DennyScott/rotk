@@ -25,9 +25,9 @@ var playState = {
 		//We've hit the end of a turn, call the end of turn chain
 		if (game.global.endTurn) {
 			this.endOfTurnChain();
+		}else{
+			this.changePlayersTurn(); //Change to the opponents turn
 		}
-
-		this.changePlayersTurn(); //Change to the opponents turn
 		game.global.endTurn = !game.global.endTurn;
 	},
 
@@ -37,11 +37,15 @@ var playState = {
 		this.playerCardExists(game.global.round[game.global.playerOne.name()]);
 		this.playerCardExists(game.global.round[game.global.playerTwo.name()]);
 
-		//Try both cards in the event chain
-		game.eventChain.playCards(game.global.round[game.global.playerOne.name()], game.global.round[game.global.playerTwo.name()]);
+		var callback = function(){
+			this.drawCards();
+			this.changePlayersTurn();
+			this.clearRound();
+		};
 
-		this.drawCards(); //Both players draw a card
-		this.clearRound();
+		//Try both cards in the event chain
+		game.eventChain.playCards(game.global.round[game.global.playerOne.name()], game.global.round[game.global.playerTwo.name()], callback, this);
+		
 	},
 
 	/**
@@ -94,7 +98,7 @@ var playState = {
 		game.global.playerOne.createView(10, 10);
 		game.global.playerTwo.createView(10, game.global.playerOne.getHeight() + 20);
 		game.global.arrow = new game.arrow(game.world.centerX + 100,
-			game.world.height * .25, .5);
+			game.world.height * .28, .25);
 		game.global.currentTurnIndicatior = game.add.text(game.world.centerX + 10, 0,
 			'Current Player: ' + game.global.currentPlayer.name(), {
 				font: '30px Geo',

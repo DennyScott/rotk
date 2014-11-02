@@ -9,7 +9,6 @@ game.chainProperties.numberChain = {
 	 * @param  {Object} twoCard A Number Card
 	 */
 	bothNumber: function(oneCard, twoCard) {
-		console.log(game.global.arrow.isUp());
 		//Get Comparotor method. This is dependent on the current
 		//direction of the arrow.
 		var comparator = game.global.arrow.isUp()?this.isGreater:this.isLessThan;
@@ -17,17 +16,20 @@ game.chainProperties.numberChain = {
 
 		//One Card wins, and gets to damage the opponent
 		 if(result === 1){
+		 	game.animations.cardWinner(oneCard, twoCard);
 		 	this.damageOpponent(oneCard);
 			this.playCard([oneCard, twoCard]);
 		 }
 		 //Two Card Wins, and gets to damage the opponent
 		 else if(result === -1){
+		 	game.animations.cardWinner(twoCard, oneCard);
 		 	this.damageOpponent(twoCard);
 			this.playCard([twoCard, oneCard]);
 		 }
 		 //Both Numbers were the same, neither are placed.
 		 else{
 		 	//Cancel out animation
+		 	game.global.round.isTie = true;
 		 }
 	},
 
@@ -74,9 +76,10 @@ game.chainProperties.numberChain = {
 	 * 
 	 * @param  {Object} card A Number Card
 	 */
-	singleNumber: function(card) {
+	singleNumber: function(card, otherCard) {
 		if (!game.global.turnWon) {
 			this.damageOpponent(card);
+			game.animations.cardWinner(card, otherCard);
 		}
 
 		this.playCard([card]);

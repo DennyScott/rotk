@@ -1,7 +1,12 @@
-var game = window.game || {};
+var game;
+var Phaser;
+window.states = window.states || {};
 
-var cardSelectionState = {
+
+window.states.cardSelectionState = {
 	preload: function() {
+		game = window.game || {};
+		Phaser = window.Phaser || {};
 		this.budget = 120;
 		this.labelEntranceMilliseconds = 1000;
 		this.budgetLabelText = 'Budget Remaining: ';
@@ -162,7 +167,7 @@ var cardSelectionState = {
 
 	destroyARandomNumberCard: function() {
 		//This line will erase a random card in the first 27 number cards only.
-		var destroyPosition = game.global.currentPlayer.deck.splice(game.rnd.integerInRange(0, this.allNumbers - 1), 1);
+		game.global.currentPlayer.deck.splice(game.rnd.integerInRange(0, this.allNumbers - 1), 1);
 	},
 
 	getLineStartPosition: function(i, spaceBetweenObject, currentPosition) {
@@ -207,6 +212,7 @@ var cardSelectionState = {
 			currentPosition = this.getLineStartPosition(i, spaceBetweenObject, currentPosition); //Gets the positon of this item, if its a new row
 
 			var timeDelay = this.labelEntranceMilliseconds * 1.2 + (i * delayBetweenCards); //Gets the delay time of the animation for this item
+			this.abilities[i].timeDelay = timeDelay;
 
 			this.placeCard(currentPosition, startY, endY, this.abilities[i], timeDelay); //Places the card and label onto the screen
 
@@ -221,7 +227,7 @@ var cardSelectionState = {
 		}
 	},
 
-	placeCard: function(x, y, endY, ability, timeDelay) {
+	placeCard: function(x, y, endY, ability) {
 		var key = ability.value;
 		this[key] = game.add.sprite(x, y, 'abilityWithQuantity');
 		this[key].alpha = 0;
@@ -243,6 +249,7 @@ var cardSelectionState = {
 
 		this[key].scale.x = 0.5;
 		this[key].scale.y = 0.5;
+		delete ability.timeDelay;
 
 	},
 
@@ -280,7 +287,7 @@ var cardSelectionState = {
 	},
 
 	setUpCardAnimation: function(card, endY, timeDelay) {
-		var tween = game.add.tween(card).to({
+		game.add.tween(card).to({
 			alpha: 1,
 			y: endY
 		}, 1000, Phaser.Easing.Linear.None, true, timeDelay);

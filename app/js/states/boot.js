@@ -1,7 +1,12 @@
-var game = window.game || {};
+var game;
+var Phaser;
+window.states = window.states || {};
 
-var bootState = {
+
+window.states.bootState = {
 	preload: function() {
+		game = window.game || {};
+		Phaser = window.Phaser || {};
 		//Load the image
 		game.load.image('progressBar', 'assets/progressBar.png');
 	},

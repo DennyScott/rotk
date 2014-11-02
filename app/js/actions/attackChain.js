@@ -19,7 +19,7 @@ game.chainProperties.attackChain = {
 	 * @param  {Object} oneCard An Attack Command Card
 	 * @param  {Object} twoCard An Attack Command Card
 	 */
-	bothAttack: function(oneCard, twoCard) {
+	both: function(oneCard, twoCard) {
 		//If oneCard has a higher precedent, it wins.
 		if(this.attackCommandOrder[oneCard.value.toLowerCase()] > this.attackCommandOrder[twoCard.value.toLowerCase()]){
 			game.animations.cardWinner(oneCard, twoCard);
@@ -42,7 +42,7 @@ game.chainProperties.attackChain = {
 	 * 
 	 * @param  {Object} oneCard An Attack Command Card
 	 */
-	singleAttack: function(oneCard, twoCard) {
+	single: function(oneCard, twoCard) {
 		game.animations.cardWinner(oneCard, twoCard);
 		this.performAttackCommand(oneCard, twoCard);
 		game.global.turnWon = true;

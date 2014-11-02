@@ -1,3 +1,4 @@
+[![Code Climate](https://codeclimate.com/github/DennyScott/rotk/badges/gpa.svg)](https://codeclimate.com/github/DennyScott/rotk)
 # Phaser Seed Project
 
 ##Cocoon Instructions

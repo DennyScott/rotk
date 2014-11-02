@@ -97,7 +97,7 @@
 
 		var _killAllCards = function() {
 			for (var i = 0; i < _this.hand.length; i++) {
-				if(typeof _this.hand[i].view() !== 'undefined'){
+				if (typeof _this.hand[i].view() !== 'undefined') {
 					_this.hand[i].view().kill();
 				}
 			}
@@ -142,10 +142,13 @@
 
 		this.createView = function(x, y) {
 			//Create Text Object
-			_text = game.add.text(x, y, _createLabel(), {
-				font: '40px Geo',
-				fill: '#000000'
+			_text = game.add.text(-400, y, _createLabel(), {
+				font: '30px Geo',
+				fill: '#ffffff'
 			});
+			game.add.tween(_text).to({
+				x: x
+			}, 1000, Phaser.Easing.Bounce.Out, true);
 		}
 
 		this.drawCards = function() {
@@ -195,8 +198,8 @@
 
 		this.removeAttackCard = function() {
 			var notFound = true;
-			for(var i = 0; i < _this.hand.length && notFound; i++){
-				if(_this.hand[i] instanceof game.AttackCommand){
+			for (var i = 0; i < _this.hand.length && notFound; i++) {
+				if (_this.hand[i] instanceof game.AttackCommand) {
 					_removeCommand(_this.hand[i]);
 					notFound = false;
 				}
@@ -204,8 +207,8 @@
 		};
 
 		this.removeAllAttackCards = function() {
-			for(var i = 0; i < _this.hand.length; i++){
-				if(_this.hand[i] instanceof game.AttackCommand){
+			for (var i = 0; i < _this.hand.length; i++) {
+				if (_this.hand[i] instanceof game.AttackCommand) {
 					_removeCommand(_this.hand[i]);
 					i--;
 				}

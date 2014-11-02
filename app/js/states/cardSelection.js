@@ -11,6 +11,7 @@ var cardSelectionState = {
 		this.createMoneyLabel();
 		this.createInstructionLabel();
 		this.placeAbilitiesOnScreen();
+		this.placeTextFieldAtTop();
 	},
 
 	update: function() {
@@ -184,7 +185,7 @@ var cardSelectionState = {
 	loadState: function() {
 		game.global.currentPlayer.hasChosenCommands = true;
 		game.global.currentPlayer = game.global.currentPlayer.opponent;
-		if(game.global.currentPlayer.hasChosenCommands !== true) {
+		if (game.global.currentPlayer.hasChosenCommands !== true) {
 			game.state.start('cardSelection')
 		} else {
 			game.state.start('play');
@@ -256,6 +257,24 @@ var cardSelectionState = {
 
 		label.scale.x = .5;
 		label.scale.y = .5;
+	},
+
+	placeTextFieldAtTop: function() {
+		var playerNameText = game.global.currentPlayer.name() + ",\n Start Choosing Your Abilities!"
+		this.playerNameWarning = game.add.text(game.world.centerX, game.world.height * .25 - 10,
+			playerNameText, {
+				font: '30px Arial',
+				fill: '#ffffff',
+				align: 'center'
+			});
+		this.playerNameWarning.anchor.setTo(0.5, 0.5);
+		this.playerNameWarning.alpha = 0;
+
+		game.add.tween(this.playerNameWarning).to({
+			alpha: 1,
+			y: this.playerNameWarning.y + 10
+		}, 1000, Phaser.Easing.Linear.None, true, 1000);
+
 	},
 
 	setUpCardAnimation: function(card, endY, timeDelay) {

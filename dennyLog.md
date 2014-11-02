@@ -59,3 +59,5 @@ The game is just about in a playable state. It will definitly be good to go by t
 * Lowered Taunt from 20 dmg to 10 dmg
 * Increased Taunt from 10 dmg to 20dmg
 * Decreased Taunt from 2 missed turns to 1 missed turn
+* Refute no longer removes attack commands on use, instead removes opponents refutes
+* Please no longer removes a single attack command, instead removes all refutes and pleads

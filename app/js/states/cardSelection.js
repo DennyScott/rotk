@@ -1,6 +1,6 @@
 var cardSelectionState = {
+	window.game = window.game || {};
 	preload: function() {
-		game = game || {};
 		this.budget = 120;
 		this.labelEntranceMilliseconds = 1000;
 		this.budgetLabelText = 'Budget Remaining: ';

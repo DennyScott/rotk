@@ -1,7 +1,11 @@
-var game = window.game || {};
+var game;
+var Phaser;
+window.states = window.states || {};
 
-var loadState = {
+window.states.loadState = {
 	preload: function() {
+		game = window.game || {};
+		Phaser = window.Phaser || {};
 		this.createLoadScreen(); //Creates the load screen to watch.  This must be first
 
 		//Loads all needed Assets

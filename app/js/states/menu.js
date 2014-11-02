@@ -1,6 +1,13 @@
-var game = window.game || {};
+var game;
+var Phaser;
+window.states = window.states || {};
 
-var menuState = {
+
+window.states.menuState = {
+	preload: function() {
+		game = window.game || {};
+		Phaser = window.Phaser || {};
+	},
 
 	create: function() {
 		this.createPlayers();

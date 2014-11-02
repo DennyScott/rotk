@@ -8,7 +8,7 @@ game.chainProperties.numberChain = {
 	 * @param  {Object} oneCard A Number Card
 	 * @param  {Object} twoCard A Number Card
 	 */
-	bothNumber: function(oneCard, twoCard) {
+	both: function(oneCard, twoCard) {
 		//Get Comparotor method. This is dependent on the current
 		//direction of the arrow.
 		var comparator = game.global.arrow.isUp()?this.isGreater:this.isLessThan;
@@ -76,7 +76,7 @@ game.chainProperties.numberChain = {
 	 * 
 	 * @param  {Object} card A Number Card
 	 */
-	singleNumber: function(card, otherCard) {
+	single: function(card, otherCard) {
 		if (!game.global.turnWon) {
 			this.damageOpponent(card);
 			game.animations.cardWinner(card, otherCard);

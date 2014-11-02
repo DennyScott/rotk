@@ -8,6 +8,11 @@ var bootState = {
 		this.createBackgroundColor();
 		this.loadNextState();
 
+		if (!game.device.desktop) {
+			game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
+			document.body.style.backgroundColor = '#3498db';
+		}
+
 	},
 
 	createBackgroundColor: function() {

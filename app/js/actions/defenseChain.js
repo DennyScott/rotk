@@ -7,7 +7,7 @@ game.chainProperties.defenseChain = {
 	 * @param  {Object} oneCard One Players Defence Command Card
 	 * @param  {Object} twoCard Another Players Defence Command Card
 	 */
-	bothDefend: function(oneCard, twoCard) {
+	both: function(oneCard, twoCard) {
 		//Do Nothing, probably want an animation here
 		game.animations.cardsEqual(oneCard, twoCard);	
 		game.global.turnWon = true; //End the turn
@@ -18,7 +18,7 @@ game.chainProperties.defenseChain = {
 	 * 
 	 * @param  {Object} oneCard A defence command card.
 	 */
-	singleDefence: function(oneCard, twoCard){
+	single: function(oneCard, twoCard){
 			oneCard.combatAction();
 			if(!game.global.turnWon){
 				game.animations.cardsEqual(oneCard, twoCard);

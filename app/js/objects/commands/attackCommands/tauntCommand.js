@@ -10,7 +10,7 @@
 	 * @param {function} combatAction The function that will run when this card is played
 	 */
 	var TauntCommand = function(owner) {
-		_command = this;
+		var _command = this;
 
 		/**
 		 * Initalizes the cards
@@ -30,7 +30,7 @@
 
 
 		_initalize(owner); //Call Constructor
-	}
+	};
 
 	TauntCommand.prototype = Object.create(game.AttackCommand.prototype);
 

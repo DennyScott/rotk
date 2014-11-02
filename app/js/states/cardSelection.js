@@ -16,7 +16,6 @@ window.states.cardSelectionState = {
 	create: function() {
 		this.createAbilities();
 		this.createMoneyLabel();
-		this.createInstructionLabel();
 		this.placeAbilitiesOnScreen();
 		this.placeTextFieldAtTop();
 	},
@@ -115,8 +114,8 @@ window.states.cardSelectionState = {
 	},
 
 	createButton: function() {
-		this.nextButton = game.add.button(game.world.centerX, game.world.height - 60, 'nextButton', this.loadState, this);
-		this.nextButton.anchor.setTo(0.5, 0.55);
+		this.nextButton = game.add.button(game.world.centerX, game.world.height * 0.9, 'nextButton', this.loadState, this);
+		this.nextButton.anchor.setTo(0.5, 0.5);
 		var text = 'Begin';
 		this.nextButton.buttonText = game.add.text(0, 0,
 			text, {
@@ -127,22 +126,6 @@ window.states.cardSelectionState = {
 		this.nextButton.buttonText.anchor.setTo(0.5, 0.5);
 		this.nextButton.addChild(this.nextButton.buttonText);
 		this.nextButton.input.useHandCursor = true; //if you want a hand cursor
-	},
-
-	createInstructionLabel: function() {
-		//Explain how to pick the cards and start the game
-		var text = "Use you points to buy as many cards\nas you can to add to your Deck";
-		var startLabel = game.add.text(game.world.width * 2, 80,
-			text, {
-				font: '25px Arial',
-				fill: '#ffffff',
-				align: 'center'
-			});
-		startLabel.anchor.setTo(0.5, 0.5);
-
-		game.add.tween(startLabel).to({
-			x: game.world.centerX
-		}, this.labelEntranceMilliseconds).easing(Phaser.Easing.Bounce.Out).loop().start();
 	},
 
 	createMoneyLabel: function() {
@@ -170,25 +153,6 @@ window.states.cardSelectionState = {
 		game.global.currentPlayer.deck.splice(game.rnd.integerInRange(0, this.allNumbers - 1), 1);
 	},
 
-	getLineStartPosition: function(i, spaceBetweenObject, currentPosition) {
-		if (i % 4 === 0) {
-			//If i is not divisable by 4, its not the start of a line, meaning currentPosition will simply be returned as is
-			var amountRemaining = this.abilities.length - i;
-			if (amountRemaining > 4) {
-				//If its greater then 4, then we not on the last line yet of cards
-				currentPosition = game.world.centerX - spaceBetweenObject * 4 / 2 + (spaceBetweenObject * 0.5);
-			} else if (amountRemaining % 2 === 0) {
-				//If the cards remaining is less then 4, and is evenly divisible
-				currentPosition = game.world.centerX - spaceBetweenObject * amountRemaining / 2 + (spaceBetweenObject * 0.5);
-			} else {
-				//If the amount of cards left is less then 4, and not evenly divisible
-				currentPosition = game.world.centerX - spaceBetweenObject * Math.floor(amountRemaining / 2);
-			}
-		}
-
-		return currentPosition; //return the position of this item
-	},
-
 	loadState: function() {
 		game.global.currentPlayer.hasChosenCommands = true;
 		game.global.currentPlayer = game.global.currentPlayer.opponent;
@@ -201,11 +165,17 @@ window.states.cardSelectionState = {
 
 	placeAbilitiesOnScreen: function() {
 		var currentPosition; //The current position of cards
-		var spaceBetweenObject = 100; //The space between cards in the same row
+		var minHorizontalSpace = 80;
+		var moreHorizontalSpace = game.world.width * 0.15;
+		var minVerticalSpace = 120;
+		var moreVerticalSpace = game.world.height * 0.25;
+		var spaceBetweenObject = moreHorizontalSpace > minHorizontalSpace ? moreHorizontalSpace : minHorizontalSpace; //The space between cards in the same row
+		var verticalSpaceBetweenCards = moreHorizontalSpace > minVerticalSpace ? moreVerticalSpace : minVerticalSpace; //The space between rows of cards
+
 		var delayBetweenCards = 200; //In milliseconds
 		var startY = game.world.centerY - 100; //Where the animation starts for the cards
-		var endY = game.world.centerY - 80; //Where the animation ends for the cards
-		var verticalSpaceBetweenCards = 150; //The space between rows of cards
+		var endY = game.world.centerY - 60; //Where the animation ends for the cards
+
 
 		for (var i = 0; i < this.abilities.length; i++) {
 
@@ -225,6 +195,26 @@ window.states.cardSelectionState = {
 			}
 
 		}
+	},
+
+
+	getLineStartPosition: function(i, spaceBetweenObject, currentPosition) {
+		if (i % 4 === 0) {
+			//If i is not divisable by 4, its not the start of a line, meaning currentPosition will simply be returned as is
+			var amountRemaining = this.abilities.length - i;
+			if (amountRemaining > 4) {
+				//If its greater then 4, then we not on the last line yet of cards
+				currentPosition = game.world.centerX - spaceBetweenObject * 4 / 2 + (spaceBetweenObject * 0.5);
+			} else if (amountRemaining % 2 === 0) {
+				//If the cards remaining is less then 4, and is evenly divisible
+				currentPosition = game.world.centerX - spaceBetweenObject * amountRemaining / 2 + (spaceBetweenObject * 0.5);
+			} else {
+				//If the amount of cards left is less then 4, and not evenly divisible
+				currentPosition = game.world.centerX - spaceBetweenObject * Math.floor(amountRemaining / 2);
+			}
+		}
+
+		return currentPosition; //return the position of this item
 	},
 
 	placeCard: function(x, y, endY, ability) {
@@ -255,7 +245,7 @@ window.states.cardSelectionState = {
 	},
 
 	placeCardLabel: function(x, y, card) {
-		var label = game.add.sprite(x, y + 40 + 20, 'priceLabel');
+		var label = game.add.sprite(x, y + 50, 'priceLabel');
 		label.anchor.setTo(0.5, 0.5);
 		label.textArea = game.add.text(0, 0,
 			card.cost, {
@@ -270,8 +260,8 @@ window.states.cardSelectionState = {
 	},
 
 	placeTextFieldAtTop: function() {
-		var playerNameText = game.global.currentPlayer.name() + ",\n Start Choosing Your Abilities!";
-		this.playerNameWarning = game.add.text(game.world.centerX, game.world.height * 0.25 - 10,
+		var playerNameText = game.global.currentPlayer.name() + ",\nChoose Your Abilities!";
+		this.playerNameWarning = game.add.text(game.world.centerX, game.world.height * 0.15 - 10,
 			playerNameText, {
 				font: '30px Arial',
 				fill: '#ffffff',

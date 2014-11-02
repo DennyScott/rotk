@@ -25,7 +25,7 @@
 		 * @param {int} y The y positoon of the card
 		 */
 		this.createView = function(x, y) {
-			var sprite = 'abilityCommand'
+			var sprite = 'abilityCommand';
 			_createView(x, y, sprite);
 		};
 	};

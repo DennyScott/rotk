@@ -17,12 +17,12 @@ game.states = {};
 game.chainProperties = {}; //Used For Different Chains (Attack, defense, etc)
 
 //Add all the states
-game.state.add('boot', bootState);
-game.state.add('load', loadState);
-game.state.add('menu', menuState);
-game.state.add('cardSelection', cardSelectionState);
+game.state.add('boot', window.states.bootState);
+game.state.add('load', window.states.loadState);
+game.state.add('menu', window.states.menuState);
+game.state.add('cardSelection', window.states.cardSelectionState);
 game.state.add('play', window.states.playState);
-game.state.add('victory', victoryState);
+game.state.add('victory', window.states.victoryState);
 
 
 //Start the boot state

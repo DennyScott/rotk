@@ -1,12 +1,19 @@
 game.animations = {
 	showCards: function(oneCard, twoCard) {
 		this.clearBoard();
-		this.oneCard = oneCard;
-		this.twoCard = twoCard;
-		this.oneCard.createView(0, 0);
-		this.twoCard.createView(0, 0);
-		this.createCard(oneCard, game.world.centerX - oneCard.view().width, game.world.height - oneCard.view().height, 0.75, -20);
-		this.createCard(twoCard, game.world.centerX + twoCard.view().width, game.world.height - twoCard.view().height, 0.75, 20);
+
+		if (typeof oneCard !== 'undefined') {
+			this.oneCard = oneCard;
+			this.oneCard.createView(0, 0);
+			this.createCard(oneCard, game.world.centerX - oneCard.view().width, game.world.height - oneCard.view().height, 0.75, -20);
+		}
+
+		if (typeof twoCard !== 'undefined') {
+			this.twoCard = twoCard;
+			this.twoCard.createView(0, 0);
+			this.createCard(twoCard, game.world.centerX + twoCard.view().width, game.world.height - twoCard.view().height, 0.75, 20);
+		}
+
 	},
 
 	createCard: function(card, x, y, scale, fromTween) {
@@ -26,7 +33,7 @@ game.animations = {
 	},
 
 	cardWinner: function(winner, loser) {
-		checkCardExists([winner, loser]);
+		loser = this.checkCardsExist(loser);
 		var tween = game.add.tween(loser.view()).to({
 			alpha: 0,
 			y: loser.view().y - 20
@@ -34,23 +41,27 @@ game.animations = {
 		tween.onComplete.add(this.removeCards, this);
 	},
 
-	checkCardsExists: function(cardArray){
-		for(var i = 0; i < cardArray.length; i++){
-			if(typeof cardArray[i] === 'undefined'){
-				createTempView(cardArray[i]);
+	checkCardsExist: function(card) {
+			if (typeof card === 'undefined') {
+				return this.createTempView();
 			}
-		}
+
+			return card;
 	},
 
-	createTempView: function(card){
-		card.view = function(){
-			var tempSprite = game.add.sprite(0, 0, 'redCommand');
-			tempSprite.alpha = 0;
-			return tempSprite;
-		}
+	createTempView: function() {
+		return card = {
+			view: function() {
+				var tempSprite = game.add.sprite(0, 0, 'redCommand');
+				tempSprite.alpha = 0;
+				return tempSprite;
+			}
+		};
 	},
 
 	removeCards: function() {
+		this.oneCard = this.checkCardsExist(this.oneCard);
+		this.twoCard =this.checkCardsExist(this.twoCard);
 		game.add.tween(this.twoCard.view()).to({
 			alpha: 0,
 		}, 600, Phaser.Easing.Linear.None, true, 600);
@@ -63,15 +74,16 @@ game.animations = {
 
 	},
 
-	destroyCards: function(){
+	destroyCards: function() {
 		this.oneCard.view().destroy();
-			this.twoCard.view().destroy();
-			this.oneCard = undefined;
-			this.twoCard = undefined;
-		},
+		this.twoCard.view().destroy();
+		this.oneCard = undefined;
+		this.twoCard = undefined;
+	},
 
 	cardsEqual: function(oneCard, twoCard) {
-		checkCardsExist([oneCard, twoCard]);
+		oneCard = this.checkCardsExist(oneCard);
+		twoCard = this.checkCardsExist(twoCard);
 		game.add.tween(oneCard.view()).to({
 			alpha: 0,
 			y: oneCard.view().y - 20

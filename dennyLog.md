@@ -51,3 +51,9 @@ The game is just about in a playable state. It will definitly be good to go by t
 * Changed Turn Win Damage from 5 to 10
 * Added "Miss 2 turn" to Incite
 * Start with 120 Points
+
+## November 2
+* Lowered Incite from 25 dmg to 15 dmg
+* Lowered Taunt from 35 dmg to 20 dmg
+* Lowered Incite from 15 dmg to 0 dmg
+* Lowered Taunt from 20 dmg to 10 dmg

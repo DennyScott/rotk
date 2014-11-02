@@ -26,11 +26,28 @@ game.animations = {
 	},
 
 	cardWinner: function(winner, loser) {
+		checkCardExists([winner, loser]);
 		var tween = game.add.tween(loser.view()).to({
 			alpha: 0,
 			y: loser.view().y - 20
 		}, 1200, Phaser.Easing.Linear.None, true, 800)
 		tween.onComplete.add(this.removeCards, this);
+	},
+
+	checkCardsExists: function(cardArray){
+		for(var i = 0; i < cardArray.length; i++){
+			if(typeof cardArray[i] === 'undefined'){
+				createTempView(cardArray[i]);
+			}
+		}
+	},
+
+	createTempView: function(card){
+		card.view = function(){
+			var tempSprite = game.add.sprite(0, 0, 'redCommand');
+			tempSprite.alpha = 0;
+			return tempSprite;
+		}
 	},
 
 	removeCards: function() {
@@ -54,6 +71,7 @@ game.animations = {
 		},
 
 	cardsEqual: function(oneCard, twoCard) {
+		checkCardsExist([oneCard, twoCard]);
 		game.add.tween(oneCard.view()).to({
 			alpha: 0,
 			y: oneCard.view().y - 20

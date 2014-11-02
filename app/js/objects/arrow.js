@@ -1,4 +1,5 @@
 (function() {
+	var game = window.game || {};
 
 	/**
 	 * Arrow Class. Used to create the arrow sprite, and
@@ -66,6 +67,6 @@
 		_initalize(x, y, scale); //Call Constructor
 	};
 
-	game = window.game || {};
+
 	game.arrow = Arrow; //Add to global Namespace
 })();

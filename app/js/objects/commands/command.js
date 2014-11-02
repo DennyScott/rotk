@@ -10,7 +10,7 @@
 	 */
 	var Command = function(owner, type, value) {
 		var _command = this;
-		var _sprite = undefined;
+		var _sprite;
 		this.owner = undefined;
 		this.type = undefined;
 		this.value = undefined;

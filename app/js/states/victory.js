@@ -3,7 +3,7 @@ var Phaser;
 window.states = window.states || {};
 
 
-var victoryState = {
+window.states.victoryState = {
 	preload: function() {
 		game = window.game || {};
 		Phaser = window.Phaser || {};

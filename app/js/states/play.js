@@ -1,7 +1,12 @@
-var game = window.game || {};
+var game;
+var Phaser;
+window.states = window.states || {};
 
-var playState = {
-	preload: function() {},
+window.states.playState = {
+	preload: function() {
+		game = window.game || {};
+		Phaser = window.Phaser || {};
+	},
 
 	create: function() {
 		this.createBoardAssets();
@@ -27,7 +32,7 @@ var playState = {
 		//We've hit the end of a turn, call the end of turn chain
 		if (game.global.endTurn) {
 			this.endOfTurnChain();
-		}else{
+		} else {
 			this.changePlayersTurn(); //Change to the opponents turn
 		}
 		game.global.endTurn = !game.global.endTurn;
@@ -39,7 +44,7 @@ var playState = {
 		this.playerCardExists(game.global.round[game.global.playerOne.name()]);
 		this.playerCardExists(game.global.round[game.global.playerTwo.name()]);
 
-		var callback = function(){
+		var callback = function() {
 			this.drawCards();
 			this.changePlayersTurn();
 			this.clearRound();
@@ -47,7 +52,7 @@ var playState = {
 
 		//Try both cards in the event chain
 		game.eventChain.playCards(game.global.round[game.global.playerOne.name()], game.global.round[game.global.playerTwo.name()], callback, this);
-		
+
 	},
 
 	/**
@@ -112,7 +117,7 @@ var playState = {
 		game.global.currentTurnIndicatior.alpha = 0;
 		game.add.tween(game.global.currentTurnIndicatior).to({
 			y: 30,
-			alpha:1
+			alpha: 1
 		}, 1000, Phaser.Easing.Linear.None, true);
 		game.global.currentTurnIndicatior.anchor.setTo(0, 0.5);
 	},

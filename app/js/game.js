@@ -12,6 +12,8 @@ game.global = {
 	amountOfColors: 3
 };
 
+game.states = {};
+
 game.chainProperties = {}; //Used For Different Chains (Attack, defense, etc)
 
 //Add all the states
@@ -19,7 +21,7 @@ game.state.add('boot', bootState);
 game.state.add('load', loadState);
 game.state.add('menu', menuState);
 game.state.add('cardSelection', cardSelectionState);
-game.state.add('play', playState);
+game.state.add('play', window.states.playState);
 game.state.add('victory', victoryState);
 
 

@@ -33,7 +33,7 @@
 				game.global.cancelTurns = _command.KOTurns;
 			}
 		};
-	}
+	};
 
 	AttackCommand.prototype = Object.create(game.AbilityCommand.prototype);
 

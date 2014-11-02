@@ -7,18 +7,25 @@ game.eventChain = {
 	 * @param  {Object} oneCard One players Card
 	 * @param  {Object} twoCard The other Players Card
 	 */
-	playCards: function(oneCard, twoCard){
+	playCards: function(oneCard, twoCard, changeTurn, context){
 		//This will be used to determine if the round has a winner
 		game.global.turnWon = false; 
+		game.global.round.isTie = false;
+		game.global.round.changeTurn = changeTurn;
+		game.global.round.context = context;
+		var _this = this;
 
 		game.animations.showCards(oneCard, twoCard);
 
 		//Go through the event Chain
-		this.handleAttackCommands(oneCard, twoCard);
-		this.handleNumberCards(oneCard, twoCard);
-		this.handleDefenseCommands(oneCard, twoCard);
-		this.handleAweCards(oneCard, twoCard);
-		this.performAweDamage();
+		setTimeout(function() {
+			_this.handleAttackCommands(oneCard, twoCard);
+			_this.handleNumberCards(oneCard, twoCard);
+			_this.handleDefenseCommands(oneCard, twoCard);
+			_this.handleAweCards(oneCard, twoCard);
+			_this.performAweDamage();
+		}, 4000);
+		
 	},
 
 	/**
@@ -39,10 +46,10 @@ game.eventChain = {
 			game.chainProperties.attackChain.bothAttack(oneCard, twoCard);
 		}else if(oneCardAttack){
 			//only oneCard played an Attack COmmand
-			game.chainProperties.attackChain.singleAttack(oneCard);
+			game.chainProperties.attackChain.singleAttack(oneCard, twoCard);
 		}else if(twoCardAttack){
 			//Only twoCard played an Attack Command
-			game.chainProperties.attackChain.singleAttack(twoCard);
+			game.chainProperties.attackChain.singleAttack(twoCard, oneCard);
 		}
 	},
 
@@ -64,10 +71,10 @@ game.eventChain = {
 			game.chainProperties.numberChain.bothNumber(oneCard, twoCard);
 		}else if(oneCardNumber){
 			//Only oneCard played a number card
-			game.chainProperties.numberChain.singleNumber(oneCard);
+			game.chainProperties.numberChain.singleNumber(oneCard, twoCard);
 		}else if(twoCardNumber){
 			//Only twoCard played a number card
-			game.chainProperties.numberChain.singleNumber(twoCard);
+			game.chainProperties.numberChain.singleNumber(twoCard, oneCard);
 		}
 	},
 
@@ -89,10 +96,10 @@ game.eventChain = {
 			game.chainProperties.defenseChain.bothDefend(oneCard, twoCard);
 		}else if(oneCardDefense){
 			//Only oneCard played a defence card
-			game.chainProperties.defenseChain.singleDefence(oneCard);
+			game.chainProperties.defenseChain.singleDefence(oneCard, twoCard);
 		}else if(twoCardDefense){
 			//Only twoCard played a defence card
-			game.chainProperties.defenseChain.singleDefence(twoCard);
+			game.chainProperties.defenseChain.singleDefence(twoCard, oneCard);
 		}
 	},
 
@@ -112,9 +119,9 @@ game.eventChain = {
 		if(oneCardAwe && twoCardAwe){
 			game.chainProperties.aweChain.bothAwe(oneCard, twoCard);
 		} else if(oneCardAwe){
-			game.chainProperties.aweChain.playAwe(oneCard);
+			game.chainProperties.aweChain.playAwe(oneCard, twoCard);
 		} else if(twoCardAwe){
-			game.chainProperties.aweChain.playAwe(twoCard);
+			game.chainProperties.aweChain.playAwe(twoCard, oneCard);
 		}
 	},
 

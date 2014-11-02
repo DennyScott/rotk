@@ -26,8 +26,10 @@ var playState = {
 		//We've hit the end of a turn, call the end of turn chain
 		if (game.global.endTurn) {
 			this.endOfTurnChain();
+		}else{
+			this.changePlayersTurn(); //Change to the opponents turn
 		}
-		this.changePlayersTurn(); //Change to the opponents turn
+		
 		game.global.endTurn = !game.global.endTurn;
 	},
 
@@ -37,11 +39,15 @@ var playState = {
 		this.playerCardExists(game.global.round[game.global.playerOne.name()]);
 		this.playerCardExists(game.global.round[game.global.playerTwo.name()]);
 
-		//Try both cards in the event chain
-		game.eventChain.playCards(game.global.round[game.global.playerOne.name()], game.global.round[game.global.playerTwo.name()]);
+		var callback = function(){
+			this.drawCards();
+			this.changePlayersTurn();
+			this.clearRound();
+		};
 
-		this.drawCards(); //Both players draw a card
-		this.clearRound();
+		//Try both cards in the event chain
+		game.eventChain.playCards(game.global.round[game.global.playerOne.name()], game.global.round[game.global.playerTwo.name()], callback, this);
+		
 	},
 
 	/**
@@ -87,6 +93,7 @@ var playState = {
 		game.global.currentPlayer = player;
 		game.global.currentPlayer.opponent.endTurn();
 		game.global.currentPlayer.startTurn();
+		
 	},
 
 	createBoardAssets: function() {

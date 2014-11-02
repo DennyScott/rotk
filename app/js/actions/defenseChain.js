@@ -9,7 +9,7 @@ game.chainProperties.defenseChain = {
 	 */
 	bothDefend: function(oneCard, twoCard) {
 		//Do Nothing, probably want an animation here
-		
+		game.animations.cardsEqual(oneCard, twoCard);	
 		game.global.turnWon = true; //End the turn
 	},
 
@@ -18,7 +18,11 @@ game.chainProperties.defenseChain = {
 	 * 
 	 * @param  {Object} oneCard A defence command card.
 	 */
-	singleDefence: function(oneCard){
+	singleDefence: function(oneCard, twoCard){
 			oneCard.combatAction();
+			if(!game.global.turnWon){
+				game.animations.cardsEqual(oneCard, twoCard);
+				game.global.turnWon = true;
+			}
 	}
 }

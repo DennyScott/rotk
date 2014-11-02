@@ -229,6 +229,7 @@ window.states.cardSelectionState = {
 
 	placeCard: function(x, y, endY, ability) {
 		var key = ability.value;
+		var timeDelay = ability.timeDelay;
 		this[key] = game.add.sprite(x, y, 'abilityWithQuantity');
 		this[key].alpha = 0;
 		this[key].anchor.setTo(0.5, 0.5);

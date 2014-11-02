@@ -26,7 +26,7 @@
 		_initalize(owner); //Call Constructor
 
 		this.combatAction = function() {
-			this.owner.opponent.removeAttackCard();
+			this.owner.opponent.removeCardsOfType([game.PleadCommand, game.RefuteCommand]);
 		};
 		this.nonCombatAction = function() {
 		};

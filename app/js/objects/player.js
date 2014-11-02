@@ -219,6 +219,17 @@
 			}
 		};
 
+		this.removeCardsOfType = function(cardTypes) {
+			for (var i = 0; i < _this.hand.length; i++) {
+				for (var j = 0; j < cardTypes.length; j++) {
+					if (_this.hand[i] instanceof cardTypes[j]) {
+						_removeCommand(_this.hand[i]);
+						i--;
+					}
+				}
+			}
+		};
+
 		/**
 		 * Get Players Health
 		 * @return {int} Current Health

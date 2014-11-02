@@ -31,6 +31,6 @@
 	};
 
 	InciteCommand.prototype = Object.create(game.AttackCommand.prototype);
-
+	game = window.game || {};
 	game.InciteCommand = InciteCommand; //Add to global Namespace
 })();

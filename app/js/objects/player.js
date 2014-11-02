@@ -1,6 +1,7 @@
 (function() {
 
 	var game = window.game || {};
+	var Phaser = window.Phaser || {};
 	/**
 	 * Player Class
 	 */
@@ -11,10 +12,10 @@
 		var _text; //The Text Object to display
 		var _cardContext;
 		var _cardClickEvent;
-		this.opponent;
-		this.hand;
-		this.budget;
-		this.hasChosenCards;
+		this.opponent = undefined;
+		this.hand = undefined;
+		this.budget = undefined;
+		this.hasChosenCards = undefined;
 
 		/**
 		 * Constructor
@@ -53,7 +54,7 @@
 			}
 		};
 
-		var _createView = function(command, i) {
+		var _createView = function(command) {
 			command.createView(0, 0);
 
 			command.view().events.onInputDown.add(_cardClickEvent, _cardContext);

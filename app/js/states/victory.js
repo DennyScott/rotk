@@ -44,7 +44,9 @@ window.states.victoryState = {
 				var startX = game.world.width + 180;
 				var endX = game.world.centerX;
 
-				this.nextButton = game.add.button(startX, game.world.height - 60, 'nextButton', this.menu, this);
+				this.nextButton = game.add.button(startX, game.world.height - 60, 'nextButton', function() {
+					game.state.start('menu');
+				});
 				this.nextButton.anchor.setTo(0.5, 0.55);
 				var text = 'Back to Start';
 				this.nextButton.buttonText = game.add.text(0, 0,
@@ -66,9 +68,5 @@ window.states.victoryState = {
 			}, this);
 
 		}, this);
-	},
-
-	menu: function() {
-		game.state.start('menu');
 	}
 };

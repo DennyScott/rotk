@@ -31,7 +31,7 @@ window.states.menuState = {
 	createBlinkingText: function() {
 		var objection = game.add.text(0, 0,
 			'Objection!', {
-				font: '40px Arial',
+				font: '70px Arial',
 				fill: '#ffff00',
 				align: 'center'
 			});
@@ -52,7 +52,7 @@ window.states.menuState = {
 
 		var holdIt = game.add.text(0, 0,
 			'Hold It!', {
-				font: '40px Arial',
+				font: '70px Arial',
 				fill: '#ffff00',
 				align: 'center'
 			});
@@ -133,10 +133,10 @@ window.states.menuState = {
 
 		this.nextButton = game.add.button(startX, game.world.height * 0.9, 'nextButton', this.start, this);
 		this.nextButton.anchor.setTo(0.5, 0.55);
-		var text = 'Start Game';
+		var text = 'Start';
 		this.nextButton.buttonText = game.add.text(0, 0,
 			text, {
-				font: '20px Arial',
+				font: '30px Arial',
 				fill: '#ffffff',
 				align: 'center'
 			});
@@ -160,7 +160,7 @@ window.states.menuState = {
 	createNameLabel: function() {
 		//Display the name of the game
 		var nameLabel = game.add.text(game.world.centerX, -50, 'Debate!', {
-			font: '70px Geo',
+			font: '90px Geo',
 			fill: '#ffffff'
 		});
 		nameLabel.anchor.setTo(0.5, 0.5);

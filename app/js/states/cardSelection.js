@@ -133,7 +133,7 @@ window.states.cardSelectionState = {
 		var text = this.budgetLabelText + this.budget;
 		this.budgetLabel = game.add.text(-100, 20,
 			text, {
-				font: '25px Arial',
+				font: '30px Arial',
 				fill: '#ffffff',
 				align: 'center'
 			});

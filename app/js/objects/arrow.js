@@ -1,5 +1,6 @@
 (function() {
 	var game = window.game || {};
+	var Phaser = window.Phaser || {}
 
 	/**
 	 * Arrow Class. Used to create the arrow sprite, and
@@ -13,7 +14,6 @@
 		var _isUp; //Boolean of arrow direction
 		var _sprite; //The drawn sprite of the arrow
 		var upArrow = 'upArrow'; //Up Arrow Texture
-		var downArrow = 'downArrow'; //Down Arrow Texture
 
 		/**
 		 * Constructor
@@ -38,7 +38,7 @@
 		 *
 		 */
 		this.flip = function() {
-			var tween = game.add.tween(_sprite).to({
+			game.add.tween(_sprite).to({
 				angle: '+180',
 			}, 1600, Phaser.Easing.Bounce.Out, true, 0);
 			_isUp = !_isUp;

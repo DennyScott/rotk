@@ -75,7 +75,7 @@
 
 		var _createMissingTurnsLabel = function() {
 			return 'Missed Turns Remaining: ' + (game.global.cancelTurns + 1);
-		}
+		};
 
 		var _createVisibleCards = function() {
 			for (var i = 0; i < _this.hand.length; i++) {
@@ -173,7 +173,7 @@
 			});
 
 			_text.anchor.setTo(widthAnchor, heightAnchor);
-			_missedTurns.anchor.setTo(widthAnchor, heightAnchor)
+			_missedTurns.anchor.setTo(widthAnchor, heightAnchor);
 
 			game.add.tween(_text).to({
 				x: x
@@ -183,15 +183,11 @@
 
 		this.hideMissingTurnsView = function() {
 			_missedTurns.text = '';
-		}
+		};
 
 		this.showMissingTurnsView = function() {
-			// var x = _missedTurns.x;
-			// game.add.tween(_text).to({
-			// 	x: x
-			// }, 1000, Phaser.Easing.Bounce.Out, true);
 			_missedTurns.text = _createMissingTurnsLabel();
-		},
+		};
 
 		this.drawCards = function() {
 			_drawMaxCards();

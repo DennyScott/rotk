@@ -1,6 +1,6 @@
 (function() {
 	var game = window.game || {};
-	var Phaser = window.Phaser || {}
+	var Phaser = window.Phaser || {};
 
 	/**
 	 * Arrow Class. Used to create the arrow sprite, and

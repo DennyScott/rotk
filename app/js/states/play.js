@@ -133,7 +133,7 @@ window.states.playState = {
 		game.add.tween(game.global.currentTurnIndicatior).to({
 			y: game.world.height * 0.10,
 		}, 1000, Phaser.Easing.Bounce.Out, true);
-		game.global.currentTurnIndicatior.anchor.setTo(.5, 0.5);
+		game.global.currentTurnIndicatior.anchor.setTo(0.5, 0.5);
 	},
 
 	clearBoard: function() {

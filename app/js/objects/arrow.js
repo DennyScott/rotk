@@ -25,6 +25,7 @@
 		var _initalize = function(x, y, scale) {
 			_isUp = true;
 			_sprite = game.add.sprite(x, y, upArrow); //Create Sprite
+			_sprite.anchor.setTo(0.5, 0.5);
 
 			//Set scale
 			_sprite.scale.x = scale;
@@ -34,14 +35,13 @@
 		/**
 		 * Public call to flip the arrow. This will determine which texture
 		 * to call call a private renderer with.
-		 * 
+		 *
 		 */
 		this.flip = function() {
-			if (_isUp) {
-				_renderFlip(downArrow); //Show Down Arrow
-			} else {
-				_renderFlip(upArrow); //Show Up Arrow
-			}
+			var tween = game.add.tween(_sprite).to({
+				angle: '+180',
+			}, 1600, Phaser.Easing.Bounce.Out, true, 0);
+			_isUp = !_isUp;
 		};
 
 		/**
@@ -52,17 +52,6 @@
 			return _isUp;
 		};
 
-		/**
-		 * Rerender the arrow sprite in the passed texture direction, then
-		 * flip the isUp boolean to match the new direction. Up is true, down is 
-		 * false.
-		 * 
-		 * @param  {String} texture New Arrow direction to render.
-		 */
-		var _renderFlip = function(texture) {
-			_sprite.loadTexture(texture);
-			_isUp = !_isUp;
-		};
 
 		_initalize(x, y, scale); //Call Constructor
 	};

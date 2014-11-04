@@ -9,6 +9,7 @@ window.states.playState = {
 	},
 
 	create: function() {
+		// this.startTime();
 		this.createBoardAssets();
 		this.prepareForGame();
 	},
@@ -27,6 +28,7 @@ window.states.playState = {
 		//Place the current players choice of card into a global scope.
 		game.global.round[game.global.currentPlayer.name()] = view.card;
 		game.global.currentPlayer.removeCommand(view.card); //Remove the card from their hand
+		game.global.useAudio.play();
 
 
 		//We've hit the end of a turn, call the end of turn chain
@@ -45,9 +47,22 @@ window.states.playState = {
 		this.playerCardExists(game.global.round[game.global.playerTwo.name()]);
 
 		var callback = function() {
-			this.drawCards();
-			this.changePlayersTurn();
-			this.clearRound();
+			var found;
+			if (game.global.playerOne.health() <= 0) {
+				found = game.global.playerOne;
+			} else if (game.global.playerTwo.health() <= 0) {
+				found = game.global.playerTwo;
+			}
+			if (typeof found !== 'undefined') {
+				game.global.winner = found.opponent;
+				found.hand = [];
+				found.opponent.hand = [];
+				game.state.start('victory');
+			} else {
+				this.drawCards();
+				this.changePlayersTurn();
+				this.clearRound();
+			}
 		};
 
 		//Try both cards in the event chain
@@ -81,13 +96,16 @@ window.states.playState = {
 		//out of numbers)
 		if (typeof game.global.cancelTurns !== 'undefined' && game.global.cancelTurns > -1) {
 			game.global.cancelTurns--;
-			game.global.currentPlayer.startTurn();
 			game.global.endTurn = true;
+			this.showMissingTurnsLabel();
 
 			if (game.global.cancelTurns === -1) {
 				game.global.endTurn = false;
 				game.global.cancelTurns = undefined;
+				this.hideMissingTurnsLabel();
 				this.flipTurn(game.global.playerOne);
+			} else {
+				this.waitForTurn();
 			}
 		} else {
 			this.flipTurn(game.global.currentPlayer.opponent);
@@ -101,21 +119,21 @@ window.states.playState = {
 	},
 
 	createBoardAssets: function() {
-		game.global.currentBoard = new game.board(game.world.centerX, game.world.height * 0.4, 0.7);
-		game.global.playerOne.createView(10, 10);
-		game.global.playerTwo.createView(10, game.global.playerOne.getHeight() + 20);
-		game.global.arrow = new game.arrow(game.world.width * 0.70,
-			game.world.height * 0.50, 0.5);
-		game.global.currentTurnIndicatior = game.add.text(game.world.width + 100, 30,
+		game.global.currentBoard = new game.board(game.world.centerX, game.world.height * 0.45, 0.6);
+		game.global.playerOne.createView(10, 10, 0, 0);
+		game.global.playerTwo.createView(game.world.width - 10, 10, 1, 0);
+		game.global.arrow = new game.arrow(game.world.width * 0.80,
+			game.world.height * 0.45, 0.5);
+		game.global.currentTurnIndicatior = game.add.text(game.world.centerX, -50,
 			'Current Player: ' + game.global.currentPlayer.name(), {
-				font: '35px Geo',
+				font: '25px Geo',
 				fill: '#ffffff',
 				align: 'center'
 			});
 		game.add.tween(game.global.currentTurnIndicatior).to({
-			x: game.world.width - 10,
+			y: game.world.height * 0.10,
 		}, 1000, Phaser.Easing.Bounce.Out, true);
-		game.global.currentTurnIndicatior.anchor.setTo(1, 0.5);
+		game.global.currentTurnIndicatior.anchor.setTo(.5, 0.5);
 	},
 
 	clearBoard: function() {
@@ -127,12 +145,20 @@ window.states.playState = {
 		game.global.round = {};
 	},
 
+	hideMissingTurnsLabel: function() {
+		game.global.currentPlayer.opponent.hideMissingTurnsView();
+	},
+
+	showMissingTurnsLabel: function() {
+		game.global.currentPlayer.opponent.showMissingTurnsView();
+	},
+
 	prepareForGame: function() {
 		this.clearRound();
 
 		game.global.playerOne.prepare(this.useCard, this);
 		game.global.playerTwo.prepare(this.useCard, this);
-		game.global.currentPlayer.startTurn();
+		this.waitForTurn();
 
 	},
 
@@ -146,7 +172,7 @@ window.states.playState = {
 			});
 		this.playerNameWarning.anchor.setTo(0, 0.5);
 
-		this.timeRemainText = 5;
+		this.timeRemainText = 3;
 		this.timeRemainWarning = game.add.text(200, game.world.height * 0.65 + 45,
 			this.timeRemainText, {
 				font: '40px Arial',

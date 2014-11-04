@@ -13,8 +13,6 @@ game.global = {
 	amountOfColors: 3
 };
 
-game.states = {};
-
 game.chainProperties = {}; //Used For Different Chains (Attack, defense, etc)
 
 //Add all the states

@@ -52,6 +52,12 @@ game.animations = {
 		var _this = this;
 		setTimeout(function() {
 			loser.view().alpha = _this.setAlpha;
+			setTimeout(function() {
+				if(typeof game.global.cancelTurns === 'undefined' || game.global.justKOD){
+					game.global.showdownAudio.play();
+					game.global.justKOD = false;
+				}
+			}, 1200);
 			var tween = game.add.tween(loser.view()).to({
 				alpha: 0,
 				y: loser.view().y - 20
@@ -83,6 +89,9 @@ game.animations = {
 	removeCards: function() {
 		this.oneCard = this.checkCardsExist(this.oneCard);
 		this.twoCard = this.checkCardsExist(this.twoCard);
+		setTimeout(function() {
+			game.global.showdownAudio.play();
+		}, 600);
 		game.add.tween(this.twoCard.view()).to({
 			alpha: 0,
 		}, 600, Phaser.Easing.Linear.None, true, 600);

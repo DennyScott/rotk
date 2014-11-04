@@ -63,6 +63,7 @@ window.states.cardSelectionState = {
 		this.deductFromBudget(item);
 		this.addAbilityToDeck(item);
 		this.updateSpriteCounter(item);
+		game.global.selectAudio.play();
 
 	},
 
@@ -156,6 +157,7 @@ window.states.cardSelectionState = {
 	loadState: function() {
 		game.global.currentPlayer.hasChosenCommands = true;
 		game.global.currentPlayer = game.global.currentPlayer.opponent;
+		game.global.nextAudio.play();
 		if (game.global.currentPlayer.hasChosenCommands !== true) {
 			game.state.start('cardSelection');
 		} else {

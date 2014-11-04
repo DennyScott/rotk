@@ -45,6 +45,7 @@ window.states.victoryState = {
 				var endX = game.world.centerX;
 
 				this.nextButton = game.add.button(startX, game.world.height - 60, 'nextButton', function() {
+					game.global.theme.stop();
 					game.state.start('menu');
 				});
 				this.nextButton.anchor.setTo(0.5, 0.55);

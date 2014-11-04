@@ -10,6 +10,7 @@ window.states.menuState = {
 	},
 
 	create: function() {
+		this.resetVariables();
 		this.createPlayers();
 		this.loadLocalStorage(); //Sets up local storage options, including loading previous high scores	
 		this.setHighScore(); //Sets up the high score to be saved to local storage if last game was higher
@@ -18,6 +19,7 @@ window.states.menuState = {
 		this.createStartLabel(); //Create the start Label to tell the user to start the game
 		this.createBlinkingText(); //Creates the blinking objection and hold it in the title screen
 		this.setUpInput(); //Sets up user input when the menu begins to start the game
+		this.startMusic();
 	},
 	/**
 	 * Creates a background image behind the menu
@@ -87,6 +89,7 @@ window.states.menuState = {
 	start: function() {
 		//Start the actual game
 		game.state.start('cardSelection');
+		game.global.nextAudio.play();
 	},
 
 	/**
@@ -172,10 +175,34 @@ window.states.menuState = {
 			.start();
 	},
 
+	resetVariables: function() {
+		game.global = {
+			fullHand: 7,
+			comboValue: 25,
+			turnDamage: 10,
+			aweDamage: 5,
+			allNumbers: 27, //To get a 1 to 9 of each color (i.e Red, Blue, and Green)
+			neededAmountOfCards: 30,
+			amountOfColors: 3
+		};
+	},
+
 	/**
 	 * Sets up the menu to accept a specific input to start the game and load the next state
 	 */
 	setUpInput: function() {
 		//No Input for this game currently
+	},
+
+	startMusic: function() {
+		game.global.theme = game.add.audio('theme');
+		game.global.theme.loop = true;
+		game.global.theme.play();
+		game.global.nextAudio = game.add.audio('next');
+		game.global.selectAudio = game.add.audio('select');
+		game.global.useAudio = game.add.audio('use');
+		game.global.showdownAudio = game.add.audio('showdown');
+		game.global.explosionAudio = game.add.audio('explosion');
+		game.global.damageAudio = game.add.audio('damage');
 	}
 };

@@ -31,6 +31,7 @@
 			if (_command.KOTurns) {
 				game.global.currentPlayer = this.owner;
 				game.global.cancelTurns = _command.KOTurns;
+				game.global.justKOD = true;
 			}
 		};
 	};

@@ -162,6 +162,7 @@
 			for (var i = 0; i < combo.length; i++) {
 				_tileArray[combo[i] - 1].changeTileColor('white'); //Change tiles back to white
 			}
+			game.global.explosionAudio.play();
 		};
 
 		/**

@@ -10,6 +10,7 @@
 		var _name; //Players Name
 		var _health; //Players Health
 		var _text; //The Text Object to display
+		var _missedTurns;
 		var _cardContext;
 		var _cardClickEvent;
 		this.opponent = undefined;
@@ -72,6 +73,10 @@
 			return name + "'s Health: " + _health;
 		};
 
+		var _createMissingTurnsLabel = function() {
+			return 'Missed Turns Remaining: ' + (game.global.cancelTurns + 1);
+		}
+
 		var _createVisibleCards = function() {
 			for (var i = 0; i < _this.hand.length; i++) {
 				if (typeof _this.hand[i].view() === 'undefined') {
@@ -100,9 +105,11 @@
 		};
 
 		var _killAllCards = function() {
-			for (var i = 0; i < _this.hand.length; i++) {
-				if (typeof _this.hand[i].view() !== 'undefined') {
-					_this.hand[i].view().kill();
+			if (_this.hand && typeof game.global.winner === 'undefined') {
+				for (var i = 0; i < _this.hand.length; i++) {
+					if (typeof _this.hand[i].view() !== 'undefined') {
+						_this.hand[i].view().kill();
+					}
 				}
 			}
 		};
@@ -129,8 +136,10 @@
 			var currentXPosition = 75;
 			var currentYPosition = game.world.centerY + (game.world.centerY * 0.75);
 
-			for (var i = 0; i < _this.hand.length; i++) {
-				_this.hand[i].view().reset(currentXPosition + (i * 140), currentYPosition);
+			if (_this.hand && typeof game.global.winner === 'undefined') {
+				for (var i = 0; i < _this.hand.length; i++) {
+					_this.hand[i].view().reset(currentXPosition + (i * 140), currentYPosition);
+				}
 			}
 		};
 
@@ -144,16 +153,45 @@
 			_killAllCards();
 		};
 
-		this.createView = function(x, y) {
+		this.createView = function(x, y, widthAnchor, heightAnchor) {
+			var startX;
+			if (widthAnchor === 1) {
+				startX = game.world.width + 200;
+			} else {
+				startX = -400;
+			}
 			//Create Text Object
-			_text = game.add.text(-400, y, _createLabel(), {
+			_text = game.add.text(startX, y, _createLabel(), {
 				font: '35px Geo',
 				fill: '#ffffff'
 			});
+
+			//Create Text Object
+			_missedTurns = game.add.text(x, y + 50, '', {
+				font: '25px Geo',
+				fill: '#ffffff'
+			});
+
+			_text.anchor.setTo(widthAnchor, heightAnchor);
+			_missedTurns.anchor.setTo(widthAnchor, heightAnchor)
+
 			game.add.tween(_text).to({
 				x: x
 			}, 1000, Phaser.Easing.Bounce.Out, true);
+
 		};
+
+		this.hideMissingTurnsView = function() {
+			_missedTurns.text = '';
+		}
+
+		this.showMissingTurnsView = function() {
+			// var x = _missedTurns.x;
+			// game.add.tween(_text).to({
+			// 	x: x
+			// }, 1000, Phaser.Easing.Bounce.Out, true);
+			_missedTurns.text = _createMissingTurnsLabel();
+		},
 
 		this.drawCards = function() {
 			_drawMaxCards();
@@ -267,6 +305,7 @@
 		};
 
 		this.startTurn = function() {
+			game.global.hasDamageSounded = false;
 			_resetAllCards();
 			_setKeyOnCards();
 		};
@@ -279,12 +318,14 @@
 		 * @return {int}        Return current health after damage.
 		 */
 		this.takeDamage = function(amount) {
-			_health -= amount;
-			_text.text = _createLabel(); //Display Current Health
-			_this.opponent.heal(amount);
-			if (_health <= 0) {
-				game.global.winner = _this.opponent;
-				game.state.start('victory');
+			if (_health > 0 && _this.opponent.health() > 0 && amount > 0) {
+				_health -= amount;
+				_text.text = _createLabel(); //Display Current Health
+				_this.opponent.heal(amount);
+				if(!game.global.hasDamageSounded) {
+					game.global.damageAudio.play();
+					game.global.hasDamageSounded = true;
+				}
 			}
 			return _health;
 		};

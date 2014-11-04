@@ -24,6 +24,7 @@
 			var value = 'Incite';
 			game.AttackCommand.call(_command, owner, value, description, cost);
 			_command.KOTurns = 2;
+			_command.damage = 0;
 
 			_setIncite();
 		};
